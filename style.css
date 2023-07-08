@@ -115,6 +115,10 @@ body{
 	 	padding-left: 50px;
 	}
 
+	#id_version{
+		display: none;
+	}
+
 	.cl_visible{
 		visibility: visible;
 	}
