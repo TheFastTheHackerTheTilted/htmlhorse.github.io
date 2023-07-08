@@ -11,6 +11,12 @@ body{
 	height: 80px;
 	font-weight: bold;
 }
+.cl_header_all_buttons{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+}
+
 .cl_header_button {
 	font-size: 15px;
     font-weight: bold;
@@ -19,12 +25,16 @@ body{
     background-color: darkgray;
     cursor: pointer;
     margin-top: 20px;
-    float: right;
     margin-right: 10px;
     padding: 8px 16px;
-    display: block;
+    display: inline-block;
     text-decoration: none;
 }
+
+.cl_header_box{
+	display: none;
+}
+
 .cl_page_text {
 	position: absolute;
 	padding: 8px 16px;
@@ -40,7 +50,7 @@ body{
 	background-color: dimgray;
 }
 
-#id_button_home {
+#id_button_log {
 	border-color: black;
 	margin-right: 30px;
 }
@@ -55,8 +65,7 @@ body{
 	border-width: 2px;
 	border-radius:7px;
 	border-style: solid;
-	margin-left: 3%;
-	margin-right: 3%;
+	margin: 0 3%;
 	padding: 5px 5px;
 }
 
@@ -81,3 +90,33 @@ body{
 	margin: 5px 0px;
 }
 
+
+/* Media Query for smaller screens */
+@media (max-width: 800px) {
+	.cl_header_all_buttons {
+    	flex-direction: column-reverse; /* Reverse the order of buttons */
+	    align-items: flex-end; /* Align buttons to the right */
+    	display: flex;
+    	visibility: hidden;
+	}
+	.cl_header_button, #id_button_log {
+		margin-right: 3%;
+		z-index: 3;
+	}
+	.cl_header_box{
+		display: block;
+		margin: 5px 3%;
+		visibility: visible;
+	}
+
+	.cl_header_box_icon {
+	 	cursor: pointer;
+	 	font-size: 50px;
+	 	padding-left: 50px;
+	}
+
+	.cl_visible{
+		visibility: visible;
+	}
+  
+}
