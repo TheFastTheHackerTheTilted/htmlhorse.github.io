@@ -1,0 +1,63 @@
+.header {
+	background-color: #8B0000;
+	height: 44px;
+}
+.nav-button{
+	display: inline;
+	font-size: 24px;
+	font-weight: bold;
+	float: left;
+    width: auto;
+    border: none;
+    display: block;
+    outline: 0;
+    padding: 9px 15px 9px 15px !important;
+    cursor: pointer;
+}
+#version{
+	float: right !important;
+	font-size: 12px;
+	font-weight: normal;
+	padding: 15px 15px 15px 15px !important;
+}
+
+.header > a:hover {
+  background-color: #9A0010;
+  border-radius: 0px 0px 15px 15px;
+}
+
+html{
+	font-family: "Lucida Handwriting", cursive;
+}
+
+body{
+	background: black;
+}
+
+#myVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%; 
+  min-height: 100%;
+  z-index: -1;
+  opacity: 0.2;
+}
+
+.bodytext{
+	background: white;
+	border-radius: 2px;
+	border-color: black;
+	border-style: groove;
+	border-width: 5px;
+	width: 60%;
+	height: 60%;
+	margin-top: 20px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.textLink {
+	color: blue;
+	cursor: pointer;
+}
