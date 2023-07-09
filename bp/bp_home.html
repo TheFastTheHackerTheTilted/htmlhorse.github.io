@@ -1,27 +1,34 @@
  <!DOCTYPE html>
  <html>
  <head>
- 	<meta charset="utf-8">
- 	<meta name="viewport" content="width=device-width, initial-scale=1">
- 	<title>WIP</title>
- 	<link rel="stylesheet" href="bp_home.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <title>bp_Home</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="bp_home.css">
+    <script type="text/javascript" src="main.js"></script>
+
  </head>
  <body>
- 	<div class="cl_header">
- 		<p class="cl_page_text">WIP</p>
-        <p class="cl_page_text" id="id_version"> v.0.0.X</p>
- 		<div class="cl_header_all_buttons">
-	 		<a class="cl_header_button active" id="id_button_home" href="https://www.htmlhorse.com">Home</a>
-            <a class="cl_header_button" href="">Blueprints</a>
-            <a class="cl_header_button" href="">Plans</a>
-            <a class="cl_header_button" href="">Changelogs</a>
- 		</div>
- 	</div>
+    <div class="cl_header">
+        <p class="cl_page_text">bp_Home</p>
+        <p class="cl_page_text" id="id_version"> v.0.0.1</p>
+        <div class="cl_header_all_buttons" id="id_header_all_buttons">
+            <a class="cl_header_button" id="id_button_home" href="https://www.htmlhorse.com">Home</a>
+            <a class="cl_header_button" href="https://www.htmlhorse.com/blueprints.html">Blueprints</a>
+            <a class="cl_header_button" href="https://www.htmlhorse.com/plans.html">Plans</a>
+            <a class="cl_header_button" id="id_button_log" href="https://www.htmlhorse.com/logs.html">Changelogs</a>
+            <div class="cl_header_box">
+                <div class="cl_header_box_icon" id="id_header_box" onclick="header_expand()">≡</div>
+            </div>
+        </div>
+    </div>
     <div class="cl_middle">
         <div id="id_intro">
-            <p>Lorem Impsum </p>
-
+            Lorem Impsum
         </div>
+            
     </div>
  <p>Test Empty body</p>
  </body>
