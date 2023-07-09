@@ -122,5 +122,9 @@ body{
 	.cl_visible{
 		visibility: visible;
 	}
+
+	.cl_bp_block, .cl_hm_v{}{
+		height: 55px;
+	}
   
 }
