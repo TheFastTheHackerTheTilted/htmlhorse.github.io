@@ -1,0 +1,14 @@
+{
+  "name": "HTMLHorse",
+  "short_name": "Horse Web",
+  "description": "An application for general usage.",
+  "icons": [
+    {
+      "src": "/htmlhorse.png",
+      "sizes": "322x380",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone"
+}
