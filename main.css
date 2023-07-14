@@ -91,6 +91,24 @@ body{
 }
 
 
+.cl_footer {
+	display: block;
+	bottom: 0px;
+	height: 100px;
+	background-color: #000010;
+	font-family: Verdana,sans-serif;
+	text-align: center!important;
+	font-size: 12px!important;
+	opacity: 0.60;
+}
+hr {
+    border-right-color: initial;
+    border-bottom-color: initial;
+    border-left-color: initial;
+    border-top-color: rgb(53, 57, 59);
+}
+
+
 /* Media Query for smaller screens */
 @media (max-width: 800px) {
 	.cl_header_all_buttons {
