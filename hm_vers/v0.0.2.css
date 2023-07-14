@@ -1,0 +1,148 @@
+body{
+	background-color: #000010;
+	font-size: 15px;
+	color: white;
+	font-family: Verdana, sans-serif;
+
+}
+
+.cl_header {
+	background-color: black;
+	height: 80px;
+	font-weight: bold;
+}
+.cl_header_all_buttons{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+}
+
+.cl_header_button {
+	font-size: 15px;
+    font-weight: bold;
+    color: black;
+    font-family: Verdana, sans-serif;
+    background-color: darkgray;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-right: 10px;
+    padding: 8px 16px;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.cl_header_box{
+	display: none;
+}
+
+.cl_page_text {
+	position: absolute;
+	padding: 8px 16px;
+	font-size: 20px ;
+}
+
+#id_version {
+	padding: 30px 160px;
+	font-size: 10px;
+}
+
+.cl_header_button:hover{
+	background-color: dimgray;
+}
+
+#id_button_log {
+	border-color: black;
+	margin-right: 30px;
+}
+
+.active {
+	background-color: lightgray;
+}
+
+.cl_middle {
+	background-color: #000024;
+	border-color: white;
+	border-width: 2px;
+	border-radius:7px;
+	border-style: solid;
+	margin: 0 3%;
+	padding: 5px 5px;
+}
+
+.cl_bp_block, .cl_hm_v{
+	background-color: #000020;
+	height: 45px;
+	margin: 20px 10px;
+	padding: 5px 5px;
+	display: block;
+	border-style: none;
+	border-color: lightblue;
+	border-width: 1px;
+}
+.cl_bp_block:hover, .cl_hm_v:hover{
+	background-color: #4b4b80;
+}
+.cl_middle a{
+	text-decoration: none;
+	color: white;
+}
+.cl_bp_block p, .cl_hm_v p{
+	margin: 5px 0px;
+}
+
+
+.cl_footer {
+	display: block;
+	bottom: 0px;
+	height: 100px;
+	background-color: #000010;
+	font-family: Verdana,sans-serif;
+	text-align: center!important;
+	font-size: 12px!important;
+	opacity: 0.60;
+}
+hr {
+    border-right-color: initial;
+    border-bottom-color: initial;
+    border-left-color: initial;
+    border-top-color: rgb(53, 57, 59);
+}
+
+
+/* Media Query for smaller screens */
+@media (max-width: 800px) {
+	.cl_header_all_buttons {
+    	flex-direction: column-reverse; /* Reverse the order of buttons */
+	    align-items: flex-end; /* Align buttons to the right */
+    	display: flex;
+    	visibility: hidden;
+	}
+	.cl_header_button, #id_button_log {
+		margin-right: 3%;
+		z-index: 3;
+	}
+	.cl_header_box{
+		display: block;
+		margin: 5px 3%;
+		visibility: visible;
+	}
+
+	.cl_header_box_icon {
+	 	cursor: pointer;
+	 	font-size: 50px;
+	 	padding-left: 50px;
+	}
+
+	#id_version{
+		display: none;
+	}
+
+	.cl_visible{
+		visibility: visible;
+	}
+
+	.cl_bp_block, .cl_hm_v{}{
+		height: 55px;
+	}
+  
+}
