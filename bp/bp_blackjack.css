@@ -1,3 +1,16 @@
+button {
+	display: inline-block;
+	border-style: none;
+	width: 50px;
+	height: 30px;
+	margin-top: 10px;
+}
+
+#id_ngame {
+	display: block;
+	width: 100px ;
+}
+ 
 
 #id_rule {
 	color: red;

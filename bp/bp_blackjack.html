@@ -27,17 +27,21 @@
     </div>
     <div class="cl_middle">
             <p id="id_rule">Rule: The closer you're to 21, its better. If you are over 21, you're out!</p>
+            <p id="id_status">System Message: Start New Game </p>
             <p id="id_win_rate">Win rate: 0%</p>
-            <p id="id_health">Health: 3</p>
-            <p>Card count: 52</p>
+            <p id="id_health">Health: 0</p>
+            <p id="id_card_count">Card count: 0</p>
             <p>Dealer's cards: </p>
-            <p id:="id_dealercards"></p>
+            <p id="id_dealercards"></p>
 
-            <p>Dealer's cards: </p>
-            <p id:="id_mycards"></p>
-            <button>Hit</button>
-            <button>Stand</button>
+            <p>Your cards: </p>
+            <p id="id_mycards"></p>
+            <div class="cl_buttons">
+            <button id="id_hit" onclick="user_hit()">Hit</button>
+            <button id="id_stande">Stand</button>
+            <button id="id_ngame" onclick="bj_new_game()">New Game</button>
+            </div>
     </div>
- <p>Test Empty body</p>
+    <div id="id_footer" class="cl_footer"><hr>HTMLHorse is a webpage filled with weird subpages. If you are interested in using similar functionalites from my pages, if anything inspired you, feel free to use. It would be nice to mention me tho!</div>
  </body>
  </html>
