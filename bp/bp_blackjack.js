@@ -6,21 +6,22 @@ var shuffle_increase_rate = 0.007
 var total_round = 0;
 var win_rounds = 0;
 var user_cards = new Array();
-var user_stands = false;
+var user_stands = true;
 var dealer_cards = new Array();
 
 function bj_new_game(){
 	shuffle_cards();
 	health = 3;
+	win_rounds = 0;
+	total_round = 0;
 	ingame = true;
-	total_round++;
-
-	update_table();
+	
 	new_round();
 }
 
 
 function shuffle_cards(){
+	deck = new Array();
 	let cardset = ['1','2','3','4','5','6','7','8','9','K','Q','J','A'];
 
 	for(i=0; i<13; i++){
@@ -37,33 +38,41 @@ function shuffle_cards(){
 	}
 	console.log(deck);
 	document.getElementById("id_status").innerText = "System Message: Cards Shuffled"
+	highlight_status();
 
 }
 
 function update_table(){
-	aftermath();
 	document.getElementById("id_health").innerText = "Health: "+health;
-	document.getElementById("id_win_rate").innerText = "Win rate: "+(win_rounds/total_round)+"%";
+	let win_ratio = ((win_rounds/total_round)*100).toFixed(1)
+	document.getElementById("id_win_rate").innerText = "Win rate: "+win_ratio+"%";
 	document.getElementById("id_card_count").innerText = "Card count: "+deck.length;
 	document.getElementById("id_mycards").innerText = "("+calc_user_score()+"): "+user_cards;
-	document.getElementById("id_dealercards").innerText = dealer_cards;
+	document.getElementById("id_dealercards").innerText = "("+calc_dealer_score()+"): "+ dealer_cards;
 	
 }
 
 function highlight_ngame(){
-	var newgamebt = document.getElementById("id_ngame");
+	var newgamebt = document.getElementById("id_end_button");
 	newgamebt.classList.add("cl_highlight");
 	setTimeout(function() {newgamebt.classList.remove("cl_highlight");}, 700);
 }
 
+function highlight_status(){
+	var idstatus = document.getElementById("id_status");
+	idstatus.classList.add("cl_highlight");
+	setTimeout(function() {idstatus.classList.remove("cl_highlight");}, 700);
+}
+
 function user_hit(){
-	if(ingame){
+	if(ingame && !user_stands){
 		let deck_length = deck.length;
 		let randomNumber = Math.floor(Math.random() * deck_length);
 
 		user_cards.push(deck[randomNumber]);
 		deck.splice(randomNumber-1,1);
-		console.log(user_cards);
+		// console.log("User cards: "+user_cards);
+		shuffle_score +=shuffle_increase_rate;
 
 
 		update_table();
@@ -76,7 +85,7 @@ function user_hit(){
 function user_stand(){
 	if(ingame){
 		user_stands = true;
-		update_table();
+		aftermath();
 	}
 	else{
 		highlight_ngame()
@@ -89,7 +98,8 @@ function dealer_hit(){
 
 	dealer_cards.push(deck[randomNumber]);
 	deck.splice(randomNumber-1,1);
-	console.log(dealer_cards);
+	// console.log("Dealer Cards: "+dealer_cards);
+	shuffle_score +=shuffle_increase_rate;
 
 
 	update_table();
@@ -98,16 +108,17 @@ function dealer_hit(){
 
 
 function new_round(){
-	total_round++;
-	shuffle_score +=shuffle_increase_rate;
-	dealer_cards = new Array();
-	user_cards = new Array()
-	user_stands=false;
-	update_table();
-
-	for (i =0; i < 2; i++){
-		user_hit();
-		dealer_hit();
+	if(user_stands){
+		total_round++;
+		console.log("Total round: "+total_round)
+		dealer_cards = new Array();
+		user_cards = new Array()
+		user_stands=false;
+		
+		for (i =0; i < 2; i++){
+			user_hit();
+			dealer_hit();
+		}
 	}
 }
 
@@ -142,15 +153,96 @@ function calc_user_score(){
 		return user_score;
 }
 
+function calc_dealer_score(){
+	dealer_cards.sort(function(a, b) {
+			if (a === 'A') {
+				return 1; // 'A' is considered greater, move it to the end
+			} else if (b === 'A') {
+			    return -1; // 'A' is considered greater, move it to the end
+			} else {
+			    return a.localeCompare(b); // Compare other elements in their default order
+			}
+		});
+
+		let dealer_score = 0;
+		for (let i = 0; i < dealer_cards.length; i++) {
+			// If its a number, add it to the score
+			if(Number.isInteger(parseInt(dealer_cards[i], 10))){
+				dealer_score+= parseInt(dealer_cards[i], 10);
+			}
+			// If not 'A' or not Int, should be K,Q,J
+			else if(dealer_cards[i] != 'A'){
+				dealer_score+=10;
+			}
+			// Else it should be 'A'
+			else{
+				if(dealer_score <11){dealer_score+=11;}
+				else{dealer_score+=1;}
+			}
+		}
+		// console.log("User score: "+dealer_score);
+		return dealer_score;
+}
+
 function aftermath(){
-	if(user_stands){
+	if(user_stands == true){
 		//first calculate how many points the user has
 		user_score = calc_user_score();
 		console.log("User score: "+user_score);
 
-		// TO DO: then calculate how many points the dealer has
-		// If cards need to be hit for dealer, hit it
-		// Get the winner, update the health and win rounds
-		// Start new round
+		while(calc_dealer_score()<17){
+			dealer_hit();
+		}
+		dealer_score = calc_dealer_score();
+		console.log("Dealer Score: "+dealer_score);
+
+		get_winner(user_score,dealer_score);
 	}
+}
+
+function get_winner(u_score, d_score){
+	console.log(u_score+" and "+d_score);
+	if(u_score >21 && dealer_score > 21){
+		document.getElementById("id_status").innerText = "1System Message: No Winner";
+	}
+	else if(u_score >21 && dealer_score <= 21){
+		document.getElementById("id_status").innerText = "2System Message: Dealer wins";
+		health--;
+	}
+	else if(u_score <=21 && dealer_score > 21){
+		document.getElementById("id_status").innerText = "3System Message: You win";
+		health++;
+		win_rounds++;
+	}
+	else if(u_score <= 21 && dealer_score <= 21 && u_score < dealer_score){
+		document.getElementById("id_status").innerText = "4System Message: Dealer wins";
+		health--;
+	}
+	else if(u_score <= 21 && dealer_score <= 21 && u_score > dealer_score){
+		document.getElementById("id_status").innerText = "5System Message: You win";
+		health++;
+		win_rounds++;
+	}
+	else{
+		document.getElementById("id_status").innerText = "6System Message: Tie";
+	}
+
+	update_table();
+	highlight_status();
+	to_new_round_button();
+	if(health <1){
+		to_new_game_button();
+	}
+}
+
+function to_new_round_button(){
+	let finalbutton = document.getElementById("id_end_button");
+	finalbutton.innerText = "Next Round"
+	finalbutton.onclick = new_round;
+}
+
+function to_new_game_button(){
+	let finalbutton = document.getElementById("id_end_button");
+	finalbutton.innerText = "New Game"
+	finalbutton.onclick = bj_new_game;
 }
