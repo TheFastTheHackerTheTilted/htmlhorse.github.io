@@ -41,26 +41,46 @@ function shuffle_cards(){
 }
 
 function update_table(){
+	aftermath();
 	document.getElementById("id_health").innerText = "Health: "+health;
 	document.getElementById("id_win_rate").innerText = "Win rate: "+(win_rounds/total_round)+"%";
 	document.getElementById("id_card_count").innerText = "Card count: "+deck.length;
-	document.getElementById("id_mycards").innerText = user_cards;
+	document.getElementById("id_mycards").innerText = "("+calc_user_score()+"): "+user_cards;
 	document.getElementById("id_dealercards").innerText = dealer_cards;
 	
 }
 
+function highlight_ngame(){
+	var newgamebt = document.getElementById("id_ngame");
+	newgamebt.classList.add("cl_highlight");
+	setTimeout(function() {newgamebt.classList.remove("cl_highlight");}, 700);
+}
 
 function user_hit(){
-	let deck_length = deck.length;
-	let randomNumber = Math.floor(Math.random() * deck_length);
+	if(ingame){
+		let deck_length = deck.length;
+		let randomNumber = Math.floor(Math.random() * deck_length);
 
-	user_cards.push(deck[randomNumber]);
-	deck.splice(randomNumber-1,1);
-	console.log(user_cards);
+		user_cards.push(deck[randomNumber]);
+		deck.splice(randomNumber-1,1);
+		console.log(user_cards);
 
 
-	update_table();
+		update_table();
+		}
+	else{
+		highlight_ngame();
+	}
+}
 
+function user_stand(){
+	if(ingame){
+		user_stands = true;
+		update_table();
+	}
+	else{
+		highlight_ngame()
+	}
 }
 
 function dealer_hit(){
@@ -82,6 +102,7 @@ function new_round(){
 	shuffle_score +=shuffle_increase_rate;
 	dealer_cards = new Array();
 	user_cards = new Array()
+	user_stands=false;
 	update_table();
 
 	for (i =0; i < 2; i++){
@@ -90,11 +111,46 @@ function new_round(){
 	}
 }
 
-function aftermath(){
-	if(user_stands){
+function calc_user_score(){
+	user_cards.sort(function(a, b) {
+			if (a === 'A') {
+				return 1; // 'A' is considered greater, move it to the end
+			} else if (b === 'A') {
+			    return -1; // 'A' is considered greater, move it to the end
+			} else {
+			    return a.localeCompare(b); // Compare other elements in their default order
+			}
+		});
+
 		let user_score = 0;
 		for (let i = 0; i < user_cards.length; i++) {
-		  console.log(myArray[i]);
+			// If its a number, add it to the score
+			if(Number.isInteger(parseInt(user_cards[i], 10))){
+				user_score+= parseInt(user_cards[i], 10);
+			}
+			// If not 'A' or not Int, should be K,Q,J
+			else if(user_cards[i] != 'A'){
+				user_score+=10;
+			}
+			// Else it should be 'A'
+			else{
+				if(user_score <11){user_score+=11;}
+				else{user_score+=1;}
+			}
 		}
+		// console.log("User score: "+user_score);
+		return user_score;
+}
+
+function aftermath(){
+	if(user_stands){
+		//first calculate how many points the user has
+		user_score = calc_user_score();
+		console.log("User score: "+user_score);
+
+		// TO DO: then calculate how many points the dealer has
+		// If cards need to be hit for dealer, hit it
+		// Get the winner, update the health and win rounds
+		// Start new round
 	}
 }

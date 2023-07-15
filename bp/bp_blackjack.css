@@ -15,3 +15,8 @@ button {
 #id_rule {
 	color: red;
 }
+
+.cl_highlight{
+	border-style: solid;
+	border-color: red;
+}
