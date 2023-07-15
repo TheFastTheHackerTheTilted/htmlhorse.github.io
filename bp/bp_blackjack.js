@@ -9,6 +9,8 @@ var user_cards = new Array();
 var user_stands = true;
 var dealer_cards = new Array();
 
+//TO DO: cards needs to be shuffled sometimes
+
 function bj_new_game(){
 	shuffle_cards();
 	health = 3;
@@ -37,8 +39,8 @@ function shuffle_cards(){
 
 	}
 	console.log(deck);
-	document.getElementById("id_status").innerText = "System Message: Cards Shuffled"
-	highlight_status();
+	update_status("Cards shuffled")
+	shuffle_score = 0.05;
 
 }
 
@@ -50,6 +52,11 @@ function update_table(){
 	document.getElementById("id_mycards").innerText = "("+calc_user_score()+"): "+user_cards;
 	document.getElementById("id_dealercards").innerText = "("+calc_dealer_score()+"): "+ dealer_cards;
 	
+}
+
+function update_status(newStatus){
+	document.getElementById("id_status").innerText = "System Message: "+newStatus;
+	highlight_status();
 }
 
 function highlight_ngame(){
@@ -106,10 +113,22 @@ function dealer_hit(){
 
 }
 
+function calc_shuffle(){
+	let shuffle_value = Math.floor(Math.random() * 999);
+	shuffle_value = (shuffle_value/1000).toFixed(3)
+	console.log("Shuffle value: "+shuffle_value)
+
+	if(shuffle_value < shuffle_score){
+		shuffle_cards();
+		update_status("Cards shuffled");
+	}
+
+}
 
 function new_round(){
 	if(user_stands){
 		total_round++;
+		calc_shuffle();
 		console.log("Total round: "+total_round)
 		dealer_cards = new Array();
 		user_cards = new Array()
@@ -203,28 +222,28 @@ function aftermath(){
 function get_winner(u_score, d_score){
 	console.log(u_score+" and "+d_score);
 	if(u_score >21 && dealer_score > 21){
-		document.getElementById("id_status").innerText = "1System Message: No Winner";
+		update_status("No Winner");
 	}
 	else if(u_score >21 && dealer_score <= 21){
-		document.getElementById("id_status").innerText = "2System Message: Dealer wins";
+		update_status("Dealer Wins");
 		health--;
 	}
 	else if(u_score <=21 && dealer_score > 21){
-		document.getElementById("id_status").innerText = "3System Message: You win";
+		update_status("You Win!");
 		health++;
 		win_rounds++;
 	}
 	else if(u_score <= 21 && dealer_score <= 21 && u_score < dealer_score){
-		document.getElementById("id_status").innerText = "4System Message: Dealer wins";
+		update_status("Dealer Wins");
 		health--;
 	}
 	else if(u_score <= 21 && dealer_score <= 21 && u_score > dealer_score){
-		document.getElementById("id_status").innerText = "5System Message: You win";
+		update_status("You Win");
 		health++;
 		win_rounds++;
 	}
 	else{
-		document.getElementById("id_status").innerText = "6System Message: Tie";
+		update_status("Tie");
 	}
 
 	update_table();
