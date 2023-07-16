@@ -1,15 +1,11 @@
 var deck = new Array();
 var health = 0;
 var ingame = false;
-var shuffle_score = 0.05
-var shuffle_increase_rate = 0.007
 var total_round = 0;
 var win_rounds = 0;
 var user_cards = new Array();
 var user_stands = true;
 var dealer_cards = new Array();
-
-//TO DO: cards needs to be shuffled sometimes
 
 function bj_new_game(){
 	shuffle_cards();
@@ -38,16 +34,27 @@ function shuffle_cards(){
 		}	
 
 	}
-	console.log(deck);
+	// console.log(deck);
 	update_status("Cards shuffled")
-	shuffle_score = 0.05;
+}
+
+function calc_shuffle(){
+	let shuffle_value = ((Math.random() * (0.5))+0.5).toFixed(3);
+	let shuffle_score = (((208-deck.length)/208).toFixed(3));
+
+	console.log("Shuffle value: "+shuffle_value + ", shufflescode "+shuffle_score);
+
+	if(shuffle_value < shuffle_score){
+		shuffle_cards();
+		update_status("Cards shuffled");
+	}
 
 }
 
 function update_table(){
 	document.getElementById("id_health").innerText = "Health: "+health;
 	let win_ratio = ((win_rounds/total_round)*100).toFixed(1)
-	document.getElementById("id_win_rate").innerText = "Win rate: "+win_ratio+"%";
+	document.getElementById("id_win_rate").innerText = "Win rate: "+win_ratio+"% in "+(total_round);
 	document.getElementById("id_card_count").innerText = "Card count: "+deck.length;
 	document.getElementById("id_mycards").innerText = "("+calc_user_score()+"): "+user_cards;
 	document.getElementById("id_dealercards").innerText = "("+calc_dealer_score()+"): "+ dealer_cards;
@@ -79,7 +86,6 @@ function user_hit(){
 		user_cards.push(deck[randomNumber]);
 		deck.splice(randomNumber-1,1);
 		// console.log("User cards: "+user_cards);
-		shuffle_score +=shuffle_increase_rate;
 
 		if(calc_user_score()>21){user_stand();}
 
@@ -107,28 +113,16 @@ function dealer_hit(){
 	dealer_cards.push(deck[randomNumber]);
 	deck.splice(randomNumber-1,1);
 	// console.log("Dealer Cards: "+dealer_cards);
-	shuffle_score +=shuffle_increase_rate;
 
 
 	update_table();
 
 }
 
-function calc_shuffle(){
-	let shuffle_value = Math.floor(Math.random() * 999);
-	shuffle_value = (shuffle_value/1000).toFixed(3)
-	console.log("Shuffle value: "+shuffle_value + "shufflescode"+shuffle_score)
 
-	if(shuffle_value < shuffle_score){
-		shuffle_cards();
-		update_status("Cards shuffled");
-	}
-
-}
 
 function new_round(){
 	if(user_stands){
-		total_round++;
 		calc_shuffle();
 		console.log("Total round: "+total_round)
 		dealer_cards = new Array();
@@ -246,6 +240,7 @@ function get_winner(u_score, d_score){
 	else{
 		update_status("Tie");
 	}
+	total_round++;
 
 	update_table();
 	highlight_status();
