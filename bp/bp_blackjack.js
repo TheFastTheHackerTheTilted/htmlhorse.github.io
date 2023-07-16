@@ -81,6 +81,7 @@ function user_hit(){
 		// console.log("User cards: "+user_cards);
 		shuffle_score +=shuffle_increase_rate;
 
+		if(calc_user_score()>21){user_stand();}
 
 		update_table();
 		}
@@ -116,7 +117,7 @@ function dealer_hit(){
 function calc_shuffle(){
 	let shuffle_value = Math.floor(Math.random() * 999);
 	shuffle_value = (shuffle_value/1000).toFixed(3)
-	console.log("Shuffle value: "+shuffle_value)
+	console.log("Shuffle value: "+shuffle_value + "shufflescode"+shuffle_score)
 
 	if(shuffle_value < shuffle_score){
 		shuffle_cards();
