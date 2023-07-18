@@ -14,3 +14,19 @@
     margin: 0 3%;
     padding: 5px 5px;
 }
+
+@keyframes getBigger {
+  0% {
+    font-size: 100px;
+  }
+  50% {
+    font-size: 120px;
+  }
+  100% {
+    font-size: 100px;
+  }
+}
+
+.animatedDiv {
+  animation: getBigger 0.5s ease-in-out;
+}
