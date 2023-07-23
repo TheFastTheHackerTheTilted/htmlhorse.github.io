@@ -28,5 +28,5 @@
 }
 
 .animatedDiv {
-  animation: getBigger 0.5s ease-in-out;
+  animation: getBigger 0.2s ease-in-out;
 }
