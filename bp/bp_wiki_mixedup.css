@@ -26,9 +26,49 @@
 	text-decoration: none;
 	cursor: pointer;
 	color: lightyellow;
+	background-color: #121233;
 }
 
 .cl_middle_right > a:hover{
 	color: black;
 	background-color: whitesmoke;
+}
+
+
+.cl_button_collapsible{
+	background-color: darkorange;
+	color: white;
+	border: none;
+	width: 100px;
+	padding: 8px;
+	margin-top: 18px;
+	display: block;
+	cursor: pointer;
+	text-align: left;
+	font-size: 14px;
+	font-weight: bold;
+}
+.cl_button_collapsible:hover{
+	background-color: orangered;
+}
+.cl_content{
+	padding: 0 18px;
+	padding-bottom: 18px;
+	display: none;
+	overflow: hidden;
+	background-color: #121233;
+}
+
+.cl_sub_content{
+	padding: 24px 18px;
+	display: none;
+	overflow: hidden;
+	background-color: #2d2d4f;
+}
+
+
+@media (max-width: 800px) {
+	.cl_middle_right{
+		display: none;
+	}
 }
