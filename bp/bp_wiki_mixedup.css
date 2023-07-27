@@ -10,19 +10,18 @@
   border-style: solid;
   border-color: darkgray;
   border-width: 1px;
-  height: 100vh;
 }
 
 .cl_middle_right {
   flex-shrink: 0;
-  flex-basis: 150px;
+  flex-basis: 200px;
   padding: 20px;
   color: white;
 }
 
 .cl_middle_right > a{
 	display: block;
-	padding: 20px 0px;
+	padding: 20px 5px;
 	text-decoration: none;
 	cursor: pointer;
 	color: lightyellow;
@@ -66,6 +65,10 @@
 	background-color: #2d2d4f;
 }
 
+#id_curseforge_link{
+	text-decoration: none;
+	color: lightblue;
+}
 
 @media (max-width: 800px) {
 	.cl_middle_right{
