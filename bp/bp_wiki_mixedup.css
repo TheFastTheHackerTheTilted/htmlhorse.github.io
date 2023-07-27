@@ -18,3 +18,17 @@
   flex-basis: 150px;
   padding: 20px;
   color: white;
+}
+
+.cl_middle_right > a{
+	display: block;
+	padding: 20px 0px;
+	text-decoration: none;
+	cursor: pointer;
+	color: lightyellow;
+}
+
+.cl_middle_right > a:hover{
+	color: black;
+	background-color: whitesmoke;
+}
