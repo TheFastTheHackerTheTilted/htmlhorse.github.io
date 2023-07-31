@@ -26,6 +26,7 @@
 	cursor: pointer;
 	color: lightyellow;
 	background-color: #121233;
+	margin-bottom: 10px;
 }
 
 .cl_middle_right > a:hover{
