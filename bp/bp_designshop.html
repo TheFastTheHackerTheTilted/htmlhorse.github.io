@@ -1,0 +1,36 @@
+ <!DOCTYPE html>
+ <html>
+ <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <title>bp_DesignShop</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="bp_designshop.css">
+    <script type="text/javascript" src="main.js"></script>
+
+ </head>
+ <body>
+    <div class="cl_header">
+        <p class="cl_page_text">bp_DesignShop</p>
+        <p class="cl_page_text" id="id_version"> v.0.1</p>
+        <div class="cl_header_all_buttons" id="id_header_all_buttons">
+            <a class="cl_header_button" id="id_button_home" href="https://www.htmlhorse.com">Home</a>
+            <a class="cl_header_button" href="https://www.htmlhorse.com/blueprints.html">Blueprints</a>
+            <a class="cl_header_button" href="https://www.htmlhorse.com/plans.html">Plans</a>
+            <a class="cl_header_button" id="id_button_log" href="https://www.htmlhorse.com/logs.html">Changelogs</a>
+            <div class="cl_header_box">
+                <div class="cl_header_box_icon" id="id_header_box" onclick="header_expand()">≡</div>
+            </div>
+        </div>
+    </div>
+    <div class="cl_middle">
+        <p>//To Do: add a width and heigh selector</p>
+        <label for="slider">Select a value:</label>
+        <input type="range" id="id_slider" min="1" max="10" value="5">
+        <button id="id_bt_calculate">Calculate</button>
+        <p>Estimated Price: <span id="id_estimate">0</span></p>
+    </div>
+    <div id="id_footer" class="cl_footer"><hr>HTMLHorse is a webpage filled with weird subpages. If you are interested in using similar functionalites from my pages, if anything inspired you, feel free to use. It would be nice to mention me tho!</div>
+ </body>
+ </html>

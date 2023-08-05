@@ -1,0 +1,17 @@
+#id_bt_calculate {
+	display: block;
+}
+
+
+
+#id_slider {
+	-webkit-appearance: none;
+	height: $range-track-height;
+	border-radius: 5px;
+	background: $range-track-color;
+	outline: none;
+	padding: 0;
+	margin: 0;
+	cursor: pointer;
+
+}
