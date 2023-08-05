@@ -1,0 +1,29 @@
+.cl_middle {
+	border-style: none;
+	background-color: whitesmoke;
+}
+
+.cl_upper_part{
+	display: flex;
+	height: 600px;
+}
+
+.cl_bottom_part{
+	height: 200px;
+}
+
+.cl_upper_block{
+	flex: 1;
+	background-color: black;
+}
+
+#id_upper_right{
+	flex: 0.5;
+	margin-left: 10px;
+}
+
+.cl_bottom{
+	height: 100%;
+	background-color: slategray;
+	margin-top: 10px;
+}
