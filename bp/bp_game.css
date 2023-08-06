@@ -13,12 +13,17 @@
 }
 
 .cl_upper_block{
-	flex: 1;
 	background-color: black;
 }
 
 #id_upper_right{
-	flex: 0.5;
+	flex-shrink: 0;
+	flex-basis: 400px;
+	margin-left: 10px;
+}
+
+#id_upper_left{
+	flex-grow: 1;
 	margin-left: 10px;
 }
 
@@ -27,4 +32,24 @@
 	background-color: slategray;
 	margin-top: 10px;
 	overflow: auto;
+}
+
+#id_inventory{
+	display: none;
+	overflow: auto;
+}
+#id_char_buttons{
+	display: inline-block;
+	background-color: gray;
+	width: 100%;
+}
+
+#id_char_buttons >button{
+	opacity: 1;
+	border-style: solid;
+	color: black;
+	background-color: sandybrown;
+	border-radius: 15px 15px 1px 1px;
+	cursor: pointer;
+	font-size: 18px;
 }
