@@ -73,3 +73,16 @@ function showOverview(){
 	showinv.style.display = "none";
 	showovw.style.display = "block";
 }
+
+function showPromptscreen(){
+	let showprompt= document.getElementById("id_upper_left");
+	let showchar= document.getElementById("id_upper_right");
+	showprompt.style.display = "block";
+	showchar.style.display = "none";
+}
+function showCharscreen(){
+	let showprompt= document.getElementById("id_upper_left");
+	let showchar= document.getElementById("id_upper_right");
+	showprompt.style.display = "none";
+	showchar.style.display = "block";
+}
