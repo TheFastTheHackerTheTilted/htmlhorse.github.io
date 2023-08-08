@@ -88,7 +88,10 @@
 	width: 325px;
 	z-index: 1;
 }
-
+#id_overview_stats{
+	position: absolute;
+	z-index: 3;
+}
 #id_overview_stats >p{
 	padding-left: 3px;
 }
@@ -120,5 +123,8 @@
 	}
 	#id_char_buttons{
 		margin-bottom: 6px;
+	}
+	#id_overview_img{
+		opacity: 0.5;
 	}
 }
