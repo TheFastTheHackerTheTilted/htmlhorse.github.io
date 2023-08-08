@@ -16,6 +16,12 @@ function fancyWriteLog(text, colorcode){
 	line++;
 }
 
+// things to keep track of
+var curinv= [];
+var equipped =[];
+
+var lastId = 2; //last item id, increase before use
+
 
 var charHealth = 100;
 var charEnergy = 20;
@@ -28,9 +34,46 @@ var charLifeSt = 0;
 var charCritCh = 0;
 var charCritMult = 1;
 var charLife = 1;
+var charElementalBuffs = [];
+var charUniques = [];
+
+function setStatsDefault(){
+	charHealth = 100;
+	charEnergy = 20;
+	charPhyDmg = 8;
+	charMgcDmg = 0;
+	charPhyDef = 0;
+	charMgcDef = 0;
+	charEnvDef = 0;
+	charLifeSt = 0;
+	charCritCh = 0;
+	charCritMult = 1;
+	charLife = 1;
+	charElementalBuffs = [];
+}
 
 function updateCharStats(){
 	//update the values with equipped items
+	setStatsDefault();
+	for (let i in equipped){
+		let theItemExtras = equipped[i].extra
+		if(theItemExtras.special === true){
+			if (theItemExtras.extraHealth !== undefined){charHealth += theItemExtras.extraHealth;}
+			if (theItemExtras.extraEnergy !== undefined){charEnergy += theItemExtras.extraEnergy;}
+			if (theItemExtras.physicalDamage !== undefined){charPhyDmg += theItemExtras.physicalDamage;}
+			if (theItemExtras.magicalDamage !== undefined){charMgcDmg += theItemExtras.magicalDamage;}
+			if (theItemExtras.physicalDefense !== undefined){charPhyDef += theItemExtras.physicalDefense;}
+			if (theItemExtras.magicalDefense !== undefined){charMgcDef += theItemExtras.magicalDefense;}
+			if (theItemExtras.enviromentalDefense !== undefined){charEnvDef += theItemExtras.enviromentalDefense;}
+			if (theItemExtras.lifeStealRate !== undefined){charLifeSt += theItemExtras.lifeStealRate;}
+			if (theItemExtras.critChance !== undefined){charCritCh += theItemExtras.critChance;}
+			if (theItemExtras.critDamageMultiplier !== undefined){charCritMult += theItemExtras.critDamageMultiplier;}
+			if (theItemExtras.bonusLife !== undefined){charLife += theItemExtras.bonusLife;}
+			if (theItemExtras.element !== undefined){charElementalBuffs.push(theItemExtras.element);}
+			if (theItemExtras.unique !== undefined){charUniques.push(theItemExtras.unique);}
+
+		}
+	}
 	updateStatScreen();
 }
 
@@ -82,23 +125,37 @@ function ItemObject(name,type,rarity,value,keyid,extra){
 	this.extra = extra;
 }
 function randomItemGenerator(){
+	let itemNames = ["The Fallen", "Star Piece", "ELEMENT","ELEMENT","ELEMENT","ELEMENT","ELEMENT", "The Queen's", "The King's", "Dwarven ", "The Eternal", "The Phoenix's", "The Shadowed", "The Celestial","ELEMENT","ELEMENT","ELEMENT","ELEMENT","ELEMENT", "Forgotten", "The Enchanted", "The Cursed", "The Radiant", "The Drifter's", "The Guardian's", "The Whispers", "Timeless", "ELEMENT","ELEMENT","ELEMENT","ELEMENT","ELEMENT", "The Stormborn", "The Wanderer's", "The Moonlit", "The Ember", "Dreamer's", "The Ironclad", "Starforged", "The Echoing" ]
+	let itemElements = ["Iron","Stone","Wooden","Golden","Fire","Water","Light","Mithril", "Dragonhide", "Obsidian", "Elvensteel", "Enchanted Crystal", "Wyvern Scale", "Runestone", "Celestial Silver", "Demonbone", "Phoenix Feather"]
+	let itemTypes = ["WEAPONS", "Hat", "Chestplate", "Leggings", "Boots", "Gloves", "Rings", "Amulet", "Cloak", "Potion", "Belt", "Necklace", "Shield", "Robe", "Bracers", "Earrings", "Tunic"]
+	let weaponTypes = ["Sword", "Bow","Wand","Gauntlets", "Mace", "Longsword","Daggers", "Spear"]
+
+
+	let randomName = itemNames[Math.floor(Math.random() * itemNames.length)];
+	if (randomName =="ELEMENT") {
+		randomName =itemElements[Math.floor(Math.random() * itemElements.length)];
+	}
+	let randomType = itemTypes[Math.floor(Math.random() * itemTypes.length)];
+	if (randomType =="WEAPON") {
+		randomType =weaponTypes[Math.floor(Math.random() * weaponTypes.length)];
+	}
+
+	let randomRarity = Math.random();
+	let selectedRarity = "";
+	if (randomRarity >=0.35 && randomRarity <=0.75) {
+		selectedRarity = "COMMON";
+	}else if(randomRarity >=0.2 && randomRarity <=0.90){
+		selectedRarity = "RARE";
+
+	}else if(randomRarity >=0.1 && randomRarity <=0.95){
+		selectedRarity = "EPIC";
+	}else if(randomRarity >=0.05 && randomRarity <=1){
+		selectedRarity = "LEGENDARY";
+	}else{selectedRarity = "MYTHIC";}
+
+
 
 }
-
-function testItemCreation(){
-	const testItem = new ItemObject("Fire Sword","SWORD","EPIC",100,0,{special:false});
-    const testItem2 = new ItemObject("Water Sword","SWORD","RARE",25,1, {special:true, element: 'fire', extraHealth: 15});
-    let itemList = [testItem,testItem2];
-    addItemToInv(testItem);
-    addItemToInv(testItem2);
-
-}
-// things to keep track of
-var curinv= [];
-var equipped =[];
-
-var lastId = 1; //last item id, increase before use
-
 
 function addItemToInv(Item){
 	// console.log(Item.name)
@@ -176,4 +233,16 @@ function showCharscreen(){
 	let showchar= document.getElementById("id_upper_right");
 	showprompt.style.display = "none";
 	showchar.style.display = "block";
+}
+
+function testItemCreation(){
+	const testItem = new ItemObject("Stone Sword","SWORD","LEGENDARY",100,0,{special:false});
+    const testItem2 = new ItemObject("Fire Sword","SWORD","RARE",25,1, {special:true, element: 'fire', extraHealth: 15});
+    const testItem3 = new ItemObject("Water Sword","SWORD","EPIC",35,2, {special:true, element: 'water', physicalDamage: 15});
+
+    let itemList = [testItem,testItem2];
+    addItemToInv(testItem);
+    addItemToInv(testItem2);
+    addItemToInv(testItem3);
+
 }
