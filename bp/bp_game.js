@@ -63,29 +63,54 @@ function testItemCreation(){
     addItemToInv(testItem2);
 
 }
-
+// things to keep track of
 var curinv= [];
-var lastId = 1
+var equipped =[];
+
+var lastId = 1; //last item id, increase before use
+
+
 function addItemToInv(Item){
 	// console.log(Item.name)
 	curinv.push(Item);
 	updateInvScreen();
 }
 
+function equipItem(keyid){
+	let indexToEquip = curinv.findIndex(item => item.keyid === keyid);
+	let findCopy = equipped.findIndex(eitem => eitem.keyid === keyid);
+	if (indexToEquip !== -1 && (curinv[indexToEquip] !== equipped[findCopy])) {
+	  	equipped.push(curinv[indexToEquip])
+	}
+	// equipped.push(Item);
+	updateInvScreen();
+	
+}
+
+
 function removeItem(keyid){
 	let indexToRemove = curinv.findIndex(item => item.keyid === keyid);
 	if (indexToRemove !== -1) {
 	  curinv.splice(indexToRemove, 1);
+	}
+	unequipItem(keyid);
+}
+
+function unequipItem(keyid){
+	let equipIndexToRemove = equipped.findIndex(item => item.keyid === keyid);
+	if (equipIndexToRemove !== -1) {
+	  equipped.splice(equipIndexToRemove, 1);
 	}
 	updateInvScreen();
 }
 
 // resets inv screen, for each item in the inventory add a div
 function updateInvScreen(){
+	console.log("Equipped item list: "+equipped)
 	let invScreen = document.getElementById("id_inventory");
 	invScreen.innerHTML ="";
 	for(let i in curinv){
-		invScreen.innerHTML = '<div class="cl_inv_item">'+'<p>'+curinv[i].rarity+' '+curinv[i].name+'</p>'+'<a>Stats</a>'+'<a>Equip</a>'+'<a>Unequip</a>'+'<a onclick="removeItem('+curinv[i].keyid+')">Sell('+curinv[i].value+')</a></div>'+invScreen.innerHTML;
+		invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+curinv[i].keyid+'">'+'<p>'+curinv[i].rarity+' '+curinv[i].name+'</p>'+'<a>Stats</a>'+'<a onclick="equipItem('+curinv[i].keyid+')">Equip</a>'+'<a onclick="unequipItem('+curinv[i].keyid+')">Unequip</a>'+'<a onclick="removeItem('+curinv[i].keyid+')">Sell('+curinv[i].value+')</a></div>'+invScreen.innerHTML;
 	}
 }
 
