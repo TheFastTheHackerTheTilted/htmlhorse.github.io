@@ -38,7 +38,24 @@
                     <button onclick="showOverview()">Overview</button>
                     <button onclick="showInventory()">Inventory</button>
                 </div>
-                <div id="id_overview">CharStats</div>
+                <div id="id_overview">
+                    <div id="id_overview_stats">
+                        <p>Health: <span id="id_char_health"></span></p>
+                        <p>Energy: <span id="id_char_energy"></span></p>
+                        <p>Physical DMG: <span id="id_char_phydmg"></span></p>
+                        <p>Magical DMG: <span id="id_char_mgcdmg"></span></p>
+                        <p>Physical DEF: <span id="id_char_phydef"></span></p>
+                        <p>Magical DEF: <span id="id_char_mgcdef"></span></p>
+                        <p>Enviromental DEF: <span id="id_char_envdef"></span></p>
+                        <p>Life Steal(%): <span id="id_char_lifest"></span></p>
+                        <p>Critic Chance(%): <span id="id_char_critch"></span></p>
+                        <p>Critic Multp(x): <span id="id_char_critmult"></span></p>
+                        <p>Life: <span id="id_char_life"></span></p>
+                    </div>
+                    <div id="id_overview_img">
+                        <img id="id_char_img" src="./bp_game/def_char.png">
+                    </div>
+                </div>
                 <div id="id_inventory">
                     <div class="cl_inv_item">
                         <p>Rarity.RARE [item name]</p>

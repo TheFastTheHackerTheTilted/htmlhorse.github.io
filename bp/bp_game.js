@@ -17,6 +17,36 @@ function fancyWriteLog(text, colorcode){
 }
 
 
+var charHealth = 100;
+var charEnergy = 20;
+var charPhyDmg = 8;
+var charMgcDmg = 0;
+var charPhyDef = 0;
+var charMgcDef = 0;
+var charEnvDef = 0;
+var charLifeSt = 0;
+var charCritCh = 0;
+var charCritMult = 1;
+var charLife = 1;
+
+function updateCharStats(){
+	//update the values with equipped items
+	updateStatScreen();
+}
+
+function updateStatScreen(){
+	document.getElementById("id_char_health").innerText = charHealth;
+	document.getElementById("id_char_energy").innerText = charEnergy;
+	document.getElementById("id_char_phydmg").innerText = charPhyDmg;
+	document.getElementById("id_char_mgcdmg").innerText = charMgcDmg;
+	document.getElementById("id_char_phydef").innerText = charPhyDef;
+	document.getElementById("id_char_mgcdef").innerText = charMgcDef;
+	document.getElementById("id_char_envdef").innerText = charEnvDef;
+	document.getElementById("id_char_lifest").innerText = charLifeSt;
+	document.getElementById("id_char_critch").innerText = charCritCh;
+	document.getElementById("id_char_critmult").innerText = charCritMult;
+	document.getElementById("id_char_life").innerText = charLife;
+}
 
 /*
 	**Items have stats**
@@ -84,7 +114,6 @@ function equipItem(keyid){
 	}
 	// equipped.push(Item);
 	updateInvScreen();
-	
 }
 
 
@@ -114,6 +143,7 @@ function updateInvScreen(){
 	}
 
 	updateEquippedScreen();
+	updateCharStats();
 }
 
 function updateEquippedScreen(){
