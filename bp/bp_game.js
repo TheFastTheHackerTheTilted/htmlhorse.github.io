@@ -112,8 +112,15 @@ function updateInvScreen(){
 	for(let i in curinv){
 		invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+curinv[i].keyid+'">'+'<p>'+curinv[i].rarity+' '+curinv[i].name+'</p>'+'<a>Stats</a>'+'<a onclick="equipItem('+curinv[i].keyid+')">Equip</a>'+'<a onclick="unequipItem('+curinv[i].keyid+')">Unequip</a>'+'<a onclick="removeItem('+curinv[i].keyid+')">Sell('+curinv[i].value+')</a></div>'+invScreen.innerHTML;
 	}
+
+	updateEquippedScreen();
 }
 
+function updateEquippedScreen(){
+	for(let i in equipped){
+		document.getElementById("id_invitem_"+equipped[i].keyid).style.backgroundColor  = "#b18a50"
+	}
+}
 
 
 function showInventory(){
