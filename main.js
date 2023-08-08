@@ -8,3 +8,9 @@ function header_expand(){
 		morebox.classList.add('cl_visible');
 	}
 }
+
+function errorPage(){
+	setTimeout(function() {
+	  	window.location.href = "https://www.htmlhorse.com";
+	}, 3000);
+}
