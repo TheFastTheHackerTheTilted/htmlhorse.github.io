@@ -36,6 +36,7 @@ var charCritMult = 1;
 var charLife = 1;
 var charElementalBuffs = [];
 var charUniques = [];
+var charBalance = 0;
 
 function setStatsDefault(){
 	charHealth = 100;
@@ -78,6 +79,7 @@ function updateCharStats(){
 }
 
 function updateStatScreen(){
+	document.getElementById("id_char_money").innerText = charBalance;
 	document.getElementById("id_char_health").innerText = charHealth;
 	document.getElementById("id_char_energy").innerText = charEnergy;
 	document.getElementById("id_char_phydmg").innerText = charPhyDmg;
@@ -126,7 +128,7 @@ function ItemObject(name,type,rarity,value,keyid,extra){
 }
 function randomItemGenerator(){
 	let itemNames = ["The Fallen", "Star Piece", "ELEMENT","ELEMENT","ELEMENT","ELEMENT","ELEMENT", "The Queen's", "The King's", "Dwarven ", "The Eternal", "The Phoenix's", "The Shadowed", "The Celestial","ELEMENT","ELEMENT","ELEMENT","ELEMENT","ELEMENT", "Forgotten", "The Enchanted", "The Cursed", "The Radiant", "The Drifter's", "The Guardian's", "The Whispers", "Timeless", "ELEMENT","ELEMENT","ELEMENT","ELEMENT","ELEMENT", "The Stormborn", "The Wanderer's", "The Moonlit", "The Ember", "Dreamer's", "The Ironclad", "Starforged", "The Echoing" ]
-	let itemElements = ["Iron","Stone","Wooden","Golden","Fire","Water","Light","Mithril", "Dragonhide", "Obsidian", "Elvensteel", "Enchanted Crystal", "Wyvern Scale", "Runestone", "Celestial Silver", "Demonbone", "Phoenix Feather"]
+	let itemElements = ["Iron","Stone","Wooden","Golden","Fire","Water","Lighting","Mithril", "Dragonhide", "Obsidian", "Elvensteel", "Enchanted Crystal", "Wyvern Scale", "Runestone", "Celestial Silver", "Demonbone", "Phoenix Feather"]
 	let itemTypes = ["WEAPONS", "Hat", "Chestplate", "Leggings", "Boots", "Gloves", "Rings", "Amulet", "Cloak", "Potion", "Belt", "Necklace", "Shield", "Robe", "Bracers", "Earrings", "Tunic"]
 	let weaponTypes = ["Sword", "Bow","Wand","Gauntlets", "Mace", "Longsword","Daggers", "Spear"]
 
@@ -137,7 +139,10 @@ function randomItemGenerator(){
 	}
 	let randomType = itemTypes[Math.floor(Math.random() * itemTypes.length)];
 	if (randomType =="WEAPON") {
-		randomType =weaponTypes[Math.floor(Math.random() * weaponTypes.length)];
+		randomWeapon =weaponTypes[Math.floor(Math.random() * weaponTypes.length)];
+		randomName = randomName +" "+ randomWeapon;
+	}else {
+		randomName = randomName +" "+ randomType;
 	}
 
 	let randomRarity = Math.random();
@@ -154,6 +159,9 @@ function randomItemGenerator(){
 	}else{selectedRarity = "MYTHIC";}
 
 
+
+	lastId++;
+	return (new ItemObject(randomName,randomType,selectedRarity,100,lastId,{special:false}));
 
 }
 
@@ -173,7 +181,14 @@ function equipItem(keyid){
 	updateInvScreen();
 }
 
-
+function sellItem(keyid){
+	let indexToSell = curinv.findIndex(item => item.keyid === keyid);
+	if (indexToSell !== -1) {
+	  charBalance += curinv[indexToSell].value;
+	}
+	
+	removeItem(keyid);
+}
 function removeItem(keyid){
 	let indexToRemove = curinv.findIndex(item => item.keyid === keyid);
 	if (indexToRemove !== -1) {
@@ -196,7 +211,7 @@ function updateInvScreen(){
 	let invScreen = document.getElementById("id_inventory");
 	invScreen.innerHTML ="";
 	for(let i in curinv){
-		invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+curinv[i].keyid+'">'+'<p>'+curinv[i].rarity+' '+curinv[i].name+'</p>'+'<a>Stats</a>'+'<a onclick="equipItem('+curinv[i].keyid+')">Equip</a>'+'<a onclick="unequipItem('+curinv[i].keyid+')">Unequip</a>'+'<a onclick="removeItem('+curinv[i].keyid+')">Sell('+curinv[i].value+')</a></div>'+invScreen.innerHTML;
+		invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+curinv[i].keyid+'">'+'<p>'+curinv[i].rarity+' '+curinv[i].name+'</p>'+'<a>Stats</a>'+'<a onclick="equipItem('+curinv[i].keyid+')">Equip</a>'+'<a onclick="unequipItem('+curinv[i].keyid+')">Unequip</a>'+'<a onclick="sellItem('+curinv[i].keyid+')">Sell('+curinv[i].value+')</a></div>'+invScreen.innerHTML;
 	}
 
 	updateEquippedScreen();
@@ -244,5 +259,6 @@ function testItemCreation(){
     addItemToInv(testItem);
     addItemToInv(testItem2);
     addItemToInv(testItem3);
+    addItemToInv(randomItemGenerator());
 
 }
