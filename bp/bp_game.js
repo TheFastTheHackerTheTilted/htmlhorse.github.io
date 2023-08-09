@@ -351,20 +351,20 @@ function printStats(keyid){
 	  	let theItemStats = theItem.extra;
 	  	if(theItemStats.special === true){
 	  		console.log(theItemStats);
-	  		itemStatScreen.innerHTML = '<p>'+theItem.name +' ' + theItem.type+'</p>';
-			if (theItemStats.extraHealth !== undefined){itemStatScreen.innerHTML = '<p>Extra Health: '+theItemStats.extraHealth.toFixed(1) +'</p>'+ itemStatScreen.innerHTML;}
-			if (theItemStats.extraEnergy !== undefined){itemStatScreen.innerHTML = '<p>Extra Energy: '+theItemStats.extraEnergy.toFixed(1) +'</p>'+ itemStatScreen.innerHTML;}
-			if (theItemStats.physicalDamage !== undefined){itemStatScreen.innerHTML = '<p>Physical Damage: '+theItemStats.physicalDamage.toFixed(1) +'</p>'+ itemStatScreen.innerHTML;}
-			if (theItemStats.magicalDamage !== undefined){itemStatScreen.innerHTML = '<p>Magical Damage: '+theItemStats.magicalDamage.toFixed(1) +'</p>'+ itemStatScreen.innerHTML;}
-			if (theItemStats.physicalDefense !== undefined){itemStatScreen.innerHTML = '<p>Physical Defense: '+theItemStats.physicalDefense.toFixed(1) +'</p>'+ itemStatScreen.innerHTML;}
-			if (theItemStats.magicalDefense !== undefined){itemStatScreen.innerHTML = '<p>Magical Defense: '+theItemStats.magicalDefense.toFixed(1) +'</p>'+ itemStatScreen.innerHTML;}
-			if (theItemStats.enviromentalDefense !== undefined){itemStatScreen.innerHTML = '<p>Enviromental Defense: '+theItemStats.enviromentalDefense.toFixed(1) +'</p>'+ itemStatScreen.innerHTML;}
-			if (theItemStats.lifeStealRate !== undefined){itemStatScreen.innerHTML = '<p>Life Steal Rate(%): '+theItemStats.lifeStealRate.toFixed(1) +'</p>'+ itemStatScreen.innerHTML;}
-			if (theItemStats.critChance !== undefined){itemStatScreen.innerHTML = '<p>Critic Chance(%): '+theItemStats.critChance.toFixed(1) +'</p>'+ itemStatScreen.innerHTML;}
-			if (theItemStats.critDamageMultiplier !== undefined){itemStatScreen.innerHTML = '<p>Ciritc Damage Rate(X): '+theItemStats.critDamageMultiplier.toFixed(1) +'</p>'+ itemStatScreen.innerHTML;}
-			if (theItemStats.bonusLife !== undefined){itemStatScreen.innerHTML = '<p>Bonus Life: +'+theItemStats.bonusLife+'</p>' + itemStatScreen.innerHTML;}
-			if (theItemStats.element !== undefined){itemStatScreen.innerHTML = '<p>Element: '+theItemStats.element +'</p>'+ itemStatScreen.innerHTML;}
-			if (theItemStats.unique !== undefined){itemStatScreen.innerHTML = '<p>Unique Feature: '+theItemStats.unique+'</p>' + itemStatScreen.innerHTML;}
+	  		itemStatScreen.innerHTML = '<p>'+theItem.name+'</p>';
+			if (theItemStats.extraHealth !== undefined){itemStatScreen.innerHTML = itemStatScreen.innerHTML+ '<p>Extra Health: '+theItemStats.extraHealth.toFixed(1) +'</p>';}
+			if (theItemStats.extraEnergy !== undefined){itemStatScreen.innerHTML = itemStatScreen.innerHTML+ '<p>Extra Energy: '+theItemStats.extraEnergy.toFixed(1) +'</p>';}
+			if (theItemStats.physicalDamage !== undefined){itemStatScreen.innerHTML = itemStatScreen.innerHTML+ '<p>Physical Damage: '+theItemStats.physicalDamage.toFixed(1) +'</p>';}
+			if (theItemStats.magicalDamage !== undefined){itemStatScreen.innerHTML = itemStatScreen.innerHTML+ '<p>Magical Damage: '+theItemStats.magicalDamage.toFixed(1) +'</p>';}
+			if (theItemStats.physicalDefense !== undefined){itemStatScreen.innerHTML = itemStatScreen.innerHTML+ '<p>Physical Defense: '+theItemStats.physicalDefense.toFixed(1) +'</p>';}
+			if (theItemStats.magicalDefense !== undefined){itemStatScreen.innerHTML = itemStatScreen.innerHTML+ '<p>Magical Defense: '+theItemStats.magicalDefense.toFixed(1) +'</p>';}
+			if (theItemStats.enviromentalDefense !== undefined){itemStatScreen.innerHTML = itemStatScreen.innerHTML+ '<p>Enviromental Defense: '+theItemStats.enviromentalDefense.toFixed(1) +'</p>';}
+			if (theItemStats.lifeStealRate !== undefined){itemStatScreen.innerHTML = itemStatScreen.innerHTML+ '<p>Life Steal Rate(%): '+theItemStats.lifeStealRate.toFixed(1) +'</p>';}
+			if (theItemStats.critChance !== undefined){itemStatScreen.innerHTML = itemStatScreen.innerHTML+ '<p>Critic Chance(%): '+theItemStats.critChance.toFixed(1) +'</p>';}
+			if (theItemStats.critDamageMultiplier !== undefined){itemStatScreen.innerHTML = itemStatScreen.innerHTML+'<p>Ciritc Damage Rate(X): '+theItemStats.critDamageMultiplier.toFixed(1) +'</p>';}
+			if (theItemStats.bonusLife !== undefined){itemStatScreen.innerHTML = itemStatScreen.innerHTML+ '<p>Bonus Life: +'+theItemStats.bonusLife+'</p>';}
+			if (theItemStats.element !== undefined){itemStatScreen.innerHTML = itemStatScreen.innerHTML+ '<p>Element: '+theItemStats.element +'</p>';}
+			if (theItemStats.unique !== undefined){itemStatScreen.innerHTML = itemStatScreen.innerHTML+ '<p>Unique Feature: '+theItemStats.unique+'</p>';}
 
 		}
 	}
