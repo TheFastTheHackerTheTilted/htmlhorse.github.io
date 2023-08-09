@@ -33,7 +33,7 @@ var charMgcDef = 0;
 var charEnvDef = 0;
 var charLifeSt = 0;
 var charCritCh = 0;
-var charCritMult = 1;
+var charCritMult = 1.3;
 var charLife = 1;
 var charElementalBuffs = [];
 var charUniques = [];
@@ -49,7 +49,7 @@ function setStatsDefault(){
 	charEnvDef = 0;
 	charLifeSt = 0;
 	charCritCh = 0;
-	charCritMult = 1;
+	charCritMult = 1.3;
 	charLife = 1;
 	charElementalBuffs = [];
 }
@@ -91,7 +91,7 @@ function updateStatScreen(){
 	document.getElementById("id_char_lifest").innerText = charLifeSt.toFixed(1);
 	document.getElementById("id_char_critch").innerText = charCritCh.toFixed(1);
 	document.getElementById("id_char_critmult").innerText = charCritMult.toFixed(1);
-	document.getElementById("id_char_life").innerText = charLife.toFixed(1);
+	document.getElementById("id_char_life").innerText = charLife;
 }
 
 /*
