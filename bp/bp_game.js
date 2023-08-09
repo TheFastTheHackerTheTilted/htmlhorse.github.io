@@ -17,10 +17,11 @@ function fancyWriteLog(text, colorcode){
 }
 
 // things to keep track of
+var progressMultiplier = 1;
 var curinv= [];
 var equipped =[];
 
-var lastId = 2; //last item id, increase before use
+var lastId = 0; //last item id, increase before use
 
 
 var charHealth = 100;
@@ -79,18 +80,18 @@ function updateCharStats(){
 }
 
 function updateStatScreen(){
-	document.getElementById("id_char_money").innerText = charBalance;
-	document.getElementById("id_char_health").innerText = charHealth;
-	document.getElementById("id_char_energy").innerText = charEnergy;
-	document.getElementById("id_char_phydmg").innerText = charPhyDmg;
-	document.getElementById("id_char_mgcdmg").innerText = charMgcDmg;
-	document.getElementById("id_char_phydef").innerText = charPhyDef;
-	document.getElementById("id_char_mgcdef").innerText = charMgcDef;
-	document.getElementById("id_char_envdef").innerText = charEnvDef;
-	document.getElementById("id_char_lifest").innerText = charLifeSt;
-	document.getElementById("id_char_critch").innerText = charCritCh;
-	document.getElementById("id_char_critmult").innerText = charCritMult;
-	document.getElementById("id_char_life").innerText = charLife;
+	document.getElementById("id_char_money").innerText = charBalance.toFixed(2);
+	document.getElementById("id_char_health").innerText = charHealth.toFixed(1);
+	document.getElementById("id_char_energy").innerText = charEnergy.toFixed(1);
+	document.getElementById("id_char_phydmg").innerText = charPhyDmg.toFixed(1);
+	document.getElementById("id_char_mgcdmg").innerText = charMgcDmg.toFixed(1);
+	document.getElementById("id_char_phydef").innerText = charPhyDef.toFixed(1);
+	document.getElementById("id_char_mgcdef").innerText = charMgcDef.toFixed(1);
+	document.getElementById("id_char_envdef").innerText = charEnvDef.toFixed(1);
+	document.getElementById("id_char_lifest").innerText = charLifeSt.toFixed(1);
+	document.getElementById("id_char_critch").innerText = charCritCh.toFixed(1);
+	document.getElementById("id_char_critmult").innerText = charCritMult.toFixed(1);
+	document.getElementById("id_char_life").innerText = charLife.toFixed(1);
 }
 
 /*
@@ -127,15 +128,21 @@ function ItemObject(name,type,rarity,value,keyid,extra){
 	this.extra = extra;
 }
 function randomItemGenerator(){
+
+	// item name/type generation
 	let itemNames = ["The Fallen", "Star Piece", "ELEMENT","ELEMENT","ELEMENT","ELEMENT","ELEMENT", "The Queen's", "The King's", "Dwarven ", "The Eternal", "The Phoenix's", "The Shadowed", "The Celestial","ELEMENT","ELEMENT","ELEMENT","ELEMENT","ELEMENT", "Forgotten", "The Enchanted", "The Cursed", "The Radiant", "The Drifter's", "The Guardian's", "The Whispers", "Timeless", "ELEMENT","ELEMENT","ELEMENT","ELEMENT","ELEMENT", "The Stormborn", "The Wanderer's", "The Moonlit", "The Ember", "Dreamer's", "The Ironclad", "Starforged", "The Echoing" ]
 	let itemElements = ["Iron","Stone","Wooden","Golden","Fire","Water","Lighting","Mithril", "Dragonhide", "Obsidian", "Elvensteel", "Enchanted Crystal", "Wyvern Scale", "Runestone", "Celestial Silver", "Demonbone", "Phoenix Feather"]
 	let itemTypes = ["WEAPONS", "Hat", "Chestplate", "Leggings", "Boots", "Gloves", "Rings", "Amulet", "Cloak", "Potion", "Belt", "Necklace", "Shield", "Robe", "Bracers", "Earrings", "Tunic"]
 	let weaponTypes = ["Sword", "Bow","Wand","Gauntlets", "Mace", "Longsword","Daggers", "Spear"]
 
 
+	let elementalItem = false;
+	let itemElement = "";
 	let randomName = itemNames[Math.floor(Math.random() * itemNames.length)];
 	if (randomName =="ELEMENT") {
+		elementalItem= true;
 		randomName =itemElements[Math.floor(Math.random() * itemElements.length)];
+		itemElement = randomName;
 	}
 	let randomType = itemTypes[Math.floor(Math.random() * itemTypes.length)];
 	if (randomType =="WEAPON") {
@@ -145,28 +152,130 @@ function randomItemGenerator(){
 		randomName = randomName +" "+ randomType;
 	}
 
+	let itemValue = 1;
+	// rarity selection
+	let itemStatLimit = 1;
+	let itemValueMultipler = 1;
 	let randomRarity = Math.random();
 	let selectedRarity = "";
 	if (randomRarity >=0.35 && randomRarity <=0.75) {
 		selectedRarity = "COMMON";
+		itemValueMultipler = 0.7;
+		itemStatLimit = 1;
 	}else if(randomRarity >=0.2 && randomRarity <=0.90){
 		selectedRarity = "RARE";
-
+		itemValueMultipler = 1;
+		itemValue+=10;
+		itemStatLimit = 2;
 	}else if(randomRarity >=0.1 && randomRarity <=0.95){
 		selectedRarity = "EPIC";
+		itemValueMultipler = 1.3;
+		itemValue+=25;
+		itemStatLimit = 4;
 	}else if(randomRarity >=0.05 && randomRarity <=1){
 		selectedRarity = "LEGENDARY";
-	}else{selectedRarity = "MYTHIC";}
+		itemValueMultipler = 1.6;
+		itemValue+=60;
+		itemStatLimit = 8;
+	}else{
+		selectedRarity = "MYTHIC";
+		itemValueMultipler = 2;
+		itemValue+=100;
+		itemStatLimit = 16;
+	}
+
+	// extra dictionary, used in last parameter of an item
+	let itemStats = {special:true}
+	// item stats
+	
+	
+	let	unique = "";
+
+	let healthChance = Math.random();
+	if (healthChance <= 0.3 && itemStatLimit >0) {
+		itemStats.extraHealth = ((Math.random()*100)*progressMultiplier*itemValueMultipler);
+		itemValue +=21;
+		itemStatLimit--;
+	}
+
+	let energyChance = Math.random();
+	if (energyChance <= 0.3 && itemStatLimit >0) {
+		itemStats.extraEnergy = ((Math.random()*50)*progressMultiplier*itemValueMultipler);
+		itemValue +=21;
+		itemStatLimit--;
+	}
+
+	let phydefChance = Math.random();
+	if (phydefChance <= 0.3 && itemStatLimit >0) {
+		itemStats.physicalDefense = ((Math.random()*15)*progressMultiplier*itemValueMultipler);
+		itemValue +=21;
+		itemStatLimit--;
+	}
+
+	let mgcdefChance = Math.random();
+	if (mgcdefChance <= 0.3 && itemStatLimit >0) {
+		itemStats.magicalDefense = ((Math.random()*15)*progressMultiplier*itemValueMultipler);
+		itemValue +=21;
+		itemStatLimit--;
+	}
+
+	let phydmgChance = Math.random();
+	if (phydmgChance <= 0.3 && itemStatLimit >0) {
+		itemStats.physicalDamage = ((Math.random()*15)*progressMultiplier*itemValueMultipler);
+		itemValue +=21;
+		itemStatLimit--;
+	}
+
+	let mgcdmgChance = Math.random();
+	if (mgcdmgChance <= 0.3 && itemStatLimit >0) {
+		itemStats.magicalDamage = ((Math.random()*15)*progressMultiplier*itemValueMultipler);
+		itemValue +=21;
+		itemStatLimit--;
+	}
+
+	let lifestChance = Math.random();
+	if (lifestChance <= 0.2 && itemStatLimit >0) {
+		itemStats.lifeStealRate = ((Math.random()*10)*progressMultiplier*itemValueMultipler);
+		itemValue +=41;
+		itemStatLimit--;
+	}
+
+	let critDmgChance = Math.random();
+	if (critDmgChance <= 0.2 && itemStatLimit >0) {
+		itemStats.critChance = ((Math.random()*10)*progressMultiplier*itemValueMultipler);
+		itemValue +=41;
+		itemStatLimit--;
+	}
+
+	let critDmgMultChance = Math.random();
+	if (critDmgMultChance <= 0.2 && itemStatLimit >0) {
+		itemStats.critDamageMultiplier = ((Math.random()*0.4)*progressMultiplier*itemValueMultipler);
+		itemValue +=41;
+		itemStatLimit--;
+	}
+
+	let bonusLifeChance = Math.random();
+	if (bonusLifeChance <= 0.1 && itemStatLimit >0) {
+		itemValue +=101;
+		itemStats.bonusLife = 1;
+		itemStatLimit--;
+	}
+
+	if(elementalItem==true){
+		itemValue +=51;
+		itemStats.element = itemElement;
+	}
+	
 
 
 
 	lastId++;
-	return (new ItemObject(randomName,randomType,selectedRarity,100,lastId,{special:false}));
+	return (new ItemObject(randomName,randomType,selectedRarity,(itemValue*itemValueMultipler),lastId,itemStats));
 
 }
 
 function addItemToInv(Item){
-	// console.log(Item.name)
+	console.log(Item)
 	curinv.push(Item);
 	updateInvScreen();
 }
@@ -211,7 +320,7 @@ function updateInvScreen(){
 	let invScreen = document.getElementById("id_inventory");
 	invScreen.innerHTML ="";
 	for(let i in curinv){
-		invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+curinv[i].keyid+'">'+'<p>'+curinv[i].rarity+' '+curinv[i].name+'</p>'+'<a>Stats</a>'+'<a onclick="equipItem('+curinv[i].keyid+')">Equip</a>'+'<a onclick="unequipItem('+curinv[i].keyid+')">Unequip</a>'+'<a onclick="sellItem('+curinv[i].keyid+')">Sell('+curinv[i].value+')</a></div>'+invScreen.innerHTML;
+		invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+curinv[i].keyid+'">'+'<p>'+curinv[i].rarity+' '+curinv[i].name+'</p>'+'<a>Stats</a>'+'<a onclick="equipItem('+curinv[i].keyid+')">Equip</a>'+'<a onclick="unequipItem('+curinv[i].keyid+')">Unequip</a>'+'<a onclick="sellItem('+curinv[i].keyid+')">Sell('+curinv[i].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
 	}
 
 	updateEquippedScreen();
@@ -251,14 +360,10 @@ function showCharscreen(){
 }
 
 function testItemCreation(){
-	const testItem = new ItemObject("Stone Sword","SWORD","LEGENDARY",100,0,{special:false});
-    const testItem2 = new ItemObject("Fire Sword","SWORD","RARE",25,1, {special:true, element: 'fire', extraHealth: 15});
-    const testItem3 = new ItemObject("Water Sword","SWORD","EPIC",35,2, {special:true, element: 'water', physicalDamage: 15});
 
-    let itemList = [testItem,testItem2];
-    addItemToInv(testItem);
-    addItemToInv(testItem2);
-    addItemToInv(testItem3);
+    addItemToInv(randomItemGenerator());
+    addItemToInv(randomItemGenerator());
+    addItemToInv(randomItemGenerator());
     addItemToInv(randomItemGenerator());
 
 }
