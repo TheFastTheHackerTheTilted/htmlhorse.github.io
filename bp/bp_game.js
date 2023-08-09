@@ -130,9 +130,9 @@ function ItemObject(name,type,rarity,value,keyid,extra){
 function randomItemGenerator(){
 
 	// item name/type generation
-	let itemNames = ["The Fallen", "Star Piece", "ELEMENT","ELEMENT","ELEMENT","ELEMENT","ELEMENT", "The Queen's", "The King's", "Dwarven ", "The Eternal", "The Phoenix's", "The Shadowed", "The Celestial","ELEMENT","ELEMENT","ELEMENT","ELEMENT","ELEMENT", "Forgotten", "The Enchanted", "The Cursed", "The Radiant", "The Drifter's", "The Guardian's", "The Whispers", "Timeless", "ELEMENT","ELEMENT","ELEMENT","ELEMENT","ELEMENT", "The Stormborn", "The Wanderer's", "The Moonlit", "The Ember", "Dreamer's", "The Ironclad", "Starforged", "The Echoing" ]
+	let itemNames = ["The Fallen", "Star Piece", "ELEMENT","ELEMENT","ELEMENT","ELEMENT","ELEMENT", "The Queen's", "The King's", "Dwarven ", "The Eternal", "The Phoenix's", "The Shadowed", "The Celestial","ELEMENT","ELEMENT","ELEMENT","ELEMENT","ELEMENT", "Forgotten", "Enchanted","Enhanced", "The Cursed", "The Radiant", "Drifter's", "The Guardian's", "The Whisperer's", "Timeless", "ELEMENT","ELEMENT","ELEMENT","ELEMENT","ELEMENT", "The Stormborn", "The Wanderer's", "The Moonlit", "The Ember", "Dreamer's", "The Ironclad", "Starforged", "The Echoing" ]
 	let itemElements = ["Iron","Stone","Wooden","Golden","Fire","Water","Lighting","Mithril", "Dragonhide", "Obsidian", "Elvensteel", "Enchanted Crystal", "Wyvern Scale", "Runestone", "Celestial Silver", "Demonbone", "Phoenix Feather"]
-	let itemTypes = ["WEAPONS", "Hat", "Chestplate", "Leggings", "Boots", "Gloves", "Rings", "Amulet", "Cloak", "Potion", "Belt", "Necklace", "Shield", "Robe", "Bracers", "Earrings", "Tunic"]
+	let itemTypes = ["WEAPON", "Hat", "Chestplate", "Leggings", "Boots", "Gloves", "Rings", "Amulet", "Cloak", "Potion", "Belt", "Necklace", "Shield", "Robe", "Bracers", "Earrings", "Tunic"]
 	let weaponTypes = ["Sword", "Bow","Wand","Gauntlets", "Mace", "Longsword","Daggers", "Spear"]
 
 
@@ -284,6 +284,7 @@ function equipItem(keyid){
 	let indexToEquip = curinv.findIndex(item => item.keyid === keyid);
 	let findCopy = equipped.findIndex(eitem => eitem.keyid === keyid);
 	if (indexToEquip !== -1 && (curinv[indexToEquip] !== equipped[findCopy])) {
+		unequipItemByType(curinv[indexToEquip].type);
 	  	equipped.push(curinv[indexToEquip])
 	}
 	// equipped.push(Item);
@@ -310,6 +311,13 @@ function unequipItem(keyid){
 	let equipIndexToRemove = equipped.findIndex(item => item.keyid === keyid);
 	if (equipIndexToRemove !== -1) {
 	  equipped.splice(equipIndexToRemove, 1);
+	}
+	updateInvScreen();
+}
+function unequipItemByType(type){
+	let unequipIndexToRemove = equipped.findIndex(item => item.type === type);
+	if (unequipIndexToRemove !== -1) {
+	  equipped.splice(unequipIndexToRemove, 1);
 	}
 	updateInvScreen();
 }
