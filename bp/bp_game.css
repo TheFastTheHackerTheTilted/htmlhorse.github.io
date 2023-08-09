@@ -96,6 +96,10 @@
 	padding-left: 3px;
 }
 
+#id_item_desc{
+	display: none;
+}
+
 @media (max-width: 800px) {
 	.cl_upper_selector{
 		display: block;

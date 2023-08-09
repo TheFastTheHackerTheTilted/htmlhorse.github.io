@@ -328,7 +328,7 @@ function updateInvScreen(){
 	let invScreen = document.getElementById("id_inventory");
 	invScreen.innerHTML ="";
 	for(let i in curinv){
-		invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+curinv[i].keyid+'">'+'<p>'+curinv[i].rarity+' '+curinv[i].name+'</p>'+'<a>Stats</a>'+'<a onclick="equipItem('+curinv[i].keyid+')">Equip</a>'+'<a onclick="unequipItem('+curinv[i].keyid+')">Unequip</a>'+'<a onclick="sellItem('+curinv[i].keyid+')">Sell('+curinv[i].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
+		invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+curinv[i].keyid+'">'+'<p>'+curinv[i].rarity+' '+curinv[i].name+'</p>'+'<a onClick = "printStats('+curinv[i].keyid+')">Stats</a>'+'<a onclick="equipItem('+curinv[i].keyid+')">Equip</a>'+'<a onclick="unequipItem('+curinv[i].keyid+')">Unequip</a>'+'<a onclick="sellItem('+curinv[i].keyid+')">Sell('+curinv[i].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
 	}
 
 	updateEquippedScreen();
@@ -342,18 +342,57 @@ function updateEquippedScreen(){
 }
 
 
+function printStats(keyid){
+	let itemStatScreen = document.getElementById("id_item_desc");
+	itemStatScreen.innerHTML = "" 
+	let indexOfStat = curinv.findIndex(item => item.keyid === keyid);
+	if (indexOfStat !== -1) {
+		let theItem = curinv[indexOfStat];
+	  	let theItemStats = theItem.extra;
+	  	if(theItemStats.special === true){
+	  		console.log(theItemStats);
+	  		itemStatScreen.innerHTML = '<p>'+theItem.name +' ' + theItem.type+'</p>';
+			if (theItemStats.extraHealth !== undefined){itemStatScreen.innerHTML = '<p>Extra Health: '+theItemStats.extraHealth.toFixed(1) +'</p>'+ itemStatScreen.innerHTML;}
+			if (theItemStats.extraEnergy !== undefined){itemStatScreen.innerHTML = '<p>Extra Energy: '+theItemStats.extraEnergy.toFixed(1) +'</p>'+ itemStatScreen.innerHTML;}
+			if (theItemStats.physicalDamage !== undefined){itemStatScreen.innerHTML = '<p>Physical Damage: '+theItemStats.physicalDamage.toFixed(1) +'</p>'+ itemStatScreen.innerHTML;}
+			if (theItemStats.magicalDamage !== undefined){itemStatScreen.innerHTML = '<p>Magical Damage: '+theItemStats.magicalDamage.toFixed(1) +'</p>'+ itemStatScreen.innerHTML;}
+			if (theItemStats.physicalDefense !== undefined){itemStatScreen.innerHTML = '<p>Physical Defense: '+theItemStats.physicalDefense.toFixed(1) +'</p>'+ itemStatScreen.innerHTML;}
+			if (theItemStats.magicalDefense !== undefined){itemStatScreen.innerHTML = '<p>Magical Defense: '+theItemStats.magicalDefense.toFixed(1) +'</p>'+ itemStatScreen.innerHTML;}
+			if (theItemStats.enviromentalDefense !== undefined){itemStatScreen.innerHTML = '<p>Enviromental Defense: '+theItemStats.enviromentalDefense.toFixed(1) +'</p>'+ itemStatScreen.innerHTML;}
+			if (theItemStats.lifeStealRate !== undefined){itemStatScreen.innerHTML = '<p>Life Steal Rate(%): '+theItemStats.lifeStealRate.toFixed(1) +'</p>'+ itemStatScreen.innerHTML;}
+			if (theItemStats.critChance !== undefined){itemStatScreen.innerHTML = '<p>Critic Chance(%): '+theItemStats.critChance.toFixed(1) +'</p>'+ itemStatScreen.innerHTML;}
+			if (theItemStats.critDamageMultiplier !== undefined){itemStatScreen.innerHTML = '<p>Ciritc Damage Rate(X): '+theItemStats.critDamageMultiplier.toFixed(1) +'</p>'+ itemStatScreen.innerHTML;}
+			if (theItemStats.bonusLife !== undefined){itemStatScreen.innerHTML = '<p>Bonus Life: +'+theItemStats.bonusLife+'</p>' + itemStatScreen.innerHTML;}
+			if (theItemStats.element !== undefined){itemStatScreen.innerHTML = '<p>Element: '+theItemStats.element +'</p>'+ itemStatScreen.innerHTML;}
+			if (theItemStats.unique !== undefined){itemStatScreen.innerHTML = '<p>Unique Feature: '+theItemStats.unique+'</p>' + itemStatScreen.innerHTML;}
+
+		}
+	}
+	showDesc();
+}
+
+
 function showInventory(){
 	let showinv= document.getElementById("id_inventory");
 	let showovw= document.getElementById("id_overview");
 	showinv.style.display = "block";
 	showovw.style.display = "none";
+	document.getElementById("id_item_desc").style.display = "none";
 }
 function showOverview(){
 	let showinv= document.getElementById("id_inventory");
 	let showovw= document.getElementById("id_overview");
 	showinv.style.display = "none";
 	showovw.style.display = "block";
+	document.getElementById("id_item_desc").style.display = "none";
 }
+function showDesc(){
+	document.getElementById("id_item_desc").style.display = "block";
+	document.getElementById("id_overview").style.display = "none";
+	document.getElementById("id_inventory").style.display = "none";
+
+}
+
 function showPromptscreen(){
 	let showprompt= document.getElementById("id_upper_left");
 	let showchar= document.getElementById("id_upper_right");
