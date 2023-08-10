@@ -52,6 +52,7 @@ function setStatsDefault(){
 	charCritMult = 1.3;
 	charLife = 1;
 	charElementalBuffs = [];
+	charUniques = [];
 }
 
 function updateCharStats(){
@@ -59,7 +60,7 @@ function updateCharStats(){
 	setStatsDefault();
 	for (let i in equipped){
 		let theItemExtras = equipped[i].extra
-		if(theItemExtras.special === true){
+		if(theItemExtras.wearable === true){
 			if (theItemExtras.extraHealth !== undefined){charHealth += theItemExtras.extraHealth;}
 			if (theItemExtras.extraEnergy !== undefined){charEnergy += theItemExtras.extraEnergy;}
 			if (theItemExtras.physicalDamage !== undefined){charPhyDmg += theItemExtras.physicalDamage;}
@@ -71,8 +72,15 @@ function updateCharStats(){
 			if (theItemExtras.critChance !== undefined){charCritCh += theItemExtras.critChance;}
 			if (theItemExtras.critDamageMultiplier !== undefined){charCritMult += theItemExtras.critDamageMultiplier;}
 			if (theItemExtras.bonusLife !== undefined){charLife += theItemExtras.bonusLife;}
-			if (theItemExtras.element !== undefined){charElementalBuffs.push(theItemExtras.element);}
-			if (theItemExtras.unique !== undefined){charUniques.push(theItemExtras.unique);}
+			if (theItemExtras.element !== undefined && !charElementalBuffs.includes(theItemExtras.element)){charElementalBuffs.push(theItemExtras.element);}
+			if (theItemExtras.unique !== undefined && !charUniques.includes(theItemExtras.unique)){
+				for (let i in theItemExtras.unique){
+					if( !charUniques.includes(theItemExtras.unique[i])){
+						charUniques.push(theItemExtras.unique[i]);
+					}
+				}
+				
+			}
 
 		}
 	}
@@ -92,6 +100,8 @@ function updateStatScreen(){
 	document.getElementById("id_char_critch").innerText = charCritCh.toFixed(1);
 	document.getElementById("id_char_critmult").innerText = charCritMult.toFixed(1);
 	document.getElementById("id_char_life").innerText = charLife;
+	document.getElementById("id_char_elem_bonus").innerText = charElementalBuffs;
+	document.getElementById("id_char_uniques").innerText = charUniques;
 }
 
 /*
@@ -103,7 +113,7 @@ function updateStatScreen(){
 	Value
 	KeyId
 	extra{
-		special = true/false if other stats exist!
+		wearable = true/false if it is wearable armor/weapon! (was 'special')
 		extraHealth
 		extraEnergy
 		physicalDefense
@@ -132,12 +142,15 @@ function randomItemGenerator(){
 	// item name/type generation
 	let itemNames = ["The Fallen", "Star Piece", "ELEMENT","ELEMENT","ELEMENT","ELEMENT","ELEMENT", "The Queen's", "The King's", "Dwarven ", "The Eternal", "The Phoenix's", "The Shadowed", "The Celestial","ELEMENT","ELEMENT","ELEMENT","ELEMENT","ELEMENT", "Forgotten", "Enchanted","Enhanced", "The Cursed", "The Radiant", "Drifter's", "The Guardian's", "The Whisperer's", "Timeless", "ELEMENT","ELEMENT","ELEMENT","ELEMENT","ELEMENT", "The Stormborn", "The Wanderer's", "The Moonlit", "The Ember", "Dreamer's", "The Ironclad", "Starforged", "The Echoing" ]
 	let itemElements = ["Iron","Stone","Wooden","Golden","Fire","Water","Lighting","Mithril", "Dragonhide", "Obsidian", "Elvensteel", "Enchanted Crystal", "Wyvern Scale", "Runestone", "Celestial Silver", "Demonbone", "Phoenix Feather"]
-	let itemTypes = ["WEAPON", "Hat", "Chestplate", "Leggings", "Boots", "Gloves", "Rings", "Amulet", "Cloak", "Potion", "Belt", "Necklace", "Shield", "Robe", "Bracers", "Earrings", "Tunic"]
-	let weaponTypes = ["Sword", "Bow","Wand","Gauntlets", "Mace", "Longsword","Daggers", "Spear"]
+	let itemTypes = ["WEAPON", "Hat", "Chestplate", "Leggings", "Boots", "Gloves", "Rings", "Amulet", "Cloak", "Belt", "Necklace", "Shield", "Robe", "Bracers", "Earrings", "Tunic"]
+	let weaponTypes = ["Sword", "Bow","Wand","Gauntlets", "Mace", "Longsword","Daggers", "Spear", "Mage Book"]
 
+	let defensiveMultiplier = 1.2;
+	let offensiveMultiplier = 1;
 
 	let elementalItem = false;
 	let itemElement = "";
+
 	let randomName = itemNames[Math.floor(Math.random() * itemNames.length)];
 	if (randomName =="ELEMENT") {
 		elementalItem= true;
@@ -147,8 +160,12 @@ function randomItemGenerator(){
 	let randomType = itemTypes[Math.floor(Math.random() * itemTypes.length)];
 	if (randomType =="WEAPON") {
 		randomWeapon =weaponTypes[Math.floor(Math.random() * weaponTypes.length)];
+		offensiveMultiplier += 0.3;
+		defensiveMultiplier += -0.3;
 		randomName = randomName +" "+ randomWeapon;
 	}else {
+		defensiveMultiplier +=0.3;
+		offensiveMultiplier += -0.3;
 		randomName = randomName +" "+ randomType;
 	}
 
@@ -162,6 +179,8 @@ function randomItemGenerator(){
 		selectedRarity = "COMMON";
 		itemValueMultipler = 0.7;
 		itemStatLimit = 1;
+		offensiveMultiplier += -0.1;
+		defensiveMultiplier += -0.1;
 	}else if(randomRarity >=0.2 && randomRarity <=0.90){
 		selectedRarity = "RARE";
 		itemValueMultipler = 1;
@@ -172,6 +191,8 @@ function randomItemGenerator(){
 		itemValueMultipler = 1.3;
 		itemValue+=25;
 		itemStatLimit = 4;
+		offensiveMultiplier += 0.1;
+		defensiveMultiplier += 0.1;
 	}else if(randomRarity >=0.05 && randomRarity <=1){
 		selectedRarity = "LEGENDARY";
 		itemValueMultipler = 1.6;
@@ -182,18 +203,20 @@ function randomItemGenerator(){
 		itemValueMultipler = 2;
 		itemValue+=100;
 		itemStatLimit = 16;
+		offensiveMultiplier += 0.3;
+		defensiveMultiplier += 0.3;
 	}
 
 	// extra dictionary, used in last parameter of an item
-	let itemStats = {special:true}
+	let itemStats = {wearable:true}
 	// item stats
 	
 	
-	let	unique = "";
+	let	uniques = [];
 
 	let healthChance = Math.random();
 	if (healthChance <= 0.3 && itemStatLimit >0) {
-		itemStats.extraHealth = ((Math.random()*100)*progressMultiplier*itemValueMultipler);
+		itemStats.extraHealth = ((Math.random()*100)*progressMultiplier*itemValueMultipler*defensiveMultiplier);
 		itemValue +=21;
 		itemStatLimit--;
 	}
@@ -207,57 +230,60 @@ function randomItemGenerator(){
 
 	let phydefChance = Math.random();
 	if (phydefChance <= 0.3 && itemStatLimit >0) {
-		itemStats.physicalDefense = ((Math.random()*15)*progressMultiplier*itemValueMultipler);
+		itemStats.physicalDefense = ((Math.random()*15)*progressMultiplier*itemValueMultipler*defensiveMultiplier);
 		itemValue +=21;
 		itemStatLimit--;
 	}
 
 	let mgcdefChance = Math.random();
 	if (mgcdefChance <= 0.3 && itemStatLimit >0) {
-		itemStats.magicalDefense = ((Math.random()*15)*progressMultiplier*itemValueMultipler);
+		itemStats.magicalDefense = ((Math.random()*15)*progressMultiplier*itemValueMultipler*defensiveMultiplier);
 		itemValue +=21;
 		itemStatLimit--;
 	}
 
 	let phydmgChance = Math.random();
 	if (phydmgChance <= 0.3 && itemStatLimit >0) {
-		itemStats.physicalDamage = ((Math.random()*15)*progressMultiplier*itemValueMultipler);
+		itemStats.physicalDamage = ((Math.random()*15)*progressMultiplier*itemValueMultipler*offensiveMultiplier);
 		itemValue +=21;
 		itemStatLimit--;
 	}
 
 	let mgcdmgChance = Math.random();
 	if (mgcdmgChance <= 0.3 && itemStatLimit >0) {
-		itemStats.magicalDamage = ((Math.random()*15)*progressMultiplier*itemValueMultipler);
+		itemStats.magicalDamage = ((Math.random()*15)*progressMultiplier*itemValueMultipler*offensiveMultiplier);
 		itemValue +=21;
 		itemStatLimit--;
 	}
 
 	let lifestChance = Math.random();
 	if (lifestChance <= 0.2 && itemStatLimit >0) {
-		itemStats.lifeStealRate = ((Math.random()*10)*progressMultiplier*itemValueMultipler);
+		itemStats.lifeStealRate = ((Math.random()*10)*progressMultiplier*itemValueMultipler*offensiveMultiplier);
 		itemValue +=41;
 		itemStatLimit--;
 	}
 
 	let critDmgChance = Math.random();
 	if (critDmgChance <= 0.2 && itemStatLimit >0) {
-		itemStats.critChance = ((Math.random()*10)*progressMultiplier*itemValueMultipler);
+		itemStats.critChance = ((Math.random()*10)*progressMultiplier*itemValueMultipler*offensiveMultiplier);
 		itemValue +=41;
 		itemStatLimit--;
 	}
 
+	// 0.2
 	let critDmgMultChance = Math.random();
-	if (critDmgMultChance <= 0.2 && itemStatLimit >0) {
-		itemStats.critDamageMultiplier = ((Math.random()*0.4)*progressMultiplier*itemValueMultipler);
+	if (critDmgMultChance <= 0.8 && itemStatLimit >0) {
+		itemStats.critDamageMultiplier = ((Math.random()*0.4)*progressMultiplier*itemValueMultipler*offensiveMultiplier);
 		itemValue +=41;
+		uniques.push("Lucky")
 		itemStatLimit--;
 	}
-
+	//0.1
 	let bonusLifeChance = Math.random();
-	if (bonusLifeChance <= 0.1 && itemStatLimit >0) {
+	if (bonusLifeChance <= 0.8 && itemStatLimit >0) {
 		itemValue +=101;
 		itemStats.bonusLife = 1;
+		uniques.push("Undead")
 		itemStatLimit--;
 	}
 
@@ -265,8 +291,10 @@ function randomItemGenerator(){
 		itemValue +=51;
 		itemStats.element = itemElement;
 	}
-	
 
+	if (uniques.length > 0){
+		itemStats.unique = uniques;
+	}
 
 
 	lastId++;
@@ -276,6 +304,7 @@ function randomItemGenerator(){
 
 function addItemToInv(Item){
 	console.log(Item)
+	writeLog("Added to inventory: "+ Item.name)
 	curinv.push(Item);
 	updateInvScreen();
 }
@@ -324,7 +353,6 @@ function unequipItemByType(type){
 
 // resets inv screen, for each item in the inventory add a div
 function updateInvScreen(){
-	console.log("Equipped item list: "+equipped)
 	let invScreen = document.getElementById("id_inventory");
 	invScreen.innerHTML ="";
 	for(let i in curinv){
@@ -349,7 +377,7 @@ function printStats(keyid){
 	if (indexOfStat !== -1) {
 		let theItem = curinv[indexOfStat];
 	  	let theItemStats = theItem.extra;
-	  	if(theItemStats.special === true){
+	  	if(theItemStats.wearable === true){
 	  		console.log(theItemStats);
 	  		itemStatScreen.innerHTML = '<p>'+theItem.name+'</p>';
 			if (theItemStats.extraHealth !== undefined){itemStatScreen.innerHTML = itemStatScreen.innerHTML+ '<p>Extra Health: '+theItemStats.extraHealth.toFixed(1) +'</p>';}
@@ -358,14 +386,13 @@ function printStats(keyid){
 			if (theItemStats.magicalDamage !== undefined){itemStatScreen.innerHTML = itemStatScreen.innerHTML+ '<p>Magical Damage: '+theItemStats.magicalDamage.toFixed(1) +'</p>';}
 			if (theItemStats.physicalDefense !== undefined){itemStatScreen.innerHTML = itemStatScreen.innerHTML+ '<p>Physical Defense: '+theItemStats.physicalDefense.toFixed(1) +'</p>';}
 			if (theItemStats.magicalDefense !== undefined){itemStatScreen.innerHTML = itemStatScreen.innerHTML+ '<p>Magical Defense: '+theItemStats.magicalDefense.toFixed(1) +'</p>';}
-			if (theItemStats.enviromentalDefense !== undefined){itemStatScreen.innerHTML = itemStatScreen.innerHTML+ '<p>Enviromental Defense: '+theItemStats.enviromentalDefense.toFixed(1) +'</p>';}
+			if (theItemStats.enviromentalDefense !== undefined){itemStatScreen.innerHTML = itemStatScreen.innerHTML+ '<p>Environmental Defense: '+theItemStats.enviromentalDefense.toFixed(1) +'</p>';}
 			if (theItemStats.lifeStealRate !== undefined){itemStatScreen.innerHTML = itemStatScreen.innerHTML+ '<p>Life Steal Rate(%): '+theItemStats.lifeStealRate.toFixed(1) +'</p>';}
 			if (theItemStats.critChance !== undefined){itemStatScreen.innerHTML = itemStatScreen.innerHTML+ '<p>Critic Chance(%): '+theItemStats.critChance.toFixed(1) +'</p>';}
-			if (theItemStats.critDamageMultiplier !== undefined){itemStatScreen.innerHTML = itemStatScreen.innerHTML+'<p>Ciritc Damage Rate(X): '+theItemStats.critDamageMultiplier.toFixed(1) +'</p>';}
+			if (theItemStats.critDamageMultiplier !== undefined){itemStatScreen.innerHTML = itemStatScreen.innerHTML+'<p>Critic Damage Rate(X): '+theItemStats.critDamageMultiplier.toFixed(1) +'</p>';}
 			if (theItemStats.bonusLife !== undefined){itemStatScreen.innerHTML = itemStatScreen.innerHTML+ '<p>Bonus Life: +'+theItemStats.bonusLife+'</p>';}
 			if (theItemStats.element !== undefined){itemStatScreen.innerHTML = itemStatScreen.innerHTML+ '<p>Element: '+theItemStats.element +'</p>';}
 			if (theItemStats.unique !== undefined){itemStatScreen.innerHTML = itemStatScreen.innerHTML+ '<p>Unique Feature: '+theItemStats.unique+'</p>';}
-
 		}
 	}
 	showDesc();
