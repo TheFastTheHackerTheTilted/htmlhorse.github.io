@@ -20,7 +20,7 @@ function bj_new_game(){
 
 function shuffle_cards(){
 	deck = new Array();
-	let cardset = ['1','2','3','4','5','6','7','8','9','K','Q','J','A'];
+	let cardset = ['2','3','4','5','6','7','8','9','10','K','Q','J','A'];
 
 	for(i=0; i<13; i++){
 		for(c=0; c<16; c++){
