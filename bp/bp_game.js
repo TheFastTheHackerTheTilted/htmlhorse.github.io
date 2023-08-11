@@ -272,15 +272,14 @@ function randomItemGenerator(){
 
 	// 0.2
 	let critDmgMultChance = Math.random();
-	if (critDmgMultChance <= 0.8 && itemStatLimit >0) {
+	if (critDmgMultChance <= 0.2 && itemStatLimit >0) {
 		itemStats.critDamageMultiplier = ((Math.random()*0.4)*progressMultiplier*itemValueMultipler*offensiveMultiplier);
 		itemValue +=41;
-		uniques.push("Lucky")
 		itemStatLimit--;
 	}
 	//0.1
 	let bonusLifeChance = Math.random();
-	if (bonusLifeChance <= 0.8 && itemStatLimit >0) {
+	if (bonusLifeChance <= 0.1 && itemStatLimit >0) {
 		itemValue +=101;
 		itemStats.bonusLife = 1;
 		uniques.push("Undead")
@@ -353,13 +352,54 @@ function unequipItemByType(type){
 
 // resets inv screen, for each item in the inventory add a div
 function updateInvScreen(){
+	if (lastInvShowed === "inv-all") {showInventoryAll();}
+	else if(lastInvShowed === "inv-equipped"){showInventoryEquipped();}
+	else if(lastInvShowed === "inv-others"){showInventoryOthers();}
+	else{showInventoryAll();}
+}
+
+var lastInvShowed = "";
+
+function showInventoryAll(){
+	lastInvShowed = "inv-all";
+
 	let invScreen = document.getElementById("id_inventory");
 	invScreen.innerHTML ="";
 	for(let i in curinv){
 		invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+curinv[i].keyid+'">'+'<p>'+curinv[i].rarity+' '+curinv[i].name+'</p>'+'<a onClick = "printStats('+curinv[i].keyid+')">Stats</a>'+'<a onclick="equipItem('+curinv[i].keyid+')">Equip</a>'+'<a onclick="unequipItem('+curinv[i].keyid+')">Unequip</a>'+'<a onclick="sellItem('+curinv[i].keyid+')">Sell('+curinv[i].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
 	}
+	invScreen.innerHTML ='<div id="id_inv_filters"><button onclick="showInventoryAll()">All</button><button onclick="showInventoryEquipped()">Equipped</button><button onclick="showInventoryOthers()">Others</button></div>'+invScreen.innerHTML;
 
 	updateEquippedScreen();
+	updateCharStats();
+}
+
+function showInventoryEquipped(){
+	lastInvShowed = "inv-equipped";
+
+	let invScreen = document.getElementById("id_inventory");
+	invScreen.innerHTML ="";
+	for(let i in equipped){
+		invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+equipped[i].keyid+'">'+'<p>'+equipped[i].rarity+' '+equipped[i].name+'</p>'+'<a onClick = "printStats('+equipped[i].keyid+')">Stats</a>'+'<a onclick="equipItem('+equipped[i].keyid+')">Equip</a>'+'<a onclick="unequipItem('+equipped[i].keyid+')">Unequip</a>'+'<a onclick="sellItem('+equipped[i].keyid+')">Sell('+equipped[i].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
+	}
+	invScreen.innerHTML ='<div id="id_inv_filters"><button onclick="showInventoryAll()">All</button><button onclick="showInventoryEquipped()">Equipped</button><button onclick="showInventoryOthers()">Others</button></div>'+invScreen.innerHTML;
+
+	updateEquippedScreen();
+	updateCharStats();
+}
+
+function showInventoryOthers(){
+	lastInvShowed = "inv-others";
+
+	let invScreen = document.getElementById("id_inventory");
+	invScreen.innerHTML ="";
+	for(let i in curinv){
+		if (!curinv[i].extra.wearable) {
+			invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+curinv[i].keyid+'">'+'<p>'+curinv[i].rarity+' '+curinv[i].name+'</p>'+'<a onClick = "printStats('+curinv[i].keyid+')">Stats</a>'+'<a onclick="equipItem('+curinv[i].keyid+')">Equip</a>'+'<a onclick="unequipItem('+curinv[i].keyid+')">Unequip</a>'+'<a onclick="sellItem('+curinv[i].keyid+')">Sell('+curinv[i].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
+		}
+	}
+	invScreen.innerHTML ='<div id="id_inv_filters"><button onclick="showInventoryAll()">All</button><button onclick="showInventoryEquipped()">Equipped</button><button onclick="showInventoryOthers()">Others</button></div>'+invScreen.innerHTML;
+
 	updateCharStats();
 }
 
@@ -398,7 +438,7 @@ function printStats(keyid){
 	showDesc();
 }
 
-
+//the main block of inventory, witch between overview and inventory
 function showInventory(){
 	let showinv= document.getElementById("id_inventory");
 	let showovw= document.getElementById("id_overview");

@@ -57,6 +57,18 @@
 	cursor: pointer;
 	font-size: 18px;
 }
+#id_inv_filters{
+	background-color: darkgray;
+}
+#id_inv_filters >button{
+	opacity: 1;
+	border-style: solid;
+	color: black;
+	background-color: saddlebrown;
+	border-radius: 15px 15px 1px 1px;
+	cursor: pointer;
+	font-size: 18px;
+}
 
 .cl_inv_item{
 /*	width: 100%;*/
