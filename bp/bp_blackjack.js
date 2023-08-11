@@ -128,11 +128,9 @@ function new_round(){
 		dealer_cards = new Array();
 		user_cards = new Array()
 		user_stands=false;
-		
-		for (i =0; i < 2; i++){
-			user_hit();
-			dealer_hit();
-		}
+		user_hit();
+		user_hit();
+		dealer_hit();
 	}
 }
 
