@@ -137,7 +137,7 @@ function ItemObject(name,type,rarity,value,keyid,extra){
 	this.keyid = keyid;
 	this.extra = extra;
 }
-function randomItemGenerator(){
+function randomWearableItemGenerator(){
 
 	// item name/type generation
 	let itemNames = ["The Fallen", "Star Piece", "ELEMENT","ELEMENT","ELEMENT","ELEMENT","ELEMENT", "The Queen's", "The King's", "Dwarven ", "The Eternal", "The Phoenix's", "The Shadowed", "The Celestial","ELEMENT","ELEMENT","ELEMENT","ELEMENT","ELEMENT", "Forgotten", "Enchanted","Enhanced", "The Cursed", "The Radiant", "Drifter's", "The Guardian's", "The Whisperer's", "Timeless", "ELEMENT","ELEMENT","ELEMENT","ELEMENT","ELEMENT", "The Stormborn", "The Wanderer's", "The Moonlit", "The Ember", "Dreamer's", "The Ironclad", "Starforged", "The Echoing" ]
@@ -475,9 +475,9 @@ function showCharscreen(){
 
 function testItemCreation(){
 
-    addItemToInv(randomItemGenerator());
-    addItemToInv(randomItemGenerator());
-    addItemToInv(randomItemGenerator());
-    addItemToInv(randomItemGenerator());
+    addItemToInv(randomWearableItemGenerator());
+    addItemToInv(randomWearableItemGenerator());
+    addItemToInv(randomWearableItemGenerator());
+    addItemToInv(randomWearableItemGenerator());
 
 }
