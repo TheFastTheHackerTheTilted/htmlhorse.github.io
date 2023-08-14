@@ -508,7 +508,11 @@ function showInventoryOthers(){
 		}
 	}
 	for(let o in otherItems){
-		invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+otherItems[o].keyid+'">'+'<p>'+otherItems[o].rarity+' '+otherItems[o].name+'</p>'+'<a onClick = "printDesc('+otherItems[o].keyid+')">Description</a>'+'<a onclick="useItem('+otherItems[o].keyid+')">Use</a>'+'<a onclick="sellItem('+otherItems[o].keyid+')">Sell('+otherItems[o].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
+		if (!otherItems[o].extra.consumable) {
+			invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+otherItems[o].keyid+'">'+'<p>'+otherItems[o].rarity+' '+otherItems[o].name+'</p>'+'<a onClick = "printDesc('+otherItems[o].keyid+')">Description</a>'+'<a onclick="useItem('+otherItems[o].keyid+')">Use</a>'+'<a onclick="sellItem('+otherItems[o].keyid+')">Sell('+otherItems[o].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
+		}else if (otherItems[o].extra.consumable) {
+			invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+otherItems[o].keyid+'">'+'<p>'+otherItems[o].rarity+' '+otherItems[o].name+'</p>'+'<a onclick="useItem('+otherItems[o].keyid+')">Use</a>'+'<a onclick="sellItem('+otherItems[o].keyid+')">Sell('+otherItems[o].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
+		}
 	}
 	invScreen.innerHTML ='<div id="id_inv_filters"><button onclick="showInventoryAll()">All</button><button onclick="showInventoryEquipped()">Equipped</button><button onclick="showInventoryOthers()">Others</button></div>'+invScreen.innerHTML;
 
