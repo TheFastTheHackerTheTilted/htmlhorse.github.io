@@ -20,6 +20,7 @@ function fancyWriteLog(text, colorcode){
 var progressMultiplier = 1;
 var curinv= [];
 var equipped =[];
+var otherItems = [];
 
 var lastId = 0; //last item id, increase before use
 
@@ -39,20 +40,35 @@ var charElementalBuffs = [];
 var charUniques = [];
 var charBalance = 0;
 
+
+var defcharHealth = 100;
+var defcharEnergy = 20;
+var defcharPhyDmg = 8;
+var defcharMgcDmg = 0;
+var defcharPhyDef = 0;
+var defcharMgcDef = 0;
+var defcharEnvDef = 0;
+var defcharLifeSt = 0;
+var defcharCritCh = 0;
+var defcharCritMult = 1.3;
+var defcharLife = 1;
+var defcharElementalBuffs = [];
+var defcharUniques = [];
+
 function setStatsDefault(){
-	charHealth = 100;
-	charEnergy = 20;
-	charPhyDmg = 8;
-	charMgcDmg = 0;
-	charPhyDef = 0;
-	charMgcDef = 0;
-	charEnvDef = 0;
-	charLifeSt = 0;
-	charCritCh = 0;
-	charCritMult = 1.3;
-	charLife = 1;
-	charElementalBuffs = [];
-	charUniques = [];
+	charHealth = defcharHealth;
+	charEnergy = defcharEnergy;
+	charPhyDmg = defcharPhyDmg;
+	charMgcDmg = defcharMgcDmg;
+	charPhyDef = defcharPhyDef;
+	charMgcDef = defcharMgcDef;
+	charEnvDef = defcharEnvDef;
+	charLifeSt = defcharLifeSt;
+	charCritCh = defcharCritCh;
+	charCritMult = defcharCritMult;
+	charLife = defcharLife;
+	charElementalBuffs = defcharElementalBuffs;
+	charUniques = defcharUniques;
 }
 
 function updateCharStats(){
@@ -143,7 +159,7 @@ function randomWearableItemGenerator(){
 	let itemNames = ["The Fallen", "Star Piece", "ELEMENT","ELEMENT","ELEMENT","ELEMENT","ELEMENT", "The Queen's", "The King's", "Dwarven ", "The Eternal", "The Phoenix's", "The Shadowed", "The Celestial","ELEMENT","ELEMENT","ELEMENT","ELEMENT","ELEMENT", "Forgotten", "Enchanted","Enhanced", "The Cursed", "The Radiant", "Drifter's", "The Guardian's", "The Whisperer's", "Timeless", "ELEMENT","ELEMENT","ELEMENT","ELEMENT","ELEMENT", "The Stormborn", "The Wanderer's", "The Moonlit", "The Ember", "Dreamer's", "The Ironclad", "Starforged", "The Echoing" ]
 	let itemElements = ["Iron","Stone","Wooden","Golden","Fire","Water","Lighting","Mithril", "Dragonhide", "Obsidian", "Elvensteel", "Enchanted Crystal", "Wyvern Scale", "Runestone", "Celestial Silver", "Demonbone", "Phoenix Feather"]
 	let itemTypes = ["WEAPON", "Hat", "Chestplate", "Leggings", "Boots", "Gloves", "Rings", "Amulet", "Cloak", "Belt", "Necklace", "Shield", "Robe", "Bracers", "Earrings", "Tunic"]
-	let weaponTypes = ["Sword", "Bow","Wand","Gauntlets", "Mace", "Longsword","Daggers", "Spear", "Mage Book"]
+	let weaponTypes = ["Sword", "Bow","Wand","Gauntlets", "Mace", "Longsword","Daggers", "Spear", "Mage Book", "Glaive"]
 
 	let defensiveMultiplier = 1.2;
 	let offensiveMultiplier = 1;
@@ -301,10 +317,96 @@ function randomWearableItemGenerator(){
 
 }
 
+function randomConsumableItemGenerator(){
+	let itemStats = {wearable:false, consumable:true}
+
+	// item name/type generation
+	let itemNames = ["The Witch's","Magician's","Corrupted","Merchant's", "", "", "", ""];
+	let itemTypes = ["Potion", "Elixir", "Scroll", "Rune", "Relic", "Charm", "Powder"]
+	let potionStats = ["extraHealth", "extraEnergy", "physicalDefense", "magicalDefense", "enviromentalDefense", "physicalDamage", "magicalDamage", "lifeStealRate", "critChance", "critDamageMultiplier"];
+
+	let defensiveMultiplier = 1.2;
+	let offensiveMultiplier = 1;
+
+
+	let randomName = itemNames[Math.floor(Math.random() * itemNames.length)];
+	
+	let randomType = itemTypes[Math.floor(Math.random() * itemTypes.length)];
+	
+	let StatSelector = potionStats[Math.floor(Math.random() * potionStats.length)]
+
+	let middleName = "";
+	let statValue = 0;
+	if (StatSelector === "extraHealth") {
+		if(charHealth >0){
+			statValue = (charHealth/10).toFixed(1)
+		}
+		middleName = "Health";
+	} else if (StatSelector === "extraEnergy") {
+	    if (charEnergy > 0) {
+	        statValue = (charEnergy / 10).toFixed(1);
+	    }
+	    middleName = "Energy";
+	} else if (StatSelector === "physicalDefense") {
+	    if (charPhyDef > 5) {
+	        statValue = (charPhyDef / 10).toFixed(1);
+	    }
+	    middleName = "Though Skin";
+	} else if (StatSelector === "magicalDefense") {
+	    if (charMgcDef > 5) {
+	        statValue = (charMgcDef / 10).toFixed(1);
+	    }
+	    middleName = "Strong Mind";
+	} else if (StatSelector === "enviromentalDefense") {
+	    if (charEnvDef > 5) {
+	        statValue = (charEnvDef / 10).toFixed(1);
+	    }
+	    middleName = "Awareness";
+	} else if (StatSelector === "physicalDamage") {
+	    if (charPhyDmg > 0) {
+	        statValue = (charPhyDmg / 10).toFixed(1);
+	    }
+	    middleName = "Strength";
+	} else if (StatSelector === "magicalDamage") {
+	    if (charMgcDmg > 5) {
+	        statValue = (charMgcDmg / 10).toFixed(1);
+	    }
+	    middleName = "Intelligence";
+	} else if (StatSelector === "lifeStealRate") {
+	    if (charLifeSt > 3) {
+	        statValue = (charLifeSt / 15).toFixed(1);
+	    }else{statValue = 1;}
+	    middleName = "Vamp";
+	} else if (StatSelector === "critChance") {
+	    if (charCritCh > 3) {
+	        statValue = (charCritCh / 10).toFixed(1);
+	    }
+	    middleName = "Precision";
+	} else if (StatSelector === "critDamageMultiplier") {
+	    if (charCritMult > 0) {
+	        statValue = (charCritMult / 10).toFixed(1);
+	    }
+	    else{statValue = 0.5;}
+	    middleName = "Focus";
+	}
+
+	if (statValue == 0) {statValue = 5;}
+
+	itemStats.Effect = StatSelector;
+	itemStats.EffectValue = statValue;
+
+	let FinalName = randomName+" "+middleName+" "+randomType;
+
+	lastId++;
+	return (new ItemObject(FinalName,randomType,"RARE",280,lastId,itemStats));
+
+}
+
 function addItemToInv(Item){
 	console.log(Item)
 	writeLog("Added to inventory: "+ Item.name)
-	curinv.push(Item);
+	if (Item.extra.wearable) {curinv.push(Item);}
+	else {otherItems.push(Item);}
 	updateInvScreen();
 }
 
@@ -368,6 +470,13 @@ function showInventoryAll(){
 	for(let i in curinv){
 		invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+curinv[i].keyid+'">'+'<p>'+curinv[i].rarity+' '+curinv[i].name+'</p>'+'<a onClick = "printStats('+curinv[i].keyid+')">Stats</a>'+'<a onclick="equipItem('+curinv[i].keyid+')">Equip</a>'+'<a onclick="unequipItem('+curinv[i].keyid+')">Unequip</a>'+'<a onclick="sellItem('+curinv[i].keyid+')">Sell('+curinv[i].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
 	}
+	for(let o in otherItems){
+		if (!otherItems[o].extra.consumable) {
+			invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+otherItems[o].keyid+'">'+'<p>'+otherItems[o].rarity+' '+otherItems[o].name+'</p>'+'<a onClick = "printDesc('+otherItems[o].keyid+')">Description</a>'+'<a onclick="useItem('+otherItems[o].keyid+')">Use</a>'+'<a onclick="sellItem('+otherItems[o].keyid+')">Sell('+otherItems[o].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
+		}else if (otherItems[o].extra.consumable) {
+			invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+otherItems[o].keyid+'">'+'<p>'+otherItems[o].rarity+' '+otherItems[o].name+'</p>'+'<a onclick="useItem('+otherItems[o].keyid+')">Use</a>'+'<a onclick="sellItem('+otherItems[o].keyid+')">Sell('+otherItems[o].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
+		}
+	}
 	invScreen.innerHTML ='<div id="id_inv_filters"><button onclick="showInventoryAll()">All</button><button onclick="showInventoryEquipped()">Equipped</button><button onclick="showInventoryOthers()">Others</button></div>'+invScreen.innerHTML;
 
 	updateEquippedScreen();
@@ -397,6 +506,9 @@ function showInventoryOthers(){
 		if (!curinv[i].extra.wearable) {
 			invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+curinv[i].keyid+'">'+'<p>'+curinv[i].rarity+' '+curinv[i].name+'</p>'+'<a onClick = "printStats('+curinv[i].keyid+')">Stats</a>'+'<a onclick="equipItem('+curinv[i].keyid+')">Equip</a>'+'<a onclick="unequipItem('+curinv[i].keyid+')">Unequip</a>'+'<a onclick="sellItem('+curinv[i].keyid+')">Sell('+curinv[i].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
 		}
+	}
+	for(let o in otherItems){
+		invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+otherItems[o].keyid+'">'+'<p>'+otherItems[o].rarity+' '+otherItems[o].name+'</p>'+'<a onClick = "printDesc('+otherItems[o].keyid+')">Description</a>'+'<a onclick="useItem('+otherItems[o].keyid+')">Use</a>'+'<a onclick="sellItem('+otherItems[o].keyid+')">Sell('+otherItems[o].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
 	}
 	invScreen.innerHTML ='<div id="id_inv_filters"><button onclick="showInventoryAll()">All</button><button onclick="showInventoryEquipped()">Equipped</button><button onclick="showInventoryOthers()">Others</button></div>'+invScreen.innerHTML;
 
@@ -479,5 +591,6 @@ function testItemCreation(){
     addItemToInv(randomWearableItemGenerator());
     addItemToInv(randomWearableItemGenerator());
     addItemToInv(randomWearableItemGenerator());
+    addItemToInv(randomConsumableItemGenerator());
 
 }
