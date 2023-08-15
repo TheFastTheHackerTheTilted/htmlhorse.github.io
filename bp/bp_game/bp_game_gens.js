@@ -36,6 +36,7 @@ function randomWearableItemGenerator(wantedTier){
 	let itemValueMultipler = 1;
 	
 	let selectedRarity = getRarity(wantedTier);
+	console.log(selectedRarity);
 	if(selectedRarity === "MYTHIC"){
 		itemValueMultipler = 2;
 		itemValue+=100;
@@ -242,7 +243,7 @@ function randomConsumableItemGenerator(wantedTier){
 	
 	
 	let selectedRarity = getRarity(wantedTier);
-	console.log(selectedRarity);
+	console.log(wantedTier + selectedRarity);
 	if (selectedRarity === "MYTHIC"){
 		itemValueMultipler = 2;
 		itemValue+=85;
@@ -277,16 +278,17 @@ function randomConsumableItemGenerator(wantedTier){
 
 function getRarity(wantedTier){
 	let randomRarity = Math.random();
-	if (wantedTier==="MYTHIC" || wantedTier===4 || randomRarity < 0.05) {
+	if (wantedTier==="MYTHIC" || wantedTier===4 || (randomRarity < 0.05 && typeof wantedTier === 'undefined')) {
 		return "MYTHIC";
-	}else if (wantedTier==="LEGENDARY" || wantedTier===3 || randomRarity < 0.1 || randomRarity > 0.95) {
+	}else if (wantedTier==="LEGENDARY" || wantedTier===3 || ((typeof wantedTier === 'undefined') && (randomRarity < 0.1 || randomRarity > 0.95))) {
 		return "LEGENDARY";
-	}else if (wantedTier==="EPIC" || wantedTier===2 || randomRarity <0.2 || randomRarity >0.85) {
+	}else if (wantedTier==="EPIC" || wantedTier===2 || ((typeof wantedTier === 'undefined') && (randomRarity <0.2 || randomRarity >0.85))) {
 		return "EPIC";
-	}else if (wantedTier==="RARE" || wantedTier===1 || randomRarity <0.35 || randomRarity>=0.70) {
+	}else if (wantedTier==="RARE" || wantedTier===1 || ((typeof wantedTier === 'undefined') && (randomRarity <0.35 || randomRarity>=0.70))) {
 		return "RARE";
 	}
-	else if (wantedTier==="COMMON" || wantedTier===0 || randomRarity < 1) {
+	else if (wantedTier==="COMMON" || wantedTier===0 || ((typeof wantedTier === 'undefined') && (randomRarity < 1))) {
 		return "COMMON";
 	}
+	else{return "COMMON";}
 }
