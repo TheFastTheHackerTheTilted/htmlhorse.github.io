@@ -281,7 +281,7 @@ function randomWearableItemGenerator(){
 
 	let critDmgChance = Math.random();
 	if (critDmgChance <= 0.2 && itemStatLimit >0) {
-		itemStats.critChance = ((Math.random()*10)*progressMultiplier*itemValueMultipler*offensiveMultiplier);
+		itemStats.critChance = ((Math.random()*8)*progressMultiplier*itemValueMultipler*offensiveMultiplier);
 		itemValue +=41;
 		itemStatLimit--;
 	}
@@ -379,7 +379,7 @@ function randomConsumableItemGenerator(){
 	    middleName = "Vamp";
 	} else if (StatSelector === "critChance") {
 	    if (charCritCh > 3) {
-	        statValue = (charCritCh / 10).toFixed(1);
+	        statValue = (charCritCh / 8).toFixed(1);
 	    }
 	    middleName = "Precision";
 	} else if (StatSelector === "critDamageMultiplier") {
@@ -401,35 +401,32 @@ function randomConsumableItemGenerator(){
 
 	
 	let randomRarity = Math.random();
+	console.log(randomRarity);
 	let selectedRarity = "";
 	if (randomRarity < 0.05) {
 		selectedRarity = "MYTHIC";
 		itemValueMultipler = 2;
 		itemValue+=100;
-	}else if(randomRarity <0.1 && randomRarity > 0.95){
+	}else if(randomRarity <0.1 || randomRarity > 0.95){
 		selectedRarity = "LEGENDARY";
 		itemValueMultipler = 1.6;
-		itemValue+=60;
+		itemValue+=75;
 
-	}else if(randomRarity <0.2 && randomRarity >0.85){
+	}else if(randomRarity <0.2 || randomRarity >0.85){
 		selectedRarity = "EPIC";
 		itemValueMultipler = 1.3;
-		itemValue+=25;
+		itemValue+=45;
 
-		offensiveMultiplier += 0.1;
-		defensiveMultiplier += 0.1;
-	}else if(randomRarity <0.35 && randomRarity>=0.70){
+	}else if(randomRarity <0.35 || randomRarity>=0.70){
 		selectedRarity = "RARE";
 		itemValueMultipler = 1;
-		itemValue+=10;
+		itemValue+=20;
 
 	}
 	else {
 		selectedRarity = "COMMON";
 		itemValueMultipler = 0.7;
-
-		offensiveMultiplier += -0.1;
-		defensiveMultiplier += -0.1;
+		itemValue+=10;
 	}
 
 	statValue = statValue * itemValueMultipler;
@@ -439,8 +436,9 @@ function randomConsumableItemGenerator(){
 	itemStats.Effect = StatSelector;
 	itemStats.EffectValue = statValue;
 
+	let finalItemPrice = itemValue*statValue/3;
 	lastId++;
-	return (new ItemObject(FinalName,randomType,selectedRarity,itemValue*itemValueMultipler,lastId,itemStats));
+	return (new ItemObject(FinalName,randomType,selectedRarity,finalItemPrice,lastId,itemStats));
 
 }
 
