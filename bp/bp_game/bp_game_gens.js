@@ -1,4 +1,4 @@
-function randomWearableItemGenerator(){
+function randomWearableItemGenerator(wantedTier){
 
 	// item name/type generation
 	let itemNames = ["The Fallen", "Star Piece", "ELEMENT","ELEMENT","ELEMENT","ELEMENT","ELEMENT", "The Queen's", "The King's", "Dwarven ", "The Eternal", "The Phoenix's", "The Shadowed", "The Celestial","ELEMENT","ELEMENT","ELEMENT","ELEMENT","ELEMENT", "Forgotten", "Enchanted","Enhanced", "The Cursed", "The Radiant", "Drifter's", "The Guardian's", "The Whisperer's", "Timeless", "ELEMENT","ELEMENT","ELEMENT","ELEMENT","ELEMENT", "The Stormborn", "The Wanderer's", "The Moonlit", "The Ember", "Dreamer's", "The Ironclad", "Starforged", "The Echoing" ]
@@ -35,7 +35,7 @@ function randomWearableItemGenerator(){
 	let itemStatLimit = 1;
 	let itemValueMultipler = 1;
 	
-	let selectedRarity = getRarity();
+	let selectedRarity = getRarity(wantedTier);
 	if(selectedRarity === "MYTHIC"){
 		itemValueMultipler = 2;
 		itemValue+=100;
@@ -157,7 +157,7 @@ function randomWearableItemGenerator(){
 
 }
 
-function randomConsumableItemGenerator(){
+function randomConsumableItemGenerator(wantedTier){
 	let itemStats = {wearable:false, consumable:true}
 
 	// item name/type generation
@@ -241,24 +241,24 @@ function randomConsumableItemGenerator(){
 
 	
 	
-	let selectedRarity = getRarity();
+	let selectedRarity = getRarity(wantedTier);
 	console.log(selectedRarity);
 	if (selectedRarity === "MYTHIC"){
 		itemValueMultipler = 2;
-		itemValue+=100;
+		itemValue+=85;
 	}else if(selectedRarity === "LEGENDARY"){
 		itemValueMultipler = 1.6;
-		itemValue+=75;
+		itemValue+=65;
 	}else if(selectedRarity === "EPIC"){
 		itemValueMultipler = 1.3;
 		itemValue+=45;
 
 	}else if(selectedRarity === "RARE"){
 		itemValueMultipler = 1;
-		itemValue+=20;
+		itemValue+=35;
 	}else {
 		itemValueMultipler = 0.7;
-		itemValue+=10;
+		itemValue+=25;
 	}
 
 	statValue = statValue * itemValueMultipler;
@@ -268,7 +268,7 @@ function randomConsumableItemGenerator(){
 	itemStats.Effect = StatSelector;
 	itemStats.EffectValue = statValue;
 
-	let finalItemPrice = itemValue*statValue/3;
+	let finalItemPrice = itemValue*statValue/5;
 	lastId++;
 	return (new ItemObject(FinalName,randomType,selectedRarity,finalItemPrice,lastId,itemStats));
 
@@ -277,16 +277,16 @@ function randomConsumableItemGenerator(){
 
 function getRarity(wantedTier){
 	let randomRarity = Math.random();
-	if (wantedTier==="MYTHIC" || wantedTier==="4" || randomRarity < 0.05) {
+	if (wantedTier==="MYTHIC" || wantedTier===4 || randomRarity < 0.05) {
 		return "MYTHIC";
-	}else if (wantedTier==="LEGENDARY" || wantedTier==="3" || randomRarity < 0.1 || randomRarity > 0.95) {
+	}else if (wantedTier==="LEGENDARY" || wantedTier===3 || randomRarity < 0.1 || randomRarity > 0.95) {
 		return "LEGENDARY";
-	}else if (wantedTier==="EPIC" || wantedTier==="2" || randomRarity <0.2 || randomRarity >0.85) {
+	}else if (wantedTier==="EPIC" || wantedTier===2 || randomRarity <0.2 || randomRarity >0.85) {
 		return "EPIC";
-	}else if (wantedTier==="RARE" || wantedTier==="1" || randomRarity <0.35 || randomRarity>=0.70) {
+	}else if (wantedTier==="RARE" || wantedTier===1 || randomRarity <0.35 || randomRarity>=0.70) {
 		return "RARE";
 	}
-	else if (wantedTier==="COMMON" || wantedTier==="0" || randomRarity < 1) {
+	else if (wantedTier==="COMMON" || wantedTier===0 || randomRarity < 1) {
 		return "COMMON";
 	}
 }

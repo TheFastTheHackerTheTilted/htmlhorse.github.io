@@ -383,10 +383,10 @@ function showCharscreen(){
 
 function testItemCreation(){
 
-    addItemToInv(randomWearableItemGenerator());
-    addItemToInv(randomWearableItemGenerator());
-    addItemToInv(randomConsumableItemGenerator());
-    addItemToInv(randomConsumableItemGenerator());
+    addItemToInv(randomWearableItemGenerator(1));
+    addItemToInv(randomWearableItemGenerator(4));
+    addItemToInv(randomConsumableItemGenerator(1));
+    addItemToInv(randomConsumableItemGenerator(4));
 
 
 }
