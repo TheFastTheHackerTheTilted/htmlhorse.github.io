@@ -325,9 +325,9 @@ function randomConsumableItemGenerator(){
 	let itemTypes = ["Potion", "Elixir", "Scroll", "Rune", "Relic", "Charm", "Powder"]
 	let potionStats = ["extraHealth", "extraEnergy", "physicalDefense", "magicalDefense", "enviromentalDefense", "physicalDamage", "magicalDamage", "lifeStealRate", "critChance", "critDamageMultiplier"];
 
-	let defensiveMultiplier = 1.2;
-	let offensiveMultiplier = 1;
 
+	let itemValue = 1;
+	let itemValueMultipler = 1;
 
 	let randomName = itemNames[Math.floor(Math.random() * itemNames.length)];
 	
@@ -392,13 +392,55 @@ function randomConsumableItemGenerator(){
 
 	if (statValue == 0) {statValue = 5;}
 
-	itemStats.Effect = StatSelector;
-	itemStats.EffectValue = statValue;
+	
 
 	let FinalName = randomName+" "+middleName+" "+randomType;
 
+
+
+
+	
+	let randomRarity = Math.random();
+	let selectedRarity = "";
+	if (randomRarity < 0.05) {
+		selectedRarity = "MYTHIC";
+		itemValueMultipler = 2;
+		itemValue+=100;
+	}else if(randomRarity <0.1 && randomRarity > 0.95){
+		selectedRarity = "LEGENDARY";
+		itemValueMultipler = 1.6;
+		itemValue+=60;
+
+	}else if(randomRarity <0.2 && randomRarity >0.85){
+		selectedRarity = "EPIC";
+		itemValueMultipler = 1.3;
+		itemValue+=25;
+
+		offensiveMultiplier += 0.1;
+		defensiveMultiplier += 0.1;
+	}else if(randomRarity <0.35 && randomRarity>=0.70){
+		selectedRarity = "RARE";
+		itemValueMultipler = 1;
+		itemValue+=10;
+
+	}
+	else {
+		selectedRarity = "COMMON";
+		itemValueMultipler = 0.7;
+
+		offensiveMultiplier += -0.1;
+		defensiveMultiplier += -0.1;
+	}
+
+	statValue = statValue * itemValueMultipler;
+
+
+
+	itemStats.Effect = StatSelector;
+	itemStats.EffectValue = statValue;
+
 	lastId++;
-	return (new ItemObject(FinalName,randomType,"RARE",280,lastId,itemStats));
+	return (new ItemObject(FinalName,randomType,selectedRarity,itemValue*itemValueMultipler,lastId,itemStats));
 
 }
 
@@ -421,14 +463,7 @@ function equipItem(keyid){
 	updateInvScreen();
 }
 
-function sellOther(keyid){
-	let indexToSell = otherItems.findIndex(item => item.keyid === keyid);
-	if (indexToSell !== -1) {
-	  charBalance += otherItems[indexToSell].value;
-	}
-	
-	removeOther(keyid);
-}
+
 
 function sellItem(keyid){
 	let indexToSell = curinv.findIndex(item => item.keyid === keyid);
@@ -438,15 +473,6 @@ function sellItem(keyid){
 	
 	removeItem(keyid);
 }
-
-function removeOther(keyid){
-	let indexToRemove = otherItems.findIndex(item => item.keyid === keyid);
-	if (indexToRemove !== -1) {
-	  otherItems.splice(indexToRemove, 1);
-	}
-	updateInvScreen();
-}
-
 function removeItem(keyid){
 	let indexToRemove = curinv.findIndex(item => item.keyid === keyid);
 	if (indexToRemove !== -1) {
@@ -454,7 +480,6 @@ function removeItem(keyid){
 	}
 	unequipItem(keyid);
 }
-
 function unequipItem(keyid){
 	let equipIndexToRemove = equipped.findIndex(item => item.keyid === keyid);
 	if (equipIndexToRemove !== -1) {
@@ -467,6 +492,44 @@ function unequipItemByType(type){
 	if (unequipIndexToRemove !== -1) {
 	  equipped.splice(unequipIndexToRemove, 1);
 	}
+	updateInvScreen();
+}
+function sellOther(keyid){
+	let indexToSell = otherItems.findIndex(item => item.keyid === keyid);
+	if (indexToSell !== -1) {
+	  charBalance += otherItems[indexToSell].value;
+	}
+	
+	removeOther(keyid);
+}
+function removeOther(keyid){
+	let indexToRemove = otherItems.findIndex(item => item.keyid === keyid);
+	if (indexToRemove !== -1) {
+	  otherItems.splice(indexToRemove, 1);
+	}
+	updateInvScreen();
+}
+function useConsumable(keyid){
+	let indexToConsume = otherItems.findIndex(item => item.keyid === keyid);
+	let theConsumStats = otherItems[indexToConsume].extra;
+	if (theConsumStats.wearable === false && theConsumStats.consumable === true) {
+	  let effectName = theConsumStats.Effect;
+	  let effectValue = theConsumStats.EffectValue;
+	  if (effectName === "extraHealth") {defcharHealth += effectValue;}
+	  else if (effectName === "extraEnergy") {defcharEnergy += effectValue;}
+	  else if (effectName === "physicalDefense") {defcharPhyDef += effectValue;}
+	  else if (effectName === "magicalDefense") {defcharMgcDef += effectValue;}
+	  else if (effectName === "enviromentalDefense") {defcharEnvDef += effectValue;}
+	  else if (effectName === "physicalDamage") {defcharPhyDmg += effectValue;}
+	  else if (effectName === "magicalDamage") {defcharMgcDmg += effectValue;}
+	  else if (effectName === "lifeStealRate") {defcharLifeSt += effectValue;}
+	  else if (effectName === "critChance") {defcharCritCh += effectValue;}
+	  else if (effectName === "critDamageMultiplier") {defcharCritMult += effectValue;}
+	  
+
+	}
+
+	removeOther(keyid);
 	updateInvScreen();
 }
 
@@ -490,9 +553,9 @@ function showInventoryAll(){
 	}
 	for(let o in otherItems){
 		if (!otherItems[o].extra.consumable) {
-			invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+otherItems[o].keyid+'">'+'<p>'+otherItems[o].rarity+' '+otherItems[o].name+'</p>'+'<a onClick = "printDesc('+otherItems[o].keyid+')">Description</a>'+'<a onclick="useItem('+otherItems[o].keyid+')">Use</a>'+'<a onclick="sellOther('+otherItems[o].keyid+')">Sell('+otherItems[o].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
+			invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+otherItems[o].keyid+'">'+'<p>'+otherItems[o].rarity+' '+otherItems[o].name+'</p>'+'<a onClick = "printDesc('+otherItems[o].keyid+')">Description</a>'+'<a onclick="sellOther('+otherItems[o].keyid+')">Sell('+otherItems[o].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
 		}else if (otherItems[o].extra.consumable) {
-			invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+otherItems[o].keyid+'">'+'<p>'+otherItems[o].rarity+' '+otherItems[o].name+'</p>'+'<a onclick="useItem('+otherItems[o].keyid+')">Use</a>'+'<a onclick="sellOther('+otherItems[o].keyid+')">Sell('+otherItems[o].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
+			invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+otherItems[o].keyid+'">'+'<p>'+otherItems[o].rarity+' '+otherItems[o].name+'</p>'+'<a onclick="useConsumable('+otherItems[o].keyid+')">Use</a>'+'<a onclick="sellOther('+otherItems[o].keyid+')">Sell('+otherItems[o].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
 		}
 	}
 	invScreen.innerHTML ='<div id="id_inv_filters"><button onclick="showInventoryAll()">All</button><button onclick="showInventoryEquipped()">Equipped</button><button onclick="showInventoryOthers()">Others</button></div>'+invScreen.innerHTML;
@@ -529,7 +592,7 @@ function showInventoryOthers(){
 		if (!otherItems[o].extra.consumable) {
 			invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+otherItems[o].keyid+'">'+'<p>'+otherItems[o].rarity+' '+otherItems[o].name+'</p>'+'<a onClick = "printDesc('+otherItems[o].keyid+')">Description</a>'+'<a onclick="sellOther('+otherItems[o].keyid+')">Sell('+otherItems[o].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
 		}else if (otherItems[o].extra.consumable) {
-			invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+otherItems[o].keyid+'">'+'<p>'+otherItems[o].rarity+' '+otherItems[o].name+'</p>'+'<a onclick="useItem('+otherItems[o].keyid+')">Use</a>'+'<a onclick="sellOther('+otherItems[o].keyid+')">Sell('+otherItems[o].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
+			invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+otherItems[o].keyid+'">'+'<p>'+otherItems[o].rarity+' '+otherItems[o].name+'</p>'+'<a onclick="useConsumable('+otherItems[o].keyid+')">Use</a>'+'<a onclick="sellOther('+otherItems[o].keyid+')">Sell('+otherItems[o].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
 		}
 	}
 	invScreen.innerHTML ='<div id="id_inv_filters"><button onclick="showInventoryAll()">All</button><button onclick="showInventoryEquipped()">Equipped</button><button onclick="showInventoryOthers()">Others</button></div>'+invScreen.innerHTML;
