@@ -25,19 +25,6 @@
 	flex-basis: 500px;
 	margin-left: 10px;
 }
-
-#id_upper_left{
-	flex-grow: 1;
-	margin-left: 10px;
-}
-
-.cl_bottom{
-	height: 100%;
-	background-color: slategray;
-	margin-top: 10px;
-	overflow: auto;
-}
-
 #id_inventory{
 	display: none;
 	overflow: auto;
@@ -111,6 +98,66 @@
 #id_item_desc{
 	display: none;
 }
+
+#id_upper_left{
+	flex-grow: 1;
+	margin-left: 10px;
+	display: flex;
+  	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	/*width: 200px; /* Adjust as needed */
+	/*	height: 200px; Adjust as needed */
+	border: 1px solid #ccc;
+	position: relative;
+	overflow: hidden;
+}
+
+.cl_promptText{
+	margin-top: 100px; /* Adjust as needed */
+  	text-align: center;
+  	padding: 0px 16px;
+  	font-size: 18px;
+  	z-index: 2;
+}
+
+.cl_promptOptionsDiv{
+	display: flex;
+  	flex-direction: column;
+  	align-items: center;
+  	margin-bottom: 20px; /* Adjust as needed */
+  	position: absolute;
+  	bottom: 100px;
+  	left: 50%;
+  	transform: translateX(-50%);
+  	z-index: 2;
+}
+
+.cl_promptOption{
+	margin: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    width: 300px;
+    height: 50px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: brown;
+    background-color: bisque;
+}
+.cl_promptBg{
+	position: absolute;
+	height: 600px;
+	z-index: 0;
+	opacity: 0.5;
+}
+
+.cl_bottom{
+	height: 100%;
+	background-color: slategray;
+	margin-top: 10px;
+	overflow: auto;
+}
+
 
 @media (max-width: 800px) {
 	.cl_upper_selector{
