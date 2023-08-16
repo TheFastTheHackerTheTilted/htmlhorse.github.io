@@ -254,19 +254,27 @@ function updateInvScreen(){
 
 var lastInvShowed = "";
 
+function getTierColor(rarity){
+	if (rarity === "COMMON" || rarity === 0){return "⬛ ";}
+	else if (rarity === "RARE" || rarity === 1){return "🟦 ";}
+	else if (rarity === "EPIC" || rarity === 2){return "🟪 ";}
+	else if (rarity === "LEGENDARY" || rarity === 3){return "🟨 ";}
+	else if (rarity === "MYTHIC" || rarity === 4){return "🟥 ";}
+}
+
 function showInventoryAll(){
 	lastInvShowed = "inv-all";
 
 	let invScreen = document.getElementById("id_inventory");
 	invScreen.innerHTML ="";
 	for(let i in curinv){
-		invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+curinv[i].keyid+'">'+'<p>'+curinv[i].rarity+' '+curinv[i].name+'</p>'+'<a onClick = "printStats('+curinv[i].keyid+')">Stats</a>'+'<a onclick="equipItem('+curinv[i].keyid+')">Equip</a>'+'<a onclick="unequipItem('+curinv[i].keyid+')">Unequip</a>'+'<a onclick="sellItem('+curinv[i].keyid+')">Sell('+curinv[i].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
+		invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+curinv[i].keyid+'">'+'<p>'+getTierColor(curinv[i].rarity)+curinv[i].rarity+' '+curinv[i].name+'</p>'+'<a onClick = "printStats('+curinv[i].keyid+')">Stats</a>'+'<a onclick="equipItem('+curinv[i].keyid+')">Equip</a>'+'<a onclick="unequipItem('+curinv[i].keyid+')">Unequip</a>'+'<a onclick="sellItem('+curinv[i].keyid+')">Sell('+curinv[i].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
 	}
 	for(let o in otherItems){
 		if (!otherItems[o].extra.consumable) {
-			invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+otherItems[o].keyid+'">'+'<p>'+otherItems[o].rarity+' '+otherItems[o].name+'</p>'+'<a onClick = "printDesc('+otherItems[o].keyid+')">Description</a>'+'<a onclick="sellOther('+otherItems[o].keyid+')">Sell('+otherItems[o].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
+			invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+otherItems[o].keyid+'">'+'<p>'+getTierColor(otherItems[o].rarity)+otherItems[o].rarity+' '+otherItems[o].name+'</p>'+'<a onClick = "printDesc('+otherItems[o].keyid+')">Description</a>'+'<a onclick="sellOther('+otherItems[o].keyid+')">Sell('+otherItems[o].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
 		}else if (otherItems[o].extra.consumable) {
-			invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+otherItems[o].keyid+'">'+'<p>'+otherItems[o].rarity+' '+otherItems[o].name+'</p>'+'<a onclick="useConsumable('+otherItems[o].keyid+')">Use</a>'+'<a onclick="sellOther('+otherItems[o].keyid+')">Sell('+otherItems[o].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
+			invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+otherItems[o].keyid+'">'+'<p>'+getTierColor(otherItems[o].rarity)+otherItems[o].rarity+' '+otherItems[o].name+'</p>'+'<a onclick="useConsumable('+otherItems[o].keyid+')">Use</a>'+'<a onclick="sellOther('+otherItems[o].keyid+')">Sell('+otherItems[o].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
 		}
 	}
 	invScreen.innerHTML ='<div id="id_inv_filters"><button onclick="showInventoryAll()">All</button><button onclick="showInventoryEquipped()">Equipped</button><button onclick="showInventoryOthers()">Others</button></div>'+invScreen.innerHTML;
@@ -281,7 +289,7 @@ function showInventoryEquipped(){
 	let invScreen = document.getElementById("id_inventory");
 	invScreen.innerHTML ="";
 	for(let i in equipped){
-		invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+equipped[i].keyid+'">'+'<p>'+equipped[i].rarity+' '+equipped[i].name+'</p>'+'<a onClick = "printStats('+equipped[i].keyid+')">Stats</a>'+'<a onclick="equipItem('+equipped[i].keyid+')">Equip</a>'+'<a onclick="unequipItem('+equipped[i].keyid+')">Unequip</a>'+'<a onclick="sellItem('+equipped[i].keyid+')">Sell('+equipped[i].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
+		invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+equipped[i].keyid+'">'+'<p>'+getTierColor(equipped[i].rarity)+equipped[i].rarity+' '+equipped[i].name+'</p>'+'<a onClick = "printStats('+equipped[i].keyid+')">Stats</a>'+'<a onclick="equipItem('+equipped[i].keyid+')">Equip</a>'+'<a onclick="unequipItem('+equipped[i].keyid+')">Unequip</a>'+'<a onclick="sellItem('+equipped[i].keyid+')">Sell('+equipped[i].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
 	}
 	invScreen.innerHTML ='<div id="id_inv_filters"><button onclick="showInventoryAll()">All</button><button onclick="showInventoryEquipped()">Equipped</button><button onclick="showInventoryOthers()">Others</button></div>'+invScreen.innerHTML;
 
@@ -296,14 +304,14 @@ function showInventoryOthers(){
 	invScreen.innerHTML ="";
 	for(let i in curinv){
 		if (!curinv[i].extra.wearable) {
-			invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+curinv[i].keyid+'">'+'<p>'+curinv[i].rarity+' '+curinv[i].name+'</p>'+'<a onClick = "printStats('+curinv[i].keyid+')">Stats</a>'+'<a onclick="equipItem('+curinv[i].keyid+')">Equip</a>'+'<a onclick="unequipItem('+curinv[i].keyid+')">Unequip</a>'+'<a onclick="sellItem('+curinv[i].keyid+')">Sell('+curinv[i].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
+			invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+curinv[i].keyid+'">'+'<p>'+getTierColor(curinv[i].rarity)+curinv[i].rarity+' '+curinv[i].name+'</p>'+'<a onClick = "printStats('+curinv[i].keyid+')">Stats</a>'+'<a onclick="equipItem('+curinv[i].keyid+')">Equip</a>'+'<a onclick="unequipItem('+curinv[i].keyid+')">Unequip</a>'+'<a onclick="sellItem('+curinv[i].keyid+')">Sell('+curinv[i].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
 		}
 	}
 	for(let o in otherItems){
 		if (!otherItems[o].extra.consumable) {
-			invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+otherItems[o].keyid+'">'+'<p>'+otherItems[o].rarity+' '+otherItems[o].name+'</p>'+'<a onClick = "printDesc('+otherItems[o].keyid+')">Description</a>'+'<a onclick="sellOther('+otherItems[o].keyid+')">Sell('+otherItems[o].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
+			invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+otherItems[o].keyid+'">'+'<p>'+getTierColor(otherItems[o].rarity)+otherItems[o].rarity+' '+otherItems[o].name+'</p>'+'<a onClick = "printDesc('+otherItems[o].keyid+')">Description</a>'+'<a onclick="sellOther('+otherItems[o].keyid+')">Sell('+otherItems[o].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
 		}else if (otherItems[o].extra.consumable) {
-			invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+otherItems[o].keyid+'">'+'<p>'+otherItems[o].rarity+' '+otherItems[o].name+'</p>'+'<a onclick="useConsumable('+otherItems[o].keyid+')">Use</a>'+'<a onclick="sellOther('+otherItems[o].keyid+')">Sell('+otherItems[o].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
+			invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+otherItems[o].keyid+'">'+'<p>'+getTierColor(otherItems[o].rarity)+otherItems[o].rarity+' '+otherItems[o].name+'</p>'+'<a onclick="useConsumable('+otherItems[o].keyid+')">Use</a>'+'<a onclick="sellOther('+otherItems[o].keyid+')">Sell('+otherItems[o].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
 		}
 	}
 	invScreen.innerHTML ='<div id="id_inv_filters"><button onclick="showInventoryAll()">All</button><button onclick="showInventoryEquipped()">Equipped</button><button onclick="showInventoryOthers()">Others</button></div>'+invScreen.innerHTML;
@@ -313,7 +321,7 @@ function showInventoryOthers(){
 
 function updateEquippedScreen(){
 	for(let i in equipped){
-		document.getElementById("id_invitem_"+equipped[i].keyid).style.backgroundColor  = "#b18a50"
+		document.getElementById("id_invitem_"+equipped[i].keyid).style.backgroundColor  = "#414141"
 	}
 }
 
