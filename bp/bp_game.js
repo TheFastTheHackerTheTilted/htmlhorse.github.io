@@ -156,7 +156,6 @@ function ItemObject(name,type,rarity,value,keyid,extra){
 	this.extra = extra;
 }
 
-
 function addItemToInv(Item){
 	console.log(Item)
 	writeLog("Added to inventory: "+ Item.name)
@@ -164,8 +163,6 @@ function addItemToInv(Item){
 	else {otherItems.push(Item);}
 	updateInvScreen();
 }
-
-
 
 function equipItem(keyid){
 	let indexToEquip = curinv.findIndex(item => item.keyid === keyid);
@@ -176,8 +173,6 @@ function equipItem(keyid){
 	}
 	updateInvScreen();
 }
-
-
 
 function sellItem(keyid){
 	let indexToSell = curinv.findIndex(item => item.keyid === keyid);
@@ -195,6 +190,7 @@ function removeItem(keyid){
 	// unequipItem(keyid);
 	updateInvScreen();
 }
+
 function unequipItem(keyid){
 	let indexToUnequip = curinv.findIndex(item => item.keyid === keyid);
 	if (indexToUnequip !== -1) {
@@ -371,6 +367,7 @@ function showInventory(){
 	showovw.style.display = "none";
 	document.getElementById("id_item_desc").style.display = "none";
 }
+
 function showOverview(){
 	let showinv= document.getElementById("id_inventory");
 	let showovw= document.getElementById("id_overview");
@@ -378,11 +375,11 @@ function showOverview(){
 	showovw.style.display = "block";
 	document.getElementById("id_item_desc").style.display = "none";
 }
+
 function showDesc(){
 	document.getElementById("id_item_desc").style.display = "block";
 	document.getElementById("id_overview").style.display = "none";
 	document.getElementById("id_inventory").style.display = "none";
-
 }
 
 function showPromptscreen(){
@@ -399,13 +396,23 @@ function showCharscreen(){
 }
 
 function testItemCreation(){
-
     addItemToInv(randomConsumableItemGenerator(0));
     addItemToInv(randomWearableItemGenerator(1));
     addItemToInv(randomWearableItemGenerator(2));
     addItemToInv(randomConsumableItemGenerator(3));
     addItemToInv(randomConsumableItemGenerator(4));
+}
 
 
+function quickPrompt(theText, theOptions, theFuncs ,theBg){
+	let PromptScreenEl = document.getElementById("id_upper_left");
+	PromptScreenEl.innerHTML = ('<img class="cl_promptBg" src="./bp_game/'+theBg+
+                '"><p class="cl_promptText">'+theText+
+                '</p><div class="cl_promptOptionsDiv" id="id_prompt_options">'+
+                '</div>')
 
+	let OptionsEl = document.getElementById("id_prompt_options");
+	for (let o in theOptions){
+		OptionsEl.innerHTML += '<button class="cl_promptOption" onClick="'+theFuncs[o]+'">'+theOptions[o]+'</button>';
+	}
 }

@@ -1,3 +1,32 @@
+/*
+	**Items have stats** 
+
+	This example item extras are for weapon/armor! 
+
+	Name
+	Type
+	Rarity
+	Value
+	KeyId
+	extra{
+		wearable = true/false // if it is wearable armor/weapon! (was 'special')
+		equipped = false/true
+		extraHealth
+		extraEnergy
+		physicalDefense
+		magicalDefense
+		enviromentalDefense
+		physicalDamage
+		magicalDamage
+		lifeStealRate
+		critChance
+		critDamageMultiplier
+		element
+		bonusLife
+		unique
+	}
+*/
+
 function randomWearableItemGenerator(wantedTier){
 
 	// item name/type generation
