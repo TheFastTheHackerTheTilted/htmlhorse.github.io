@@ -19,7 +19,6 @@ function fancyWriteLog(text, colorcode){
 // things to keep track of
 var progressMultiplier = 1;
 var curinv= [];
-var equipped =[];
 var otherItems = [];
 
 var lastId = 0; //last item id, increase before use
@@ -74,9 +73,9 @@ function setStatsDefault(){
 function updateCharStats(){
 	//update the values with equipped items
 	setStatsDefault();
-	for (let i in equipped){
-		let theItemExtras = equipped[i].extra
-		if(theItemExtras.wearable === true){
+	for (let i in curinv){
+		let theItemExtras = curinv[i].extra
+		if(theItemExtras.wearable === true && theItemExtras.equipped === true){
 			if (theItemExtras.extraHealth !== undefined){charHealth += theItemExtras.extraHealth;}
 			if (theItemExtras.extraEnergy !== undefined){charEnergy += theItemExtras.extraEnergy;}
 			if (theItemExtras.physicalDamage !== undefined){charPhyDmg += theItemExtras.physicalDamage;}
@@ -121,7 +120,9 @@ function updateStatScreen(){
 }
 
 /*
-	**Items have stats**
+	**Items have stats** 
+
+	This example item extras are for weapon/armor! 
 
 	Name
 	Type
@@ -129,7 +130,8 @@ function updateStatScreen(){
 	Value
 	KeyId
 	extra{
-		wearable = true/false if it is wearable armor/weapon! (was 'special')
+		wearable = true/false // if it is wearable armor/weapon! (was 'special')
+		equipped = false/true
 		extraHealth
 		extraEnergy
 		physicalDefense
@@ -163,14 +165,15 @@ function addItemToInv(Item){
 	updateInvScreen();
 }
 
+
+
 function equipItem(keyid){
 	let indexToEquip = curinv.findIndex(item => item.keyid === keyid);
-	let findCopy = equipped.findIndex(eitem => eitem.keyid === keyid);
-	if (indexToEquip !== -1 && (curinv[indexToEquip] !== equipped[findCopy])) {
+
+	if (indexToEquip !== -1) {
 		unequipItemByType(curinv[indexToEquip].type);
-	  	equipped.push(curinv[indexToEquip])
+		curinv[indexToEquip].extra.equipped = true;
 	}
-	// equipped.push(Item);
 	updateInvScreen();
 }
 
@@ -179,32 +182,35 @@ function equipItem(keyid){
 function sellItem(keyid){
 	let indexToSell = curinv.findIndex(item => item.keyid === keyid);
 	if (indexToSell !== -1) {
-	  charBalance += curinv[indexToSell].value;
+	  	charBalance += curinv[indexToSell].value;
 	}
-	
 	removeItem(keyid);
 }
+
 function removeItem(keyid){
 	let indexToRemove = curinv.findIndex(item => item.keyid === keyid);
 	if (indexToRemove !== -1) {
-	  curinv.splice(indexToRemove, 1);
+	  	curinv.splice(indexToRemove, 1);
 	}
-	unequipItem(keyid);
+	// unequipItem(keyid);
+	updateInvScreen();
 }
 function unequipItem(keyid){
-	let equipIndexToRemove = equipped.findIndex(item => item.keyid === keyid);
-	if (equipIndexToRemove !== -1) {
-	  equipped.splice(equipIndexToRemove, 1);
+	let indexToUnequip = curinv.findIndex(item => item.keyid === keyid);
+	if (indexToUnequip !== -1) {
+	  curinv[indexToUnequip].extra.equipped = false;
 	}
 	updateInvScreen();
 }
+
 function unequipItemByType(type){
-	let unequipIndexToRemove = equipped.findIndex(item => item.type === type);
+	let unequipIndexToRemove = curinv.findIndex(item => item.type === type);
 	if (unequipIndexToRemove !== -1) {
-	  equipped.splice(unequipIndexToRemove, 1);
+	  curinv[unequipIndexToRemove].extra.equipped = false;
 	}
 	updateInvScreen();
 }
+
 function sellOther(keyid){
 	let indexToSell = otherItems.findIndex(item => item.keyid === keyid);
 	if (indexToSell !== -1) {
@@ -288,8 +294,10 @@ function showInventoryEquipped(){
 
 	let invScreen = document.getElementById("id_inventory");
 	invScreen.innerHTML ="";
-	for(let i in equipped){
-		invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+equipped[i].keyid+'">'+'<p>'+getTierColor(equipped[i].rarity)+equipped[i].rarity+' '+equipped[i].name+'</p>'+'<a onClick = "printStats('+equipped[i].keyid+')">Stats</a>'+'<a onclick="equipItem('+equipped[i].keyid+')">Equip</a>'+'<a onclick="unequipItem('+equipped[i].keyid+')">Unequip</a>'+'<a onclick="sellItem('+equipped[i].keyid+')">Sell('+equipped[i].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
+	for(let i in curinv){
+		if (curinv[i].extra.equipped) {
+		invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+curinv[i].keyid+'">'+'<p>'+getTierColor(curinv[i].rarity)+curinv[i].rarity+' '+curinv[i].name+'</p>'+'<a onClick = "printStats('+curinv[i].keyid+')">Stats</a>'+'<a onclick="equipItem('+curinv[i].keyid+')">Equip</a>'+'<a onclick="unequipItem('+curinv[i].keyid+')">Unequip</a>'+'<a onclick="sellItem('+curinv[i].keyid+')">Sell('+curinv[i].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
+		}
 	}
 	invScreen.innerHTML ='<div id="id_inv_filters"><button onclick="showInventoryAll()">All</button><button onclick="showInventoryEquipped()">Equipped</button><button onclick="showInventoryOthers()">Others</button></div>'+invScreen.innerHTML;
 
@@ -320,11 +328,12 @@ function showInventoryOthers(){
 }
 
 function updateEquippedScreen(){
-	for(let i in equipped){
-		document.getElementById("id_invitem_"+equipped[i].keyid).style.backgroundColor  = "#414141"
+	for(let i in curinv){
+		if (curinv[i].extra.equipped) {
+			document.getElementById("id_invitem_"+curinv[i].keyid).style.backgroundColor  = "#414141"
+		}
 	}
 }
-
 
 function printStats(keyid){
 	let itemStatScreen = document.getElementById("id_item_desc");

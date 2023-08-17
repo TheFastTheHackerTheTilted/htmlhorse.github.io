@@ -65,7 +65,7 @@ function randomWearableItemGenerator(wantedTier){
 	}
 
 	// extra dictionary, used in last parameter of an item
-	let itemStats = {wearable:true}
+	let itemStats = {wearable:true,equipped:false}
 	// item stats
 	
 	
