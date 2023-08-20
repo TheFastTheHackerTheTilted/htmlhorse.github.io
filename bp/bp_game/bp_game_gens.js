@@ -191,7 +191,7 @@ function randomConsumableItemGenerator(wantedTier){
 	let itemStats = {wearable:false, consumable:true}
 
 	// item name/type generation
-	let itemNames = ["The Witch's","Magician's","Corrupted","Merchant's", "", "", "", ""];
+	let itemNames = [""];
 	let itemTypes = ["Potion", "Elixir", "Scroll", "Rune", "Relic", "Charm", "Powder"]
 	let potionStats = ["extraHealth", "extraEnergy", "physicalDefense", "magicalDefense", "enviromentalDefense", "physicalDamage", "magicalDamage", "lifeStealRate", "critChance", "critDamageMultiplier"];
 
