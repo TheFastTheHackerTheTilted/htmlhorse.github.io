@@ -188,7 +188,7 @@ function randomWearableItemGenerator(wantedTier){
 }
 
 function randomConsumableItemGenerator(wantedTier){
-	let itemStats = {wearable:false, consumable:true}
+	let itemStats = {wearable:false, consumable:true, special:true}
 
 	// item name/type generation
 	let itemNames = [""];
@@ -320,4 +320,17 @@ function getRarity(wantedTier){
 		return "COMMON";
 	}
 	else{return "COMMON";}
+}
+
+
+function genEnemy(){
+	let enemyNameList = ["Zombie","Spider","Nightmare","Goreman","Boogieman","Reptile Soldier"]
+	let enemyName = enemyNameList[Math.floor(Math.random() * enemyNameList.length)];
+	let rHp = Math.random()*100;
+	let rPDmg = Math.random()*20;
+	let rMDmg = Math.random()*20;
+	let rPDef = Math.random()*20;
+	let rMDef = Math.random()*20;
+
+	return (new enemyObject(enemyName,rHp,rPDmg,rMDmg,rPDef,rMDef));
 }

@@ -16,7 +16,12 @@ function fancyWriteLog(text, colorcode){
 	line++;
 }
 
+
+
+
 // things to keep track of
+var inFight = false;
+var inCity = true;;
 var progressMultiplier = 1;
 var curinv= [];
 var otherItems = [];
@@ -165,21 +170,25 @@ function addItemToInv(Item){
 }
 
 function equipItem(keyid){
-	let indexToEquip = curinv.findIndex(item => item.keyid === keyid);
+	if(!inFight){
+		let indexToEquip = curinv.findIndex(item => item.keyid === keyid);
 
-	if (indexToEquip !== -1) {
-		unequipItemByType(curinv[indexToEquip].type);
-		curinv[indexToEquip].extra.equipped = true;
+		if (indexToEquip !== -1) {
+			unequipItemByType(curinv[indexToEquip].type);
+			curinv[indexToEquip].extra.equipped = true;
+		}
+		updateInvScreen();
 	}
-	updateInvScreen();
 }
 
 function sellItem(keyid){
-	let indexToSell = curinv.findIndex(item => item.keyid === keyid);
-	if (indexToSell !== -1) {
-	  	charBalance += curinv[indexToSell].value;
+	if(inCity){
+		let indexToSell = curinv.findIndex(item => item.keyid === keyid);
+		if (indexToSell !== -1) {
+		  	charBalance += curinv[indexToSell].value;
+		}
+		removeItem(keyid);
 	}
-	removeItem(keyid);
 }
 
 function removeItem(keyid){
@@ -192,29 +201,36 @@ function removeItem(keyid){
 }
 
 function unequipItem(keyid){
-	let indexToUnequip = curinv.findIndex(item => item.keyid === keyid);
-	if (indexToUnequip !== -1) {
-	  curinv[indexToUnequip].extra.equipped = false;
+	if(!inFight){
+		let indexToUnequip = curinv.findIndex(item => item.keyid === keyid);
+		if (indexToUnequip !== -1) {
+		  curinv[indexToUnequip].extra.equipped = false;
+		}
+		updateInvScreen();
 	}
-	updateInvScreen();
 }
 
 function unequipItemByType(type){
-	let unequipIndexToRemove = curinv.findIndex(item => item.type === type);
-	if (unequipIndexToRemove !== -1) {
-	  curinv[unequipIndexToRemove].extra.equipped = false;
+	if(!inFight){
+		let unequipIndexToRemove = curinv.findIndex(item => item.type === type);
+		if (unequipIndexToRemove !== -1) {
+		  curinv[unequipIndexToRemove].extra.equipped = false;
+		}
+		updateInvScreen();
 	}
-	updateInvScreen();
 }
 
 function sellOther(keyid){
-	let indexToSell = otherItems.findIndex(item => item.keyid === keyid);
-	if (indexToSell !== -1) {
-	  charBalance += otherItems[indexToSell].value;
+	if(inCity){
+		let indexToSell = otherItems.findIndex(item => item.keyid === keyid);
+		if (indexToSell !== -1) {
+		  charBalance += otherItems[indexToSell].value;
+		}
+		
+		removeOther(keyid);
 	}
-	
-	removeOther(keyid);
 }
+
 function removeOther(keyid){
 	let indexToRemove = otherItems.findIndex(item => item.keyid === keyid);
 	if (indexToRemove !== -1) {
@@ -223,27 +239,29 @@ function removeOther(keyid){
 	updateInvScreen();
 }
 function useConsumable(keyid){
+
+
 	let indexToConsume = otherItems.findIndex(item => item.keyid === keyid);
 	let theConsumStats = otherItems[indexToConsume].extra;
-	if (theConsumStats.wearable === false && theConsumStats.consumable === true) {
-	  let effectName = theConsumStats.Effect;
-	  let effectValue = theConsumStats.EffectValue;
-	  if (effectName === "extraHealth") {defcharHealth += effectValue;}
-	  else if (effectName === "extraEnergy") {defcharEnergy += effectValue;}
-	  else if (effectName === "physicalDefense") {defcharPhyDef += effectValue;}
-	  else if (effectName === "magicalDefense") {defcharMgcDef += effectValue;}
-	  else if (effectName === "enviromentalDefense") {defcharEnvDef += effectValue;}
-	  else if (effectName === "physicalDamage") {defcharPhyDmg += effectValue;}
-	  else if (effectName === "magicalDamage") {defcharMgcDmg += effectValue;}
-	  else if (effectName === "lifeStealRate") {defcharLifeSt += effectValue;}
-	  else if (effectName === "critChance") {defcharCritCh += effectValue;}
-	  else if (effectName === "critDamageMultiplier") {defcharCritMult += effectValue;}
-	  
-
+	if(!inFight){
+		if (theConsumStats.wearable === false && theConsumStats.consumable === true && theConsumStats.special === true) {
+		  	let effectName = theConsumStats.Effect;
+		  	let effectValue = theConsumStats.EffectValue;
+		  	if (effectName === "extraHealth") {defcharHealth += effectValue;}
+		  	else if (effectName === "extraEnergy") {defcharEnergy += effectValue;}
+		  	else if (effectName === "physicalDefense") {defcharPhyDef += effectValue;}
+		  	else if (effectName === "magicalDefense") {defcharMgcDef += effectValue;}
+		  	else if (effectName === "enviromentalDefense") {defcharEnvDef += effectValue;}
+		  	else if (effectName === "physicalDamage") {defcharPhyDmg += effectValue;}
+		  	else if (effectName === "magicalDamage") {defcharMgcDmg += effectValue;}
+		  	else if (effectName === "lifeStealRate") {defcharLifeSt += effectValue;}
+		  	else if (effectName === "critChance") {defcharCritCh += effectValue;}
+		  	else if (effectName === "critDamageMultiplier") {defcharCritMult += effectValue;}
+		  
+		}
+		removeOther(keyid);
+		updateInvScreen();
 	}
-
-	removeOther(keyid);
-	updateInvScreen();
 }
 
 // resets inv screen, for each item in the inventory add a div
@@ -415,4 +433,28 @@ function quickPrompt(theText, theOptions, theFuncs ,theBg){
 	for (let o in theOptions){
 		OptionsEl.innerHTML += '<button class="cl_promptOption" onClick="'+theFuncs[o]+'">'+theOptions[o]+'</button>';
 	}
+}
+
+
+function enemyObject(name,hp,pdmg,mdmg,pdef,mdef){
+	this.name = name;
+	this.health = hp;
+	this.phydmg = pdmg;
+	this.mgcdmg = mdmg;
+	this.phydef = pdef;
+	this.mgcdef = mdef
+}
+
+function newFight(){
+	inFight = true;
+	inCity = false;
+	let theEnemy = genEnemy();
+	quickPrompt(theEnemy.name+" appeared!!", ["Fight"], ["startFight()"],"forest.jpg")
+	console.log(theEnemy);
+}
+
+var charFightHealth
+function startFight(enemy){
+	
+
 }

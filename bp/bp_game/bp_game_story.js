@@ -33,6 +33,6 @@ function st_newStory(){
 	newDiagList(["Diag1","Here you go","Goodbye(no more content atm)"]);
 	diagPosition ="street.jpg";
 	endOptions = ["Stay", "Go"]
-	endFuncs = ["st_stay()","st_go()"]
+	endFuncs = ["st_stay()","newFight()"]
 	runDiag();
 }
