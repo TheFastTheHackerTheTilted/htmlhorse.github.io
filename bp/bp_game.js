@@ -172,7 +172,7 @@ function addItemToInv(Item){
 function equipItem(keyid){
 	if(!inFight){
 		let indexToEquip = curinv.findIndex(item => item.keyid === keyid);
-
+		console.log("in inv: "+indexToEquip);
 		if (indexToEquip !== -1) {
 			unequipItemByType(curinv[indexToEquip].type);
 			curinv[indexToEquip].extra.equipped = true;
@@ -212,10 +212,13 @@ function unequipItem(keyid){
 
 function unequipItemByType(type){
 	if(!inFight){
-		let unequipIndexToRemove = curinv.findIndex(item => item.type === type);
-		if (unequipIndexToRemove !== -1) {
-		  curinv[unequipIndexToRemove].extra.equipped = false;
+
+		for (let i = 0; i < curinv.length; i++) {
+			if (curinv[i].type === type) {
+				curinv[i].extra.equipped = false;
+			}
 		}
+
 		updateInvScreen();
 	}
 }
@@ -266,6 +269,7 @@ function useConsumable(keyid){
 
 // resets inv screen, for each item in the inventory add a div
 function updateInvScreen(){
+	console.log(curinv);
 	if (lastInvShowed === "inv-all") {showInventoryAll();}
 	else if(lastInvShowed === "inv-equipped"){showInventoryEquipped();}
 	else if(lastInvShowed === "inv-others"){showInventoryOthers();}
@@ -416,6 +420,8 @@ function showCharscreen(){
 function testItemCreation(){
     addItemToInv(randomConsumableItemGenerator(0));
     addItemToInv(randomWearableItemGenerator(1));
+    addItemToInv(randomWearableItemGenerator(1));
+    addItemToInv(randomWearableItemGenerator(1));
     addItemToInv(randomWearableItemGenerator(2));
     addItemToInv(randomConsumableItemGenerator(3));
     addItemToInv(randomConsumableItemGenerator(4));
@@ -445,16 +451,20 @@ function enemyObject(name,hp,pdmg,mdmg,pdef,mdef){
 	this.mgcdef = mdef
 }
 
+function addEnemyToPrompt(eName){
+	let fPromptScreen = document.getElementById("id_upper_left");
+	fPromptScreen.innerHTML = '<img class="cl_promptEnemy" src="./bp_game/m_'+eName+'.png">'+fPromptScreen.innerHTML;
+}
 function newFight(){
-	inFight = true;
 	inCity = false;
 	let theEnemy = genEnemy();
-	quickPrompt(theEnemy.name+" appeared!!", ["Fight"], ["startFight()"],"forest.jpg")
+	quickPrompt(theEnemy.name+" appeared!!\n(Last chance for item changes)", ["Fight"], ["startFight()"],"forest.jpg")
+	addEnemyToPrompt("zombie")
 	console.log(theEnemy);
 }
 
 var charFightHealth
 function startFight(enemy){
-	
+	inFight = true;
 
 }

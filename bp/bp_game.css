@@ -24,6 +24,7 @@
 	flex-shrink: 0;
 	flex-basis: 500px;
 	margin-left: 10px;
+	overflow: auto;
 }
 #id_inventory{
 	display: none;
@@ -150,6 +151,15 @@
 	z-index: 0;
 	opacity: 0.5;
 }
+
+.cl_promptEnemy{
+	position: absolute;
+	z-index: 1;
+	height: 450px;
+	bottom: 20px;
+	left: 10px;
+}
+
 
 .cl_bottom{
 	height: 100%;

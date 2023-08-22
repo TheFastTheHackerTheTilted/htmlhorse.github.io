@@ -30,9 +30,26 @@ function nextDiag(){
 }
 
 function st_newStory(){
-	newDiagList(["Diag1","Here you go","Goodbye(no more content atm)"]);
+	newDiagList(["I just turned 21, and I am officially allowed to be an ADVENTURER!!","I am so excited!!","First i need to Register to adventurer's guild"]);
 	diagPosition ="street.jpg";
-	endOptions = ["Stay", "Go"]
-	endFuncs = ["st_stay()","newFight()"]
+	endOptions = ["Go"];
+	endFuncs = ["st_main00()"];
 	runDiag();
+}
+
+function st_main00(){
+	newDiagList(["Receptionist: Hello adventurer's, lets register you.","*She gets my name and info to register me*","*After signing some documents i am now officially an adventurer!!*","Receptionist: take these beginner equipment and go on to your first adventure!"]);
+	diagPosition = "tavern.jpg";
+	endOptions = ["Start Adventure"];
+	endFuncs= ["st_main01()"];
+	runDiag();
+}
+
+function st_main01(){
+	addItemToInv(randomWearableItemGenerator(0));
+	addItemToInv(randomWearableItemGenerator(0));
+	addItemToInv(randomWearableItemGenerator(0));
+	addItemToInv(randomWearableItemGenerator(1));
+	inCity = false;
+	newFight();
 }
