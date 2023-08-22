@@ -38,7 +38,7 @@ function st_newStory(){
 }
 
 function st_main00(){
-	newDiagList(["Receptionist: Hello adventurer's, lets register you.","*She gets my name and info to register me*","*After signing some documents i am now officially an adventurer!!*","Receptionist: take these beginner equipment and go on to your first adventure!"]);
+	newDiagList(["Receptionist: Hello adventurer, lets register you.","*She gets my name and info to register me*","*After signing some documents i am now officially an adventurer!!*","Receptionist: take these beginner equipment and go on to your first adventure!"]);
 	diagPosition = "tavern.jpg";
 	endOptions = ["Start Adventure"];
 	endFuncs= ["st_main01()"];

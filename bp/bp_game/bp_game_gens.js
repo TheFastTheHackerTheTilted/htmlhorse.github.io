@@ -48,6 +48,7 @@ function randomWearableItemGenerator(wantedTier){
 		itemElement = randomName;
 	}
 	let randomType = itemTypes[Math.floor(Math.random() * itemTypes.length)];
+	let randomWeapon = "";
 	if (randomType =="WEAPON") {
 		randomWeapon =weaponTypes[Math.floor(Math.random() * weaponTypes.length)];
 		offensiveMultiplier += 0.3;
@@ -129,7 +130,7 @@ function randomWearableItemGenerator(wantedTier){
 	}
 
 	let phydmgChance = Math.random();
-	if (phydmgChance <= 0.3 && itemStatLimit >0) {
+	if ((phydmgChance <= 0.3 && itemStatLimit >0) || (randomType === "WEAPON" & (!randomWeapon.includes("Wand") && !randomWeapon.includes("Mage")))) {
 		itemStats.physicalDamage = ((Math.random()*15)*progressMultiplier*itemValueMultipler*offensiveMultiplier);
 		itemValue +=21;
 		itemStatLimit--;
