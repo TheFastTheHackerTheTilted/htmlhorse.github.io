@@ -66,7 +66,7 @@ function randomWearableItemGenerator(wantedTier){
 	let itemValueMultipler = 1;
 	
 	let selectedRarity = getRarity(wantedTier);
-	console.log(selectedRarity);
+	// console.log(selectedRarity);
 	if(selectedRarity === "MYTHIC"){
 		itemValueMultipler = 2;
 		itemValue+=100;
@@ -273,7 +273,7 @@ function randomConsumableItemGenerator(wantedTier){
 	
 	
 	let selectedRarity = getRarity(wantedTier);
-	console.log(wantedTier + selectedRarity);
+	// console.log(wantedTier + selectedRarity);
 	if (selectedRarity === "MYTHIC"){
 		itemValueMultipler = 2;
 		itemValue+=85;

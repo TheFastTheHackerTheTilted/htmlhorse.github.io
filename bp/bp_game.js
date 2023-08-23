@@ -488,7 +488,6 @@ function charHeal(hp){
 }
 
 function charEnergize(ep){
-	console.log(ep)
 	if(ep === undefined){
 		charFightEnergy = charEnergy;
 	}
