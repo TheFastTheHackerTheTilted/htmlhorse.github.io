@@ -8,9 +8,10 @@ function skill_Basic(){
 function skill_Fireball(){
 	let finalDmgValue = charMgcDmg;
 	damageEnemyMGC(finalDmgValue);
+	hitAnim();
 	updateFight();
 }
 
 function skill_Die(){
-	
+
 }

@@ -293,17 +293,36 @@ function getTierColor(rarity){
 function showInventoryAll(){
 	lastInvShowed = "inv-all";
 
+
 	let invScreen = document.getElementById("id_inventory");
 	invScreen.innerHTML ="";
 	for(let i in curinv){
-		invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+curinv[i].keyid+'">'+'<p>'+getTierColor(curinv[i].rarity)+curinv[i].rarity+' '+curinv[i].name+'</p>'+'<a onClick = "printStats('+curinv[i].keyid+')">Stats</a>'+'<a onclick="equipItem('+curinv[i].keyid+')">Equip</a>'+'<a onclick="unequipItem('+curinv[i].keyid+')">Unequip</a>'+'<a onclick="sellItem('+curinv[i].keyid+')">Sell('+curinv[i].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
+		
+		equipSection = '';
+		if (!inFight) {
+			equipSection = '<a onclick="equipItem('+curinv[i].keyid+')">Equip</a>'+'<a onclick="unequipItem('+curinv[i].keyid+')">Unequip</a>'
+			
+		}
+
+		sellSection = '';
+		if(inCity){
+			sellSection = '<a onclick="sellItem('+curinv[i].keyid+')">Sell('+curinv[i].value.toFixed(1)+')</a>';
+		}
+
+		invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+curinv[i].keyid+'">'+'<p>'+getTierColor(curinv[i].rarity)+curinv[i].rarity+' '+curinv[i].name+'</p>'+'<a onClick = "printStats('+curinv[i].keyid+')">Stats</a>'+equipSection+sellSection+'</div>'+invScreen.innerHTML;
 	}
 	for(let o in otherItems){
-		if (!otherItems[o].extra.consumable) {
-			invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+otherItems[o].keyid+'">'+'<p>'+getTierColor(otherItems[o].rarity)+otherItems[o].rarity+' '+otherItems[o].name+'</p>'+'<a onClick = "printDesc('+otherItems[o].keyid+')">Description</a>'+'<a onclick="sellOther('+otherItems[o].keyid+')">Sell('+otherItems[o].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
-		}else if (otherItems[o].extra.consumable) {
-			invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+otherItems[o].keyid+'">'+'<p>'+getTierColor(otherItems[o].rarity)+otherItems[o].rarity+' '+otherItems[o].name+'</p>'+'<a onclick="useConsumable('+otherItems[o].keyid+')">Use</a>'+'<a onclick="sellOther('+otherItems[o].keyid+')">Sell('+otherItems[o].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
+		sellSection = '';
+		if (!inFight && inCity) {
+			sellSection = '<a onclick="sellItem('+otherItems[o].keyid+')">Sell('+otherItems[o].value.toFixed(1)+')</a>';
 		}
+		useSection = ''
+		if (otherItems[o].extra.consumable) {
+			useSection = '<a onclick="useConsumable('+otherItems[o].keyid+')">Use</a>'
+		}
+
+		invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+otherItems[o].keyid+'">'+'<p>'+getTierColor(otherItems[o].rarity)+otherItems[o].rarity+' '+otherItems[o].name+'</p>'+useSection+sellSection +'</div>'+invScreen.innerHTML;
+		
 	}
 	invScreen.innerHTML ='<div id="id_inv_filters"><button onclick="showInventoryAll()">All</button><button onclick="showInventoryEquipped()">Equipped</button><button onclick="showInventoryOthers()">Others</button></div>'+invScreen.innerHTML;
 
@@ -318,7 +337,18 @@ function showInventoryEquipped(){
 	invScreen.innerHTML ="";
 	for(let i in curinv){
 		if (curinv[i].extra.equipped) {
-		invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+curinv[i].keyid+'">'+'<p>'+getTierColor(curinv[i].rarity)+curinv[i].rarity+' '+curinv[i].name+'</p>'+'<a onClick = "printStats('+curinv[i].keyid+')">Stats</a>'+'<a onclick="equipItem('+curinv[i].keyid+')">Equip</a>'+'<a onclick="unequipItem('+curinv[i].keyid+')">Unequip</a>'+'<a onclick="sellItem('+curinv[i].keyid+')">Sell('+curinv[i].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
+			
+			equipSection = '';
+			if (!inFight) {
+				equipSection = '<a onclick="equipItem('+curinv[i].keyid+')">Equip</a>'+'<a onclick="unequipItem('+curinv[i].keyid+')">Unequip</a>'
+			}
+
+			sellSection = '';
+			if(inCity){
+				sellSection = '<a onclick="sellItem('+curinv[i].keyid+')">Sell('+curinv[i].value.toFixed(1)+')</a>';
+			}
+
+			invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+curinv[i].keyid+'">'+'<p>'+getTierColor(curinv[i].rarity)+curinv[i].rarity+' '+curinv[i].name+'</p>'+'<a onClick = "printStats('+curinv[i].keyid+')">Stats</a>'+ equipSection + sellSection+'</div>'+invScreen.innerHTML;
 		}
 	}
 	invScreen.innerHTML ='<div id="id_inv_filters"><button onclick="showInventoryAll()">All</button><button onclick="showInventoryEquipped()">Equipped</button><button onclick="showInventoryOthers()">Others</button></div>'+invScreen.innerHTML;
@@ -334,15 +364,27 @@ function showInventoryOthers(){
 	invScreen.innerHTML ="";
 	for(let i in curinv){
 		if (!curinv[i].extra.wearable) {
-			invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+curinv[i].keyid+'">'+'<p>'+getTierColor(curinv[i].rarity)+curinv[i].rarity+' '+curinv[i].name+'</p>'+'<a onClick = "printStats('+curinv[i].keyid+')">Stats</a>'+'<a onclick="equipItem('+curinv[i].keyid+')">Equip</a>'+'<a onclick="unequipItem('+curinv[i].keyid+')">Unequip</a>'+'<a onclick="sellItem('+curinv[i].keyid+')">Sell('+curinv[i].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
+			equipSection = '';
+			sellSection = '';
+			if (!inFight) {
+				equipSection = '<a onclick="equipItem('+curinv[i].keyid+')">Equip</a>'+'<a onclick="unequipItem('+curinv[i].keyid+')">Unequip</a>'
+				sellSection = '<a onclick="sellItem('+curinv[i].keyid+')">Sell('+curinv[i].value.toFixed(1)+')</a>';
+			}
+			invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+curinv[i].keyid+'">'+'<p>'+getTierColor(curinv[i].rarity)+curinv[i].rarity+' '+curinv[i].name+'</p>'+'<a onClick = "printStats('+curinv[i].keyid+')">Stats</a>'+equipSection+ sellSection+'</div>'+invScreen.innerHTML;
 		}
 	}
 	for(let o in otherItems){
-		if (!otherItems[o].extra.consumable) {
-			invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+otherItems[o].keyid+'">'+'<p>'+getTierColor(otherItems[o].rarity)+otherItems[o].rarity+' '+otherItems[o].name+'</p>'+'<a onClick = "printDesc('+otherItems[o].keyid+')">Description</a>'+'<a onclick="sellOther('+otherItems[o].keyid+')">Sell('+otherItems[o].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
-		}else if (otherItems[o].extra.consumable) {
-			invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+otherItems[o].keyid+'">'+'<p>'+getTierColor(otherItems[o].rarity)+otherItems[o].rarity+' '+otherItems[o].name+'</p>'+'<a onclick="useConsumable('+otherItems[o].keyid+')">Use</a>'+'<a onclick="sellOther('+otherItems[o].keyid+')">Sell('+otherItems[o].value.toFixed(1)+')</a></div>'+invScreen.innerHTML;
+		sellSection = '';
+		if (!inFight && inCity) {
+			sellSection = '<a onclick="sellItem('+otherItems[o].keyid+')">Sell('+otherItems[o].value.toFixed(1)+')</a>';
 		}
+		useSection = ''
+		if (otherItems[o].extra.consumable) {
+			useSection = '<a onclick="useConsumable('+otherItems[o].keyid+')">Use</a>'
+		}
+
+		invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+otherItems[o].keyid+'">'+'<p>'+getTierColor(otherItems[o].rarity)+otherItems[o].rarity+' '+otherItems[o].name+'</p>'+useSection+sellSection +'</div>'+invScreen.innerHTML;
+		
 	}
 	invScreen.innerHTML ='<div id="id_inv_filters"><button onclick="showInventoryAll()">All</button><button onclick="showInventoryEquipped()">Equipped</button><button onclick="showInventoryOthers()">Others</button></div>'+invScreen.innerHTML;
 
@@ -479,7 +521,7 @@ function newFight(){
 	let theEnemy = genEnemy();
 	console.log(theEnemy);
 	setEnemyStats(theEnemy);
-	quickPrompt(theEnemy.name+" appeared!!\n(Last chance for item changes)", ["Start Fight"], ["startFight()"],"forest.jpg")
+	quickPrompt(theEnemy.name+" appeared!!\n(Last chance for item changes)", ["Start Fight"], ["startFight()"],"p_forest.jpg")
 	addEnemyToPrompt(theEnemy.name)
 }
 
@@ -545,6 +587,7 @@ function charEnergize(ep){
 function startFight(){
 	inFight = true;
 	addFightGUI();
+	updateInvScreen();
 	
 	// hitAnim();
 }
@@ -557,7 +600,11 @@ function updateFight(){
 	else if(curEnemyHealth <=0 ){
 		removeFightGui();
 		console.log("Enemy died")
-		quickPrompt(["Enemy died"],["Continue"],["justWalk()"],"forest.jpg")
+
+		inFight = false;
+		updateInvScreen();
+
+		quickPrompt(["Enemy died"],["Continue"],["justWalk()"],"p_forest.jpg")
 	}
 	else if(charFightHealth <0){
 		removeFightGui();
@@ -602,15 +649,27 @@ function enterCity(){
 	writeLog("===You arrived to city.")
 	inCity = true;
 	inFight = false;
+	
 	charHeal();
 	charEnergize();
+
 	lastCityDistance = 0.00;
+	progressMultiplier +=0.1
+
+	updateInvScreen();
+	showCityMenu();
 }
+
+function showCityMenu(){
+	quickPrompt(["*Welcome to the city*"],["Infirmary","Hot Tub","Leave City"],["charHeal()","charEnergize()","leaveCity()"],"p_street.jpg");
+}
+
 function leaveCity(){
 	charHeal();
 	charEnergize();
 	writeLog("===You left the city.")
 	inCity = false;
+	updateInvScreen();
 	newFight();
 
 }
