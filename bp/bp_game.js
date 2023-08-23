@@ -25,6 +25,7 @@ var inCity = true;;
 var progressMultiplier = 1;
 var curinv= [];
 var otherItems = [];
+var charSkills = ["Basic"];
 
 var lastId = 0; //last item id, increase before use
 
@@ -109,8 +110,8 @@ function updateCharStats(){
 
 function updateStatScreen(){
 	document.getElementById("id_char_money").innerText = charBalance.toFixed(2);
-	document.getElementById("id_char_health").innerText = charHealth.toFixed(1);
-	document.getElementById("id_char_energy").innerText = charEnergy.toFixed(1);
+	document.getElementById("id_char_health").innerText = charFightHealth.toFixed(1)+"/"+charHealth.toFixed(1);
+	document.getElementById("id_char_energy").innerText = charFightEnergy.toFixed(1)+"/"+charEnergy.toFixed(1);
 	document.getElementById("id_char_phydmg").innerText = charPhyDmg.toFixed(1);
 	document.getElementById("id_char_mgcdmg").innerText = charMgcDmg.toFixed(1);
 	document.getElementById("id_char_phydef").innerText = charPhyDef.toFixed(1);
@@ -269,6 +270,8 @@ function useConsumable(keyid){
 
 // resets inv screen, for each item in the inventory add a div
 function updateInvScreen(){
+	charHeal("fix");
+	charEnergize("fix");
 	console.log(curinv);
 	if (lastInvShowed === "inv-all") {showInventoryAll();}
 	else if(lastInvShowed === "inv-equipped"){showInventoryEquipped();}
@@ -431,7 +434,7 @@ function testItemCreation(){
 function quickPrompt(theText, theOptions, theFuncs ,theBg){
 	let PromptScreenEl = document.getElementById("id_upper_left");
 	PromptScreenEl.innerHTML = ('<img class="cl_promptBg" src="./bp_game/'+theBg+
-                '"><p class="cl_promptText">'+theText+
+                '"><p class="cl_promptText" id="id_promptText">'+theText+
                 '</p><div class="cl_promptOptionsDiv" id="id_prompt_options">'+
                 '</div>')
 
@@ -456,15 +459,121 @@ function addEnemyToPrompt(eName){
 	fPromptScreen.innerHTML = '<img class="cl_promptEnemy" src="./bp_game/m_'+eName+'.png">'+fPromptScreen.innerHTML;
 }
 function newFight(){
-	inCity = false;
+	lastCityDistance += travelRate;
+	updateCharStats();
 	let theEnemy = genEnemy();
-	quickPrompt(theEnemy.name+" appeared!!\n(Last chance for item changes)", ["Fight"], ["startFight()"],"forest.jpg")
+	quickPrompt(theEnemy.name+" appeared!!\n(Last chance for item changes)", ["Start Fight"], ["startFight()"],"forest.jpg")
 	addEnemyToPrompt("zombie")
 	console.log(theEnemy);
 }
 
-var charFightHealth
+var charFightHealth = charHealth;
+var charFightEnergy = charEnergy;
+
+function charHeal(hp){
+	if(hp === undefined){
+		charFightHealth = charHealth;
+	}
+	else if(hp == "fix" & charFightHealth > charHealth){
+		charFightHealth = charHealth;
+	}
+	else if(hp !== "fix"){
+		charFightHealth +=hp;
+		if (charFightHealth > charHealth){
+			charFightHealth = charHealth;
+		}
+	}
+	updateCharStats();
+}
+
+function charEnergize(ep){
+	console.log(ep)
+	if(ep === undefined){
+		charFightEnergy = charEnergy;
+	}
+	else if(ep == "fix" & charFightEnergy > charEnergy){
+		charFightEnergy = charEnergy;
+	}
+	else if(ep !== "fix"){
+		charFightEnergy +=ep;
+		if (charFightEnergy > charEnergy){
+			charFightEnergy = charEnergy;
+		}
+	}
+	updateCharStats();
+}
+
+
 function startFight(enemy){
 	inFight = true;
+	addFightGUI();
+	addSkillsToGUI();
+	// hitAnim();
+}
 
+function addFightGUI(){
+	removePromptScreen();
+	let upperLeft = document.getElementById("id_upper_left");
+	upperLeft.innerHTML += '<div class="cl_fight_gui" id="id_fight_gui"></div>'
+	
+}
+function addSkillsToGUI(){
+	let gui = document.getElementById("id_fight_gui");
+	for (let s in charSkills)
+}
+
+function removeFightGui(){
+	let gui = document.getElementById("id_fight_gui");
+	gui.remove();
+}
+
+function removePromptScreen(){
+	let options = document.getElementById("id_prompt_options");
+	options.remove();
+
+	let ptext = document.getElementById("id_promptText");
+	ptext.remove();
+}
+
+
+var lastCityDistance = 0.50;
+var	travelRate = 0.05;
+function enterCity(){
+	writeLog("You arrived to city.")
+	inCity = true;
+	inFight = false;
+	charHeal();
+	charEnergize();
+	lastCityDistance = 0.00;
+}
+function leaveCity(){
+	charHeal();
+	charEnergize();
+	writeLog("You left the city.")
+	inCity = false;
+	newFight();
+
+}
+function nextWorldMove(){
+	let fightChance = Math.random();
+	if (fightChance > lastCityDistance) {
+		newFight();
+	}
+	else{
+		enterCity();
+	}
+}
+
+
+function hitAnim(){
+	let upLeft = document.getElementById("id_upper_left");
+	upLeft.innerHTML = '<img class="cl_hitimg" id="id_hitimg" src="./bp_game/r_hit.png">'+upLeft.innerHTML;
+
+	let hitObj = document.getElementById("id_hitimg");
+	hitObj.classList.add("hitAnim");
+}
+
+function getAttacked(){
+	let upLeft = document.getElementById("id_upper_left");
+	upLeft.classList.add("getHitAnim");
 }
