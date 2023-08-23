@@ -195,10 +195,44 @@
 .cl_fight_gui{
 	background: sandybrown;
     width: 100%;
-    height: 150px;
+    height: 130px;
     bottom: 0;
     position: absolute;
     z-index: 2;
+}
+.cl_skillButton{
+	width: 45%;
+	height: 50px;
+	background-color: lightgray;
+	border-style: solid;
+	border-radius: 0px;
+	cursor: pointer;
+	font-size: 20px;
+	position: absolute;
+}
+.cl_skillButton:hover{
+	background-color: darkgray;
+}
+
+.top-left{
+	top: 0;
+	left: 0;
+	margin: 10px 0 0 10px;
+}
+.top-right{
+	top: 0;
+	right: 0;
+	margin: 10px 10px 0 0;
+}
+.bottom-left{
+	bottom: 0;
+	left: 0;
+	margin: 0 0 10px 10px;
+}
+.bottom-right{
+	bottom: 0;
+	right: 0;
+	margin: 0 10px 10px 0;
 }
 
 @keyframes hitAnim{
@@ -210,7 +244,7 @@
 }
 
 
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
 	.cl_upper_selector{
 		display: block;
 		background-color: gray;

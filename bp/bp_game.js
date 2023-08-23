@@ -25,7 +25,8 @@ var inCity = true;;
 var progressMultiplier = 1;
 var curinv= [];
 var otherItems = [];
-var charSkills = ["Basic"];
+var charSkills = ["Basic","Fireball"];
+var charSkillSlots = ["Basic","Fireball","",""]
 
 var lastId = 0; //last item id, increase before use
 
@@ -519,7 +520,10 @@ function addFightGUI(){
 }
 function addSkillsToGUI(){
 	let gui = document.getElementById("id_fight_gui");
-	for (let s in charSkills)
+	let positionList = ["top-left","top-right","bottom-left","bottom-right"];
+	for (let s in charSkillSlots){
+		gui.innerHTML = gui.innerHTML + '<button onclick="skill_' +charSkillSlots[s] + '"() class="cl_skillButton '+ positionList[s]+'">'+charSkillSlots[s]+"</button>"
+	}
 }
 
 function removeFightGui(){
