@@ -30,6 +30,7 @@ var charSkillSlots = ["Basic","Fireball","Die",""]
 
 var lastId = 0; //last item id, increase before use
 
+var charBalance = 0;
 
 var charHealth = 100;
 var charEnergy = 20;
@@ -44,7 +45,7 @@ var charCritMult = 1.3;
 var charLife = 1;
 var charElementalBuffs = [];
 var charUniques = [];
-var charBalance = 0;
+
 
 
 var defcharHealth = 100;
@@ -314,7 +315,7 @@ function showInventoryAll(){
 	for(let o in otherItems){
 		sellSection = '';
 		if (!inFight && inCity) {
-			sellSection = '<a onclick="sellItem('+otherItems[o].keyid+')">Sell('+otherItems[o].value.toFixed(1)+')</a>';
+			sellSection = '<a onclick="sellOther('+otherItems[o].keyid+')">Sell('+otherItems[o].value.toFixed(1)+')</a>';
 		}
 		useSection = ''
 		if (otherItems[o].extra.consumable) {
@@ -368,15 +369,18 @@ function showInventoryOthers(){
 			sellSection = '';
 			if (!inFight) {
 				equipSection = '<a onclick="equipItem('+curinv[i].keyid+')">Equip</a>'+'<a onclick="unequipItem('+curinv[i].keyid+')">Unequip</a>'
+			}
+			if(inCity){
 				sellSection = '<a onclick="sellItem('+curinv[i].keyid+')">Sell('+curinv[i].value.toFixed(1)+')</a>';
 			}
+
 			invScreen.innerHTML = '<div class="cl_inv_item" id="id_invitem_'+curinv[i].keyid+'">'+'<p>'+getTierColor(curinv[i].rarity)+curinv[i].rarity+' '+curinv[i].name+'</p>'+'<a onClick = "printStats('+curinv[i].keyid+')">Stats</a>'+equipSection+ sellSection+'</div>'+invScreen.innerHTML;
 		}
 	}
 	for(let o in otherItems){
 		sellSection = '';
 		if (!inFight && inCity) {
-			sellSection = '<a onclick="sellItem('+otherItems[o].keyid+')">Sell('+otherItems[o].value.toFixed(1)+')</a>';
+			sellSection = '<a onclick="sellOther('+otherItems[o].keyid+')">Sell('+otherItems[o].value.toFixed(1)+')</a>';
 		}
 		useSection = ''
 		if (otherItems[o].extra.consumable) {
@@ -521,7 +525,8 @@ function newFight(){
 	let theEnemy = genEnemy();
 	console.log(theEnemy);
 	setEnemyStats(theEnemy);
-	quickPrompt(theEnemy.name+" appeared!!\n(Last chance for item changes)", ["Start Fight"], ["startFight()"],"p_forest.jpg")
+	quickPrompt(theEnemy.name+" appeared!!\n(Last chance for item changes)", ["Start Fight"], ["startFight()"],"p_forest.jpg");
+	writeLog("Fight: "+theEnemy.name+" appeared!!")
 	addEnemyToPrompt(theEnemy.name)
 }
 
@@ -596,6 +601,7 @@ function startFight(){
 function updateFight(){
 	if (curEnemyHealth >0 && charFightHealth >0) {
 		updateEnemyHealthBar();
+		updateCharStats();
 	}
 	else if(curEnemyHealth <=0 ){
 		removeFightGui();
@@ -606,7 +612,8 @@ function updateFight(){
 
 		quickPrompt(["Enemy died"],["Continue"],["justWalk()"],"p_forest.jpg")
 	}
-	else if(charFightHealth <0){
+	else if(charFightHealth <=0){
+		updateCharStats();
 		removeFightGui();
 		quickPrompt(["You died..."],["New Game"],["location.reload()"],"rip.png")
 	}
@@ -650,8 +657,6 @@ function enterCity(){
 	inCity = true;
 	inFight = false;
 	
-	charHeal();
-	charEnergize();
 
 	lastCityDistance = 0.00;
 	progressMultiplier +=0.1
@@ -660,8 +665,36 @@ function enterCity(){
 	showCityMenu();
 }
 
+function cityHeal(){
+	if (charBalance >=35 && charFightHealth < charHealth) {
+		charBalance -= 35;
+		charHeal();
+		writeLog("In City: You feel fully healed.")
+	}
+	else if(charFightHealth >= charHealth){
+		writeLog("In City: you already feel fully healed.")
+	}
+	else{
+		writeLog("In City: you dont have enough money..")
+	}
+}
+
+function cityEnergize(){
+	if (charBalance >=20 && charFightEnergy < charEnergy) {
+		charBalance -= 20;
+		charEnergize();
+		writeLog("In City: You feel fully energized.")
+	}
+	else if(charFightEnergy >= charEnergy){
+		writeLog("In City: you already feel fully energized.")
+	}
+	else{
+		writeLog("In City: You dont have enough money..")
+	}
+}
+
 function showCityMenu(){
-	quickPrompt(["*Welcome to the city*"],["Infirmary","Hot Tub","Leave City"],["charHeal()","charEnergize()","leaveCity()"],"p_street.jpg");
+	quickPrompt(["*Welcome to the city*"],["Infirmary(35$)","Hot Tub(20$)","Leave City"],["cityHeal()","cityEnergize()","leaveCity()"],"p_street.jpg");
 }
 
 function leaveCity(){
@@ -685,6 +718,7 @@ function walkAnim(){
 	let pBg = document.getElementById("id_prompt_bg");
 	pBg.classList.remove("cl_walk_anim");
 	pBg.classList.add("cl_walk_anim")
+	charEnergize(10);
 
 }
 
@@ -712,7 +746,10 @@ function hitAnim(){
 	hitObj.classList.add("hitAnim");
 }
 
-function getAttacked(){
+function damageChar(value){
+	charFightHealth -= value;
+
+	//turn upperleft to red, fading away
 	let upLeft = document.getElementById("id_upper_left");
 	upLeft.classList.add("getHitAnim");
 }
