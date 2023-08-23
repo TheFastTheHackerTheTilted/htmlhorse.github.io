@@ -25,8 +25,8 @@ var inCity = true;;
 var progressMultiplier = 1;
 var curinv= [];
 var otherItems = [];
-var charSkills = ["Basic","Fireball"];
-var charSkillSlots = ["Basic","Fireball","",""]
+var charSkills = ["Basic","Fireball","Die"];
+var charSkillSlots = ["Basic","Fireball","Die",""]
 
 var lastId = 0; //last item id, increase before use
 
@@ -174,7 +174,7 @@ function addItemToInv(Item){
 function equipItem(keyid){
 	if(!inFight){
 		let indexToEquip = curinv.findIndex(item => item.keyid === keyid);
-		console.log("in inv: "+indexToEquip);
+		// console.log("in inv: "+indexToEquip);
 		if (indexToEquip !== -1) {
 			unequipItemByType(curinv[indexToEquip].type);
 			curinv[indexToEquip].extra.equipped = true;
@@ -273,7 +273,7 @@ function useConsumable(keyid){
 function updateInvScreen(){
 	charHeal("fix");
 	charEnergize("fix");
-	console.log(curinv);
+	// console.log(curinv);
 	if (lastInvShowed === "inv-all") {showInventoryAll();}
 	else if(lastInvShowed === "inv-equipped"){showInventoryEquipped();}
 	else if(lastInvShowed === "inv-others"){showInventoryOthers();}
@@ -434,7 +434,7 @@ function testItemCreation(){
 
 function quickPrompt(theText, theOptions, theFuncs ,theBg){
 	let PromptScreenEl = document.getElementById("id_upper_left");
-	PromptScreenEl.innerHTML = ('<img class="cl_promptBg" src="./bp_game/'+theBg+
+	PromptScreenEl.innerHTML = ('<img class="cl_promptBg" id="id_prompt_bg" src="./bp_game/'+theBg+
                 '"><p class="cl_promptText" id="id_promptText">'+theText+
                 '</p><div class="cl_promptOptionsDiv" id="id_prompt_options">'+
                 '</div>')
@@ -452,20 +452,58 @@ function enemyObject(name,hp,pdmg,mdmg,pdef,mdef){
 	this.phydmg = pdmg;
 	this.mgcdmg = mdmg;
 	this.phydef = pdef;
-	this.mgcdef = mdef
+	this.mgcdef = mdef;
 }
 
 function addEnemyToPrompt(eName){
 	let fPromptScreen = document.getElementById("id_upper_left");
-	fPromptScreen.innerHTML = '<img class="cl_promptEnemy" src="./bp_game/m_'+eName+'.png">'+fPromptScreen.innerHTML;
+	fPromptScreen.innerHTML = '<img class="cl_promptEnemy" id="id_promptEnemy" src="./bp_game/m_'+eName+'.png">'+fPromptScreen.innerHTML;
 }
+
+function removeEnemyFromPrompt(){
+	let promptEnemy = document.getElementById("id_upromptEnemy");
+	promptEnemy.remove();
+}
+
+
+var curEnemy = undefined;
+var curEnemyHealth = 1;
+var curEnemyPhyDmg = 1;
+var curEnemyMgcDmg = 1;
+var curEnemyPhyDef = 1;
+var curEnemyMgcDef = 1;
+var enemyMaxHealth = 100;
+
 function newFight(){
-	lastCityDistance += travelRate;
 	updateCharStats();
 	let theEnemy = genEnemy();
-	quickPrompt(theEnemy.name+" appeared!!\n(Last chance for item changes)", ["Start Fight"], ["startFight()"],"forest.jpg")
-	addEnemyToPrompt("zombie")
 	console.log(theEnemy);
+	setEnemyStats(theEnemy);
+	quickPrompt(theEnemy.name+" appeared!!\n(Last chance for item changes)", ["Start Fight"], ["startFight()"],"forest.jpg")
+	addEnemyToPrompt(theEnemy.name)
+}
+
+function setEnemyStats(theEnemy){
+	curEnemy = theEnemy;
+	curEnemyHealth = theEnemy.health;
+	enemyMaxHealth = theEnemy.health;
+	curEnemyPhyDmg = theEnemy.phydmg;
+	curEnemyMgcDmg = theEnemy.mgcdmg;
+	curEnemyPhyDef = theEnemy.phydef;
+	curEnemyMgcDmg = theEnemy.mgcdef;
+}
+
+function updateEnemyHealthBar(){
+	let enemyHealth = document.getElementById("id_enemy_health_left");
+	let leftHealthRate = (curEnemyHealth/enemyMaxHealth)*100;
+	enemyHealth.style.width = leftHealthRate+'%';
+}
+
+function damageEnemyPHY(dvalue){
+	curEnemyHealth = curEnemyHealth - (dvalue*(100/(100+curEnemyPhyDef)));
+}
+function damageEnemyMGC(dvalue){
+	curEnemyHealth = curEnemyHealth - (dvalue*(100/(100+curEnemyMgcDef)));
 }
 
 var charFightHealth = charHealth;
@@ -504,30 +542,49 @@ function charEnergize(ep){
 }
 
 
-function startFight(enemy){
+function startFight(){
 	inFight = true;
 	addFightGUI();
-	addSkillsToGUI();
+	
 	// hitAnim();
+}
+
+//where we check if there is a winner
+function updateFight(){
+	if (curEnemyHealth >0 && charFightHealth >0) {
+		updateEnemyHealthBar();
+	}
+	else if(curEnemyHealth <=0 ){
+		removeFightGui();
+		console.log("Enemy died")
+		quickPrompt(["Enemy died"],["Continue"],["justWalk()"],"forest.jpg")
+	}
+	else if(charFightHealth <0){
+		removeFightGui();
+		quickPrompt(["You died..."],["New Game"],["location.reload()"],"rip.png")
+	}
 }
 
 function addFightGUI(){
 	removePromptScreen();
 	let upperLeft = document.getElementById("id_upper_left");
-	upperLeft.innerHTML += '<div class="cl_fight_gui" id="id_fight_gui"></div>'
-	
+	upperLeft.innerHTML += '<div class="cl_fight_gui" id="id_fight_gui"></div>';
+	upperLeft.innerHTML += '<div class="cl_enemy_total_health" id="id_enemy_total_health"><div class="cl_enemy_health_left" id="id_enemy_health_left"></div></div>';
+	addSkillsToGUI();
 }
 function addSkillsToGUI(){
 	let gui = document.getElementById("id_fight_gui");
 	let positionList = ["top-left","top-right","bottom-left","bottom-right"];
 	for (let s in charSkillSlots){
-		gui.innerHTML = gui.innerHTML + '<button onclick="skill_' +charSkillSlots[s] + '"() class="cl_skillButton '+ positionList[s]+'">'+charSkillSlots[s]+"</button>"
+		gui.innerHTML = gui.innerHTML + '<button onclick="skill_' +charSkillSlots[s] + '()" class="cl_skillButton '+ positionList[s]+'">'+charSkillSlots[s]+"</button>"
 	}
 }
 
 function removeFightGui(){
 	let gui = document.getElementById("id_fight_gui");
 	gui.remove();
+	let hpGui = document.getElementById("id_enemy_total_health");
+	hpGui.remove();
 }
 
 function removePromptScreen(){
@@ -539,10 +596,10 @@ function removePromptScreen(){
 }
 
 
-var lastCityDistance = 0.50;
-var	travelRate = 0.05;
+var lastCityDistance = 0.00;
+var	travelRate = 0.15;
 function enterCity(){
-	writeLog("You arrived to city.")
+	writeLog("===You arrived to city.")
 	inCity = true;
 	inFight = false;
 	charHeal();
@@ -552,11 +609,26 @@ function enterCity(){
 function leaveCity(){
 	charHeal();
 	charEnergize();
-	writeLog("You left the city.")
+	writeLog("===You left the city.")
 	inCity = false;
 	newFight();
 
 }
+
+function justWalk(){
+	lastCityDistance += travelRate;
+	removePromptScreen();
+	console.log("Just walked")
+	walkAnim();
+	setTimeout(nextWorldMove,2000)
+}
+function walkAnim(){
+	let pBg = document.getElementById("id_prompt_bg");
+	pBg.classList.remove("cl_walk_anim");
+	pBg.classList.add("cl_walk_anim")
+
+}
+
 function nextWorldMove(){
 	let fightChance = Math.random();
 	if (fightChance > lastCityDistance) {
@@ -569,6 +641,11 @@ function nextWorldMove(){
 
 
 function hitAnim(){
+	let hitimg = document.getElementById("id_hitimg");
+	if (hitimg !== null) {
+		hitimg.remove();
+	}
+
 	let upLeft = document.getElementById("id_upper_left");
 	upLeft.innerHTML = '<img class="cl_hitimg" id="id_hitimg" src="./bp_game/r_hit.png">'+upLeft.innerHTML;
 

@@ -154,6 +154,38 @@
 	height: 600px;
 	z-index: 0;
 	opacity: 0.5;
+	top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+}
+.cl_walk_anim{
+	animation: walk_anim 2s linear;
+}
+@keyframes walk_anim{
+	0%, 100% {
+    	left: 50%;
+    	top: 50%;
+  	}
+  	15% {
+    	left: 45%;
+    	top: 45%;
+  	}
+  	30% {
+    	left: 40%;
+    	top: 50%;
+  	}
+  	45%{
+  		left: 40%;
+    	top: 50%;
+  	}
+  	60%{
+  		left: 55%;
+  		top: 45%;
+  	}
+  	75% {
+    	left: 60%;
+    	top: 50%;
+  	}
 }
 
 .cl_promptEnemy{
@@ -188,10 +220,28 @@
 	animation: hitAnim 0.4s linear;
 }
 
-.getHitAnim{
-	animation: hitAnim 1s linear;
+@keyframes hitAnim{
+	0% {
+		opacity: 1;
+	}
+	70%{opacity: 1}
+	100% {opacity: 0}
 }
 
+
+.cl_enemy_total_health{
+	background: white;
+    width: 80%;
+    height: 10px;
+    top: 50px;
+    position: absolute;
+    z-index: 2;
+}
+.cl_enemy_health_left{
+	background-color: green;
+	height: 8px;
+	width: 100%;
+}
 .cl_fight_gui{
 	background: sandybrown;
     width: 100%;
@@ -235,13 +285,7 @@
 	margin: 0 10px 10px 0;
 }
 
-@keyframes hitAnim{
-	0% {
-		opacity: 1;
-	}
-	70%{opacity: 1}
-	100% {opacity: 0}
-}
+
 
 
 @media (max-width: 1000px) {
