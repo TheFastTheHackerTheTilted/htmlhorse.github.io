@@ -594,7 +594,6 @@ function startFight(){
 	addFightGUI();
 	updateInvScreen();
 	
-	// hitAnim();
 }
 
 //where we check if there is a winner
@@ -733,14 +732,18 @@ function nextWorldMove(){
 }
 
 
-function hitAnim(){
+function hitAnim(aName){
+	if (aName === undefined) {
+		aName = "r_default"
+	}
+
 	let hitimg = document.getElementById("id_hitimg");
 	if (hitimg !== null) {
 		hitimg.remove();
 	}
 
 	let upLeft = document.getElementById("id_upleft_anim_div");
-	upLeft.innerHTML = '<img class="cl_hitimg" id="id_hitimg" src="./bp_game/r_hit.png">';
+	upLeft.innerHTML = '<img class="cl_hitimg" id="id_hitimg" src="./bp_game/'+aName+'.png">';
 
 	let hitObj = document.getElementById("id_hitimg");
 	hitObj.classList.add("hitAnim");

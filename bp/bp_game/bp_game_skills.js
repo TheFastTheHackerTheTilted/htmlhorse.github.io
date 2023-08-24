@@ -1,7 +1,7 @@
 function skill_Basic(){
 	let finalDmgValue = charPhyDmg;
 	damageEnemyPHY(finalDmgValue);
-	hitAnim();
+	hitAnim("r_basic");
 
 	charEnergize(5);
 
@@ -14,7 +14,7 @@ function skill_Fireball(){
 		charEnergize(-15);
 
 		damageEnemyMGC(finalDmgValue);
-		hitAnim();
+		hitAnim("r_fireball");
 
 		updateFight();
 	}
