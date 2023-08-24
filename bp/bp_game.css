@@ -354,4 +354,9 @@
 	#id_overview_img{
 		opacity: 0.5;
 	}
+
+	.cl_inv_item{
+		height: auto;
+		padding: 0px 0px 5px 10px;
+	}
 }
