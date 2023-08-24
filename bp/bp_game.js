@@ -607,6 +607,7 @@ function updateFight(){
 		console.log("Enemy died")
 
 		inFight = false;
+		dropLoot();
 		updateInvScreen();
 
 		quickPrompt(["Enemy died"],["Continue"],["justWalk()"],"p_forest.jpg")
@@ -615,6 +616,21 @@ function updateFight(){
 		updateCharStats();
 		removeFightGui();
 		quickPrompt(["You died..."],["New Game"],["location.reload()"],"rip.png")
+	}
+}
+
+function dropLoot(){
+	let randomloot = Math.random();
+	if (randomloot > 0.95) {
+		addItemToInv(randomConsumableItemGenerator());
+	}
+	else if(randomloot > 0.55){
+		addItemToInv(randomWearableItemGenerator());
+	}
+	else{
+		lootMoney = (Math.random()*100*progressMultiplier);
+		charBalance += lootMoney;
+		writeLog("Drop: gained "+lootMoney.toFixed(2));
 	}
 }
 

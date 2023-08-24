@@ -221,8 +221,9 @@
 .cl_hitimg{
 	width: 300px;
     height: 175px;
-    top: 25%;
-    left: 25%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     position: absolute;
     opacity: 0;
 }
