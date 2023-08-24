@@ -208,10 +208,18 @@
 }
 
 
+.cl_upleft_anim_div{
+	z-index: 5;
+	width: 100%;
+	height: 100%;
+	opacity: 1;
+	pointer-events: none;
+
+}
+
 .cl_hitimg{
 	width: 300px;
     height: 175px;
-    z-index: 2;
     top: 25%;
     left: 25%;
     position: absolute;
@@ -228,6 +236,30 @@
 	}
 	70%{opacity: 1}
 	100% {opacity: 0}
+}
+
+#id_damageChar{
+	height: 100%;
+	width: 100%;
+	opacity: 0;
+	position: absolute;
+	background-color: red;
+	pointer-events: none
+}
+
+.getHitAnim{
+	animation: gettingHit 0.4s linear;
+}
+@keyframes gettingHit{
+	0% {
+		opacity: 0;
+	}
+	70%{
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
 }
 
 

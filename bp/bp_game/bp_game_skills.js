@@ -1,8 +1,10 @@
 function skill_Basic(){
 	let finalDmgValue = charPhyDmg;
 	damageEnemyPHY(finalDmgValue);
-	charEnergize(5);
 	hitAnim();
+
+	charEnergize(5);
+
 	updateFight();
 }
 
@@ -10,8 +12,10 @@ function skill_Fireball(){
 	if(charFightEnergy >= 15){
 		let finalDmgValue = charMgcDmg;
 		charEnergize(-15);
+
 		damageEnemyMGC(finalDmgValue);
 		hitAnim();
+
 		updateFight();
 	}
 	else{
@@ -20,6 +24,7 @@ function skill_Fireball(){
 }
 
 function skill_Die(){
-	damageChar(50);
+	damageChar(20);
+	charHurtAnim();
 	updateFight();
 }

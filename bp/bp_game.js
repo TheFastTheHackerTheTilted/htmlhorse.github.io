@@ -482,8 +482,8 @@ function quickPrompt(theText, theOptions, theFuncs ,theBg){
 	let PromptScreenEl = document.getElementById("id_upper_left");
 	PromptScreenEl.innerHTML = ('<img class="cl_promptBg" id="id_prompt_bg" src="./bp_game/'+theBg+
                 '"><p class="cl_promptText" id="id_promptText">'+theText+
-                '</p><div class="cl_promptOptionsDiv" id="id_prompt_options">'+
-                '</div>')
+                '</p><div class="cl_promptOptionsDiv" id="id_prompt_options"></div>'+
+                '<div class="cl_upleft_anim_div" id="id_upleft_anim_div"></div>')
 
 	let OptionsEl = document.getElementById("id_prompt_options");
 	for (let o in theOptions){
@@ -658,7 +658,7 @@ function enterCity(){
 	inFight = false;
 	
 
-	lastCityDistance = 0.00;
+	lastCityDistance = -0.05;
 	progressMultiplier +=0.1
 
 	updateInvScreen();
@@ -739,8 +739,8 @@ function hitAnim(){
 		hitimg.remove();
 	}
 
-	let upLeft = document.getElementById("id_upper_left");
-	upLeft.innerHTML = '<img class="cl_hitimg" id="id_hitimg" src="./bp_game/r_hit.png">'+upLeft.innerHTML;
+	let upLeft = document.getElementById("id_upleft_anim_div");
+	upLeft.innerHTML = '<img class="cl_hitimg" id="id_hitimg" src="./bp_game/r_hit.png">';
 
 	let hitObj = document.getElementById("id_hitimg");
 	hitObj.classList.add("hitAnim");
@@ -748,8 +748,18 @@ function hitAnim(){
 
 function damageChar(value){
 	charFightHealth -= value;
+}
+
+function charHurtAnim(){
+	let dmgScreen = document.getElementById("id_damageChar");
+	if (dmgScreen !== null) {
+		dmgScreen.remove();
+	}
+
+	let upLeft = document.getElementById("id_upleft_anim_div");
+	upLeft.innerHTML = '<div class="cl_damageChar" id="id_damageChar"></div>';
 
 	//turn upperleft to red, fading away
-	let upLeft = document.getElementById("id_upper_left");
-	upLeft.classList.add("getHitAnim");
+	let dmgChar = document.getElementById("id_damageChar");
+	dmgChar.classList.add("getHitAnim");
 }
