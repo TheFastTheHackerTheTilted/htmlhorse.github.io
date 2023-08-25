@@ -799,7 +799,7 @@ function leaveCity(){
 	charHeal("fix");
 	charEnergize("fix");
 	writeLog("===You left the city.");
-	writeLog("Current difficulty: "+progressMultiplier);
+	writeLog("Current difficulty: "+progressMultiplier.toFixed(1));
 	inCity = false;
 	updateInvScreen();
 	// newFight();
