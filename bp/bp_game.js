@@ -496,6 +496,12 @@ function quickPrompt(theText, theOptions, theFuncs ,theBg){
 	}
 }
 
+function changeBg(bg){
+	let imgElement = document.getElementById('id_prompt_bg');
+
+	imgElement.setAttribute('src', './bp_game/'+bg);
+}
+
 
 function enemyObject(name,hp,pdmg,mdmg,pdef,mdef){
 	this.name = name;
@@ -531,7 +537,7 @@ function newFight(){
 	let theEnemy = genEnemy();
 	console.log(theEnemy);
 	setEnemyStats(theEnemy);
-	quickPrompt(theEnemy.name+" appeared!!\n(Last chance for item changes)", ["Start Fight"], ["startFight()"],"p_forest.jpg");
+	quickPrompt(theEnemy.name+" appeared!!", ["Start Fight"], ["startFight()"],"p_forest.jpg");
 	writeLog("Fight: "+theEnemy.name+" appeared!!")
 	addEnemyToPrompt(theEnemy.name)
 }
@@ -548,15 +554,21 @@ function setEnemyStats(theEnemy){
 
 function updateEnemyHealthBar(){
 	let enemyHealth = document.getElementById("id_enemy_health_left");
+	if (curEnemyHealth <=0) {
+		curEnemyHealth = 0;
+	}
 	let leftHealthRate = (curEnemyHealth/enemyMaxHealth)*100;
 	enemyHealth.style.width = leftHealthRate+'%';
 }
 
 function damageEnemyPHY(dvalue){
 	curEnemyHealth = curEnemyHealth - (dvalue*(100/(100+curEnemyPhyDef)));
+	updateEnemyHealthBar();
+
 }
 function damageEnemyMGC(dvalue){
 	curEnemyHealth = curEnemyHealth - (dvalue*(100/(100+curEnemyMgcDef)));
+	updateEnemyHealthBar();
 }
 
 var charFightHealth = charHealth;
@@ -594,12 +606,28 @@ function charEnergize(ep){
 	updateCharStats();
 }
 
-
+var lastAttackBy = ""
 function startFight(){
 	inFight = true;
 	addFightGUI();
 	updateInvScreen();
+	updateFight();
 	
+}
+
+function skillButtonStyleBlocked(){
+	let buttons = document.querySelectorAll('.cl_skillButton');
+
+	buttons.forEach(button => {
+		button.style.backgroundColor = 'dimgray';
+	});
+}
+function skillButtonStyleUnlock(){
+	let buttons = document.querySelectorAll('.cl_skillButton');
+
+	buttons.forEach(button => {
+		button.style.backgroundColor = 'lightgray';
+	});
 }
 
 //where we check if there is a winner
@@ -607,6 +635,14 @@ function updateFight(){
 	if (curEnemyHealth >0 && charFightHealth >0) {
 		updateEnemyHealthBar();
 		updateCharStats();
+		let clButton = document.querySelector('.cl_skillButton');
+		if (lastAttackBy === "char"){
+			skillButtonStyleBlocked();
+			setTimeout(enemyHits,1000);
+		}
+		else{
+			skillButtonStyleUnlock();
+		}
 	}
 	else if(curEnemyHealth <=0 ){
 		removeFightGui();
@@ -655,17 +691,22 @@ function addXp(amount){
 		if (charLevel >= 2) {
 			learnSkill("Fireball");
 		}
+		if (charLevel >= 5){
+			learnSkill("Refresh");
+		}
 	}
 
 }
 
 function learnSkill(skill){
-	charSkills.push(skill);
-	writeLog("Learned new skill: "+skill)
-	for(let s in charSkillSlots){
-		if(charSkillSlots[s] === ""){
-			charSkillSlots[s] = skill;
-			break;
+	if(!charSkills.includes(skill)){
+		charSkills.push(skill);
+		writeLog("Learned new skill: "+skill)
+		for(let s in charSkillSlots){
+			if(charSkillSlots[s] === ""){
+				charSkillSlots[s] = skill;
+				break;
+			}
 		}
 	}
 
@@ -703,7 +744,7 @@ function removePromptScreen(){
 }
 
 
-var lastCityDistance = 0.00;
+var lastCityDistance = -0.05;
 var	travelRate = 0.15;
 function enterCity(){
 	writeLog("===You arrived to city.")
@@ -756,11 +797,13 @@ function leaveCity(){
 	writeLog("===You left the city.")
 	inCity = false;
 	updateInvScreen();
-	newFight();
+	// newFight();
+	justWalk();
 
 }
 
 function justWalk(){
+	changeBg("p_forest.jpg")
 	lastCityDistance += travelRate;
 	removePromptScreen();
 	console.log("Just walked")
@@ -777,7 +820,7 @@ function walkAnim(){
 
 function nextWorldMove(){
 	let fightChance = Math.random();
-	if (fightChance > lastCityDistance) {
+	if (fightChance > lastCityDistance || lastCityDistance <= 0.10) {
 		newFight();
 	}
 	else{
@@ -803,8 +846,17 @@ function hitAnim(aName){
 	hitObj.classList.add("hitAnim");
 }
 
+function enemyHits(){
+	finaldmgvalue = (curEnemyMgcDmg * (100/(100+charMgcDef))) + (curEnemyPhyDmg*(100/(100+charPhyDef)));
+	lastAttackBy = "enemy";
+	damageChar(finaldmgvalue);
+	updateFight();
+}
+
 function damageChar(value){
 	charFightHealth -= value;
+	charHurtAnim();
+
 }
 
 function charHurtAnim(){

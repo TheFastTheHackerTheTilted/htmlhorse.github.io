@@ -50,7 +50,7 @@ function st_main01(){
 	addItemToInv(randomWearableItemGenerator(0));
 	addItemToInv(randomWearableItemGenerator(0));
 	addItemToInv(randomWearableItemGenerator(1));
-	newDiagList(["Dont forget; you can only heal in cities or with potions.","Thats why its important that you change your equipment before you leave the city so you can heal accordingly.","Equip now and go on.."]);
+	newDiagList(["Dont forget; you can not heal with time.","Thats why its important that you heal yourself properly, in Infirmary or in other ways.","Equip now and go on.."]);
 	diagPosition = "p_tavern.jpg";
 	endOptions = ["Leave city"];
 	endFuncs= ["leaveCity()"];
