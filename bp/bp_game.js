@@ -12,7 +12,7 @@ function writeLog(text){
 function fancyWriteLog(text, colorcode){
 
 	let logs = document.getElementById("id_logs");
-	logs.innerHTML = '<span style="color:'+colorcode+';">'+"<br><"+line+">"+text+'</span>'+logs.innerHTML;
+	logs.innerHTML = '<span style="color:'+colorcode+'">'+"<"+line+"> "+text+'</span>'+logs.innerHTML;
 	line++;
 }
 
@@ -25,8 +25,8 @@ var inCity = true;;
 var progressMultiplier = 1;
 var curinv= [];
 var otherItems = [];
-var charSkills = ["Basic","Die"];
-var charSkillSlots = ["Basic","Die","",""]
+var charSkills = ["Basic",];
+var charSkillSlots = ["Basic","","",""]
 
 var lastId = 0; //last item id, increase before use
 
@@ -798,7 +798,8 @@ function showCityMenu(){
 function leaveCity(){
 	charHeal("fix");
 	charEnergize("fix");
-	writeLog("===You left the city.")
+	writeLog("===You left the city.");
+	writeLog("Current difficulty: "+progressMultiplier);
 	inCity = false;
 	updateInvScreen();
 	// newFight();
