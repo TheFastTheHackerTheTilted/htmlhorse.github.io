@@ -1,7 +1,14 @@
 function skill_Basic(){
 	let finalDmgValue = charPhyDmg;
+	let cricChance = Math.random()*100;
+	if (cricChance < charCritCh) {
+		finalDmgValue = finalDmgValue* charCritMult;
+		hitAnim("r_default")
+	}else{
+		hitAnim("r_basic");
+	}
 	damageEnemyPHY(finalDmgValue);
-	hitAnim("r_basic");
+	
 
 	charEnergize(5);
 

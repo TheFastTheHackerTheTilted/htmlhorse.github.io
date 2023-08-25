@@ -25,10 +25,14 @@ var inCity = true;;
 var progressMultiplier = 1;
 var curinv= [];
 var otherItems = [];
-var charSkills = ["Basic","Fireball","Die"];
-var charSkillSlots = ["Basic","Fireball","Die",""]
+var charSkills = ["Basic","Die"];
+var charSkillSlots = ["Basic","Die","",""]
 
 var lastId = 0; //last item id, increase before use
+
+var charLevel = 1;
+var charXp = 0;
+var charXpToLevel = 20;
 
 var charBalance = 0;
 
@@ -111,6 +115,7 @@ function updateCharStats(){
 }
 
 function updateStatScreen(){
+	document.getElementById("id_char_level").innerText = charLevel + " (" +((charXp/charXpToLevel)*100).toFixed(1)+"%)";
 	document.getElementById("id_char_money").innerText = charBalance.toFixed(2);
 	document.getElementById("id_char_health").innerText = charFightHealth.toFixed(1)+"/"+charHealth.toFixed(1);
 	document.getElementById("id_char_energy").innerText = charFightEnergy.toFixed(1)+"/"+charEnergy.toFixed(1);
@@ -499,6 +504,7 @@ function enemyObject(name,hp,pdmg,mdmg,pdef,mdef){
 	this.mgcdmg = mdmg;
 	this.phydef = pdef;
 	this.mgcdef = mdef;
+	this.xp = Number(((hp/3)+(pdmg/2)+(mdmg/2)+(pdef/2)+(mdef/2)).toFixed(3));
 }
 
 function addEnemyToPrompt(eName){
@@ -608,6 +614,7 @@ function updateFight(){
 
 		inFight = false;
 		dropLoot();
+		addXp(curEnemy.xp);
 		updateInvScreen();
 
 		quickPrompt(["Enemy died"],["Continue"],["justWalk()"],"p_forest.jpg")
@@ -630,9 +637,40 @@ function dropLoot(){
 	else{
 		lootMoney = (Math.random()*100*progressMultiplier);
 		charBalance += lootMoney;
-		writeLog("Drop: gained "+lootMoney.toFixed(2));
+		writeLog("Drop: gained "+lootMoney.toFixed(2)+"$");
 	}
 }
+
+function addXp(amount){
+	let fAmount = Number((Number(amount)).toFixed(1));
+	
+	// charXp += fAmount;
+	charXp = Number((charXp+fAmount).toFixed(3));
+	writeLog("Gained "+fAmount+" XP!")
+	if (charXp >= charXpToLevel) {
+		charLevel++;
+		writeLog("Levelup! You are now level "+charLevel);
+		charXp -= charXpToLevel;
+		charXpToLevel = (charLevel*3*progressMultiplier).toFixed(3);
+		if (charLevel >= 2) {
+			learnSkill("Fireball");
+		}
+	}
+
+}
+
+function learnSkill(skill){
+	charSkills.push(skill);
+	writeLog("Learned new skill: "+skill)
+	for(let s in charSkillSlots){
+		if(charSkillSlots[s] === ""){
+			charSkillSlots[s] = skill;
+			break;
+		}
+	}
+
+}
+
 
 function addFightGUI(){
 	removePromptScreen();
@@ -713,8 +751,8 @@ function showCityMenu(){
 }
 
 function leaveCity(){
-	charHeal();
-	charEnergize();
+	charHeal("fix");
+	charEnergize("fix");
 	writeLog("===You left the city.")
 	inCity = false;
 	updateInvScreen();
