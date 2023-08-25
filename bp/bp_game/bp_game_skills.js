@@ -9,7 +9,7 @@ function skill_Basic(){
 			hitAnim("r_basic");
 		}
 		let damageDone = damageEnemyPHY(finalDmgValue);
-		charFightHealth += damageDone*charLifeSt; 
+		charFightHealth += damageDone*(charLifeSt/100); 
 
 		charEnergize(5);
 		lastAttackBy = "char";
@@ -52,10 +52,12 @@ function skill_Die(){
 
 function skill_Refresh(){
 	if (lastAttackBy!=="char") {
+		if (charFightEnergy >=40) {
 		finalHealValue = (charMgcDmg*2)+(charHealth/10)
 		charHeal(finalHealValue);
 		lastAttackBy = "char";
 		skillButtonStyleBlocked();
 		setTimeout(updateFight,500);
+		}
 	}
 }

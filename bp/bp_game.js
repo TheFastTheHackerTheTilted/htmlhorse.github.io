@@ -795,6 +795,11 @@ function showCityMenu(){
 	quickPrompt(["*Welcome to the city*"],["Infirmary(35$)","Hot Tub(20$)","Leave City"],["cityHeal()","cityEnergize()","leaveCity()"],"p_street.jpg");
 }
 
+function showMerchant(){
+	quickPrompt(["*What do you want to buy*"],["Infirmary(35$)","Hot Tub(20$)","Leave City"],["cityHeal()","cityEnergize()","leaveCity()"],"p_street.jpg");
+
+}
+
 function leaveCity(){
 	charHeal("fix");
 	charEnergize("fix");
