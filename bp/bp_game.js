@@ -792,12 +792,48 @@ function cityEnergize(){
 }
 
 function showCityMenu(){
-	quickPrompt(["*Welcome to the city*"],["Infirmary(35$)","Hot Tub(20$)","Leave City"],["cityHeal()","cityEnergize()","leaveCity()"],"p_street.jpg");
+	quickPrompt(["*Welcome to the city*"],["Infirmary(35$)","Hot Tub(20$)","Merchant","Leave City"],["cityHeal()","cityEnergize()","showMerchantMenu()","leaveCity()"],"p_street.jpg");
 }
 
-function showMerchant(){
-	quickPrompt(["*What do you want to buy*"],["Infirmary(35$)","Hot Tub(20$)","Leave City"],["cityHeal()","cityEnergize()","leaveCity()"],"p_street.jpg");
+function showMerchantMenu(){
+	quickPrompt(["*What do you want to buy*"],["Random Equipment(150$)","Random Consumable(250$)","Mystery Box(175$)","Go Back"],["cityBuyEquipment()","cityBuyConsumable()","cityBuyMystery()","showCityMenu()"],"p_merchant.png");
 
+}
+function cityBuyEquipment(){
+	if (charBalance >= 150) {
+		charBalance -=150;
+		writeLog("Merchant: Equipment bought successfully!");
+		addItemToInv(randomWearableItemGenerator());
+	}
+	else{
+		writeLog("Merchant: Not enough money!")
+	}
+}
+function cityBuyConsumable(){
+	if (charBalance >= 250) {
+		charBalance -=250;
+		writeLog("Merchant: Consumable bought successfully!");
+		addItemToInv(randomConsumableItemGenerator());
+	}
+	else{
+		writeLog("Merchant: Not enough money!")
+	}
+}
+function cityBuyMystery(){
+	if (charBalance >= 175) {
+		charBalance -=175;
+		writeLog("Merchant: Mystery item bought successfully!");
+		let itemDecider =  Math.random();
+		if (itemDecider <=0.75) {
+			addItemToInv(randomWearableItemGenerator());
+		}
+		else{
+			addItemToInv(randomConsumableItemGenerator());
+		}
+	}
+	else{
+		writeLog("Merchant: Not enough money!")
+	}
 }
 
 function leaveCity(){
