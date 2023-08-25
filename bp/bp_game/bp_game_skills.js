@@ -8,13 +8,13 @@ function skill_Basic(){
 		}else{
 			hitAnim("r_basic");
 		}
-		damageEnemyPHY(finalDmgValue);
-		
+		let damageDone = damageEnemyPHY(finalDmgValue);
+		charFightHealth += damageDone*charLifeSt; 
 
 		charEnergize(5);
 		lastAttackBy = "char";
 
-
+		skillButtonStyleBlocked();
 		setTimeout(updateFight,500);
 		
 	}
@@ -30,7 +30,8 @@ function skill_Fireball(){
 			hitAnim("r_fireball");
 
 			lastAttackBy = "char";
-			updateFight();
+			skillButtonStyleBlocked();
+			setTimeout(updateFight,500);
 			
 		}
 		else{
@@ -44,7 +45,8 @@ function skill_Die(){
 		damageChar(20);
 		charHurtAnim();
 		lastAttackBy = "char";
-		updateFight();
+		skillButtonStyleBlocked();
+		setTimeout(updateFight,500);
 	}
 }
 
@@ -53,6 +55,7 @@ function skill_Refresh(){
 		finalHealValue = (charMgcDmg*2)+(charHealth/10)
 		charHeal(finalHealValue);
 		lastAttackBy = "char";
-		updateFight();
+		skillButtonStyleBlocked();
+		setTimeout(updateFight,500);
 	}
 }

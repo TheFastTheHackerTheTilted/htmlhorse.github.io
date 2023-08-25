@@ -503,7 +503,7 @@ function changeBg(bg){
 }
 
 
-function enemyObject(name,hp,pdmg,mdmg,pdef,mdef){
+function enemyObject(name,hp,pdmg,mdmg,pdef,mdef,fullName){
 	this.name = name;
 	this.health = hp;
 	this.phydmg = pdmg;
@@ -511,6 +511,7 @@ function enemyObject(name,hp,pdmg,mdmg,pdef,mdef){
 	this.phydef = pdef;
 	this.mgcdef = mdef;
 	this.xp = Number(((hp/3)+(pdmg/2)+(mdmg/2)+(pdef/2)+(mdef/2)).toFixed(3));
+	this.fullName = fullName;
 }
 
 function addEnemyToPrompt(eName){
@@ -537,8 +538,8 @@ function newFight(){
 	let theEnemy = genEnemy();
 	console.log(theEnemy);
 	setEnemyStats(theEnemy);
-	quickPrompt(theEnemy.name+" appeared!!", ["Start Fight"], ["startFight()"],"p_forest.jpg");
-	writeLog("Fight: "+theEnemy.name+" appeared!!")
+	quickPrompt(theEnemy.fullName+" appeared!!", ["Start Fight"], ["startFight()"],"p_forest.jpg");
+	writeLog("Fight: "+theEnemy.fullName+" appeared!!")
 	addEnemyToPrompt(theEnemy.name)
 }
 
@@ -562,8 +563,10 @@ function updateEnemyHealthBar(){
 }
 
 function damageEnemyPHY(dvalue){
-	curEnemyHealth = curEnemyHealth - (dvalue*(100/(100+curEnemyPhyDef)));
+	let finlPhyDmg = (dvalue*(100/(100+curEnemyPhyDef)))
+	curEnemyHealth = curEnemyHealth - finlPhyDmg;
 	updateEnemyHealthBar();
+	return finlPhyDmg;
 
 }
 function damageEnemyMGC(dvalue){
@@ -685,6 +688,7 @@ function addXp(amount){
 	writeLog("Gained "+fAmount+" XP!")
 	if (charXp >= charXpToLevel) {
 		charLevel++;
+		progressMultiplier += 0.1
 		writeLog("Levelup! You are now level "+charLevel);
 		charXp -= charXpToLevel;
 		charXpToLevel = (charLevel*3*progressMultiplier).toFixed(3);

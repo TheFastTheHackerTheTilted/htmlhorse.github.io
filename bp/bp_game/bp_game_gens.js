@@ -328,11 +328,33 @@ function genEnemy(){
 	let diffMult = progressMultiplier;
 	let enemyNameList = ["Zombie","Spider","Nightmare","Goreman","Boogieman","Reptile Soldier"]
 	let enemyName = enemyNameList[Math.floor(Math.random() * enemyNameList.length)];
-	let rHp = (Math.random()*30 + 10)*diffMult;
-	let rPDmg = (Math.random()*5 +1)*diffMult;
-	let rMDmg = (Math.random()*5 +1)*diffMult;
-	let rPDef = (Math.random()*5 +1)*diffMult;
-	let rMDef = (Math.random()*5 +1)*diffMult;
+	let enemyType = enemyName;
+	let rHp = (Math.random()*(30*diffMult) + 10)*diffMult;
+	let rPDmg = (Math.random()*(8*diffMult) +1)*diffMult;
+	let rMDmg = (Math.random()*(8*diffMult) +1)*diffMult;
+	let rPDef = (Math.random()*(8*diffMult) +1)*diffMult;
+	let rMDef = (Math.random()*(8*diffMult) +1)*diffMult;
 
-	return (new enemyObject(enemyName,rHp,rPDmg,rMDmg,rPDef,rMDef));
+	if((rHp >(((25*diffMult) + 10)*diffMult)) && (rPDmg >(((5*diffMult) + 1)*diffMult)) && (rMDmg >(((5*diffMult) + 1)*diffMult)) && (rPDef >(((5*diffMult) + 1)*diffMult)) && (rMDef >(((5*diffMult) + 1)*diffMult))) {
+		enemyName = "ALPHA "+ enemyName;
+	}
+	else {
+		if(rHp >(((28*diffMult) + 10)*diffMult)) {
+			enemyName = "GIANT "+enemyName;
+		}
+		if(rPDmg >(((6*diffMult) + 1)*diffMult)) {
+			enemyName = "WARRIOR "+enemyName;
+		}
+		if(rMDmg >(((6*diffMult) + 1)*diffMult)) {
+			enemyName = "WIZARD "+enemyName;
+		}
+		if(rPDef >(((6*diffMult) + 1)*diffMult)) {
+			enemyName = "ARMORED "+enemyName;
+		}
+		if(rMDef >(((6*diffMult) + 1)*diffMult)) {
+			enemyName = "BLESSED "+enemyName;
+		}
+	}
+
+	return (new enemyObject(enemyType,rHp,rPDmg,rMDmg,rPDef,rMDef,enemyName));
 }
