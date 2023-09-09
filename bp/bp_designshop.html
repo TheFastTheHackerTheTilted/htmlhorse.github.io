@@ -25,12 +25,99 @@
         </div>
     </div>
     <div class="cl_middle">
-        <p>//To Do: add a width and heigh selector</p>
-        <label for="slider">Select a value:</label>
-        <input type="range" id="id_slider" min="1" max="10" value="5">
-        <button id="id_bt_calculate">Calculate</button>
-        <p>Estimated Price: <span id="id_estimate">0</span></p>
+        <p>Enter details of your order:</p>
+        <div id="id_div_height">
+            <label for="height">Height(M):</label>
+            <input type="number" id="id_height" name="height" min="0" max="99" autocomplete="off" value="1" onchange="calculate()">
+        </div>
+
+        <div id="id_div_width">
+            <label for="width">Width(M):</label>
+            <input type="number" id="id_width" name="width" min="0" max="99" autocomplete="off" value="1" onchange="calculate()">
+        </div>
+
+        <div id="id_mats">
+            <div id="id_opt_1" class="cl_opts" onclick="matChange(1)">
+                <p>Metal</p>
+            </div>
+            <div id="id_opt_2" class="cl_opts" onclick="matChange(2)">
+                <p>Plastic</p>
+            </div>
+            <div id="id_opt_3" class="cl_opts" onclick="matChange(3)">
+                <p>Wood</p>
+            </div>
+            <div id="id_opt_4" class="cl_opts" onclick="matChange(4)">
+                <p>Glass</p>
+            </div>
+        </div>
+
+        <p id="id_txt_price">Estimated Price: <span id="id_estimate">5</span>$</p>
     </div>
     <div id="id_footer" class="cl_footer"><hr>HTMLHorse is a webpage filled with weird subpages. If you are interested in using similar functionalites from my pages, if anything inspired you, feel free to use. It would be nice to mention me tho!</div>
  </body>
+ <script type="text/javascript">
+    var materialPrice = 5
+
+    function calculate(){
+        let height = document.getElementById('id_height');
+        let width = document.getElementById('id_width');
+
+        if (height.value > 99){
+            height.value = 99
+            height.innerText = 99
+        }
+        if (width.value > 99){
+            width.value = 99
+            width.innerText = 99
+        }
+        if (height.value <= 0){
+            height.value = 1
+            height.innerText = 1
+        }
+        if (width.value <= 0){
+            width.value = 1
+            width.innerText = 1
+        }
+
+
+
+        area = (width.value)*(height.value)
+
+        let pr = document.getElementById("id_estimate")
+        pr.innerText = area*materialPrice
+     }
+
+    function matChange(mat){
+        let m1 = document.getElementById("id_opt_1");
+        let m2 = document.getElementById("id_opt_2");
+        let m3 = document.getElementById("id_opt_3");
+        let m4 = document.getElementById("id_opt_4");
+
+        m1.classList.remove("active-mat")
+        m2.classList.remove("active-mat")
+        m3.classList.remove("active-mat")
+        m4.classList.remove("active-mat")
+
+        document.getElementById("id_opt_"+mat).classList.add("active-mat")
+
+        if (mat == 1){
+            materialPrice = 5
+        }
+
+        if (mat == 2){
+            materialPrice = 2.5
+        }
+        if (mat == 3){
+            materialPrice = 4
+        }
+        if (mat == 4){
+            materialPrice = 10
+        }
+
+
+
+
+        calculate()
+     }
+ </script>
  </html>
