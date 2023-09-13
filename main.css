@@ -68,7 +68,7 @@ body{
 
 .cl_bp_block, .cl_hm_v{
 	background-color: #000020;
-	height: 45px;
+/*	height: 45px;*/
 	margin: 20px 10px;
 	padding: 5px 5px;
 	display: block;
@@ -145,7 +145,7 @@ hr {
 	}
 
 	.cl_bp_block, .cl_hm_v{
-		height: 55px;
+/*		height: 55px;*/
 	}
 
   
