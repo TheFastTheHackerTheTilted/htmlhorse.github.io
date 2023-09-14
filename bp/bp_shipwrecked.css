@@ -27,3 +27,25 @@
 .cl_div_buttons{
 	flex: 60%;
 }
+
+#id_items{
+	display: none;
+	justify-content: center;
+}
+#id_choices{
+	display: flex;
+	height: 70%;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+.cl_choice{
+	display: block;
+	width: 50%;
+	border-style: none;
+	background-color: lightblue;
+	font-size: 25px;
+	height: 40px;
+	cursor: pointer;
+	margin:auto;
+}

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="bp_shipwrecked.css">
     <script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript" src="bp_shipwrecked.js"></script>
     <link rel="manifest" href="manifest.json" />
 
  </head>
@@ -28,13 +29,22 @@
     <div class="cl_screen">
         <div id="id_game">
             <div class="cl_div_prompt">
-                <label class="cl_prompt" id="id_prompt">Test Text?</label>
+                <label class="cl_prompt" id="id_prompt"></label>
             </div>
             <div class="cl_div_buttons" id="id_buttons">
-                <button class="cl_item" id="item1">Medicine</button>
-                <button class="cl_item" id="item2">Axe</button>
+                <div id="id_items">
+                    <button class="cl_item" id="item1">Medicine</button>
+                    <button class="cl_item" id="item2">Axe</button>
+                </div>
+                <div id="id_choices">
+                    <button class="cl_choice">Next</button>
+                </div>
             </div>
         </div>        
     </div>
+
  </body>
+<script>
+    startGame();
+</script>
  </html>
