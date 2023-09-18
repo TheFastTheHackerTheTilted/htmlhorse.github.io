@@ -1,0 +1,94 @@
+ <!DOCTYPE html>
+ <html>
+ <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <title>HTMLHorse</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="bp_space.css">
+
+    <script type="text/javascript" src="main.js"></script>
+    <link rel="manifest" href="manifest.json" />
+
+ </head>
+ <body>
+    <div class="cl_header">
+        <p class="cl_page_text">Space</p>
+        <p class="cl_page_text" id="id_version">v0.1</p>
+        <div class="cl_header_all_buttons" id="id_header_all_buttons">
+            <a class="cl_header_button active" id="id_button_home" href="https://www.htmlhorse.com">Home</a>
+            <a class="cl_header_button" href="https://www.htmlhorse.com/blueprints">Blueprints</a>
+            <a class="cl_header_button" href="https://www.htmlhorse.com/plans">Plans</a>
+            <a class="cl_header_button" id="id_button_log" href="https://www.htmlhorse.com/logs">Changelogs</a>
+            <div class="cl_header_box">
+                <div class="cl_header_box_icon" id="id_header_box" onclick="header_expand()">≡</div>
+            </div>
+        </div>
+    </div>
+    <div class="cl_main_panel" id="id_main_panel">
+        
+    </div>
+
+ </body>
+<script>
+    var canvasId = 0;
+    var cwidth = window.innerWidth;
+    var cheight = window.innerHeight;
+
+    function getRandomColor() {
+        const r = Math.floor(Math.random() * 256);
+        const g = Math.floor(Math.random() * 256);
+        const b = Math.floor(Math.random() * 256);
+        return `rgb(${r},${g},${b})`;
+    }
+
+    function createCanvas(){
+        let mainPanel = document.getElementById("id_main_panel");
+        const newCanvas = document.createElement('canvas');
+        newCanvas.setAttribute('id','id_space_'+canvasId);
+        newCanvas.setAttribute('class','cl_canvas')
+        canvasId +=1;
+        const ctx = newCanvas.getContext('2d');
+
+        const pixelRatio = window.devicePixelRatio || 1; // Get the device pixel ratio
+
+        newCanvas.width = cwidth * pixelRatio; // Set the canvas width in actual pixels
+        newCanvas.height = cheight * pixelRatio; // Set the canvas height in actual pixels
+
+
+        // Scale the context to match the pixel density
+        ctx.scale(pixelRatio, pixelRatio);
+
+
+
+        for (let x = 0; x < cwidth; x += 5) {
+            for (let y = 0; y < cheight; y += 5) {
+                let p = Math.random()*1000
+
+                if (p >999) {
+                    ctx.fillStyle = getRandomColor();
+                    ctx.fillRect(x, y, 5, 5);
+                }
+                else {
+                    continue;
+                }
+
+                
+            }
+        }
+
+        mainPanel.appendChild(newCanvas);
+
+    }
+
+
+
+    
+
+
+
+createCanvas();
+createCanvas();
+</script>
+ </html>

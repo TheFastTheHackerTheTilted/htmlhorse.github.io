@@ -1,0 +1,13 @@
+body {
+	background-color: black;
+	overflow: hidden;
+}
+
+.cl_main_panel{
+	display: flex;
+    justify-content: center;
+}
+
+.cl_canvas{
+	position: absolute;
+}

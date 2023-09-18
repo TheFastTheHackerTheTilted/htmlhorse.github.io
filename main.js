@@ -24,10 +24,11 @@ function addAllBps(){
     addBp("./bp/bp_blackjack.html","bp_blackjack","This blueprint is for blackjack gamble game.")
     addBp("./bp/bp_sf6.html","bp_sf6","This blueprint is dedicated for street fighter 6.")
     addBp("./bp/bp_clickcounter.html","bp_clickcounter","This blueprint is for click counter.")
-    addBp("./bp/bp_wiki_mixedup.html","bp_wiki_mixedup","This blueprint is for the mod Mixedup.")
+    addBp("./bp/bp_wiki_mixedup.html","bp_wiki_mixedup","This blueprint is for the mod Mixed-up.")
     addBp("./bp/bp_designshop.html","bp_designshop","This blueprint is for the design of a shopping page.")
 	addBp("./bp/bp_game.html","bp_game","This blueprint is for the interactive game.")
 	addBp("./bp/bp_shipwrecked.html","bp_shipwrecked","This blueprint is for example game shipwrecked where you think carefully and survive");
+	addBp("./bp/bp_space.html","bp_space","This blueprint is for simulation of space traveling");
 
 
 }
