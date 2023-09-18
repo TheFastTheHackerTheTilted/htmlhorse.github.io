@@ -17,18 +17,18 @@ function errorPage(){
 
 function addAllBps(){
 
-    addBp("./bp/bp_home.html","bp_home","This blueprint is for simple homepage.")
-    addBp("./bp/bp_bp.html","bp_blueprints","This blueprint is for blueprints page, ironic.")
-    addBp("./bp/bp_backgroundvideo.html","bp_backgroundvideo","This blueprint is for pages with video background.")
-    addBp("./bp/bp_randomizer.html","bp_randomizer","This blueprint is for seed based random number generator.")
-    addBp("./bp/bp_blackjack.html","bp_blackjack","This blueprint is for blackjack gamble game.")
-    addBp("./bp/bp_sf6.html","bp_sf6","This blueprint is dedicated for street fighter 6.")
-    addBp("./bp/bp_clickcounter.html","bp_clickcounter","This blueprint is for click counter.")
-    addBp("./bp/bp_wiki_mixedup.html","bp_wiki_mixedup","This blueprint is for the mod Mixed-up.")
-    addBp("./bp/bp_designshop.html","bp_designshop","This blueprint is for the design of a shopping page.")
-	addBp("./bp/bp_game.html","bp_game","This blueprint is for the interactive game.")
-	addBp("./bp/bp_shipwrecked.html","bp_shipwrecked","This blueprint is for example game shipwrecked where you think carefully and survive");
-	addBp("./bp/bp_space.html","bp_space","This blueprint is for simulation of space traveling");
+    addBp("./bp/bp_home.html","bp_home","For simple homepage.")
+    addBp("./bp/bp_bp.html","bp_blueprints","For blueprints page, ironic.")
+    addBp("./bp/bp_backgroundvideo.html","bp_backgroundvideo","For pages with video background.")
+    addBp("./bp/bp_randomizer.html","bp_randomizer","For seed based random number generator.")
+    addBp("./bp/bp_blackjack.html","bp_blackjack","For blackjack gamble game.")
+    addBp("./bp/bp_sf6.html","bp_sf6","Dedicated for street fighter 6.")
+    addBp("./bp/bp_clickcounter.html","bp_clickcounter","For click counter.")
+    addBp("./bp/bp_wiki_mixedup.html","bp_wiki_mixedup","For the mod Mixed-up.")
+    addBp("./bp/bp_designshop.html","bp_designshop","For the design of a shopping page.")
+	addBp("./bp/bp_game.html","bp_game","For the interactive game.")
+	addBp("./bp/bp_shipwrecked.html","bp_shipwrecked","For example game shipwrecked where you think carefully and survive");
+	addBp("./bp/bp_space.html","bp_space","For simulation of space traveling");
 
 
 }
