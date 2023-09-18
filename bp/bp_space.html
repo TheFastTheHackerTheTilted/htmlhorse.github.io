@@ -36,11 +36,13 @@
     var cwidth = window.innerWidth;
     var cheight = window.innerHeight;
 
+    var canvasList = []
+
     function getRandomColor() {
         const r = Math.floor(Math.random() * 256);
         const g = Math.floor(Math.random() * 256);
         const b = Math.floor(Math.random() * 256);
-        return `rgb(${r},${g},${b})`;
+        return `rgb(${r},${g},${b}, 0.3)`;
     }
 
     function createCanvas(){
@@ -78,17 +80,51 @@
             }
         }
 
+        canvasList.push(newCanvas);
         mainPanel.appendChild(newCanvas);
 
     }
 
 
 
-    
+    function calculater(){}
+
+    function moveForward() {
+        for (let i = 0; i < canvasList.length; i++) {
+            let theCanvas = canvasList[i];
+
+            // Increase the size of the canvas (you can adjust the scaling factor)
+            theCanvas.width *= 1.01;
+            theCanvas.height *= 1.01;
+
+            if (theCanvas.width >= cwidth * 3) {
+                // Keep the canvas if its width is within the desired threshold
+                console.log("needs to be deleted "+theCanvas.id)
+                theCanvas.parentNode.removeChild(theCanvas);
+                canvasList.splice(i, 1);
+            } 
+        }
+
+        // createCanvas();
+    }
 
 
+    function handleScroll(event) {
+      // Normalize scroll direction across different browsers
+      const delta = event.deltaY || (-event.detail); // deltaY for modern browsers, detail for Firefox
 
-createCanvas();
+      if (delta > 0) {
+        // The user is scrolling down
+        moveForward();
+      }
+    }
+
+    // Add a scroll event listener for modern browsers
+    window.addEventListener('wheel', handleScroll);
+
+    // Add a scroll event listener for Firefox
+    window.addEventListener('DOMMouseScroll', handleScroll);
+
 createCanvas();
 </script>
  </html>
