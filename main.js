@@ -29,6 +29,7 @@ function addAllBps(){
 	addBp("./bp/bp_game.html","bp_game","For the interactive game.")
 	addBp("./bp/bp_shipwrecked.html","bp_shipwrecked","For example game shipwrecked where you think carefully and survive");
 	addBp("./bp/bp_space.html","bp_space","For simulation of space traveling");
+	addBp("./bp/bp_givethephone.html","bp_givethephone","For the ' giving the phone to x' game");
 
 
 }
