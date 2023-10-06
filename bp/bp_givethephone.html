@@ -36,23 +36,51 @@
             <button>Pack2</button>
         </div>
         <div id="id_game">
-            <p>Prompt?</p>
+            <a id="id_nextPrompt" onclick="nextPrompt()"></a>
+            <p id="id_promptScreen">Prompt?</p>
         </div>
     </div>
 
  </body>
 <script>
+    var pack1 = ["prompt1","prompt2","prompt11","prompt14"];
+    var finalPack = [];
     function startGame(){
-        showGame()
+        showGame();
 
+        finalPack = finalPack.concat(pack1)
+
+        setTimeout(endAnim, 4000);
+        nextPrompt();
+    }
+
+    function nextPrompt(){
+        let randomIndex = Math.floor(Math.random() * finalPack.length);
+        let promptScreen = document.getElementById("id_promptScreen");
+
+        promptScreen.innerText = finalPack[randomIndex];
+    }
+
+    function endAnim(){
+        let gameScreen = document.getElementById("id_game");
+        gameScreen.innerHTML =    '<video id="id_endAnim" width="640" height="360" autoplay loop muted><source src="bp_arcade/explosion_360p.mp4" type="video/mp4">Your browser does not support the video tag.</video>' + gameScreen.innerHTML
+
+        setTimeout(endGame,3000);
     }
     function endGame(){
+        let endAnim = document.getElementById("id_endAnim");
+        endAnim.remove();
+
+
+
         let screen = document.getElementById("id_screen");
         screen.style.height = '95vh';
 
         var bodyElement = document.body;
-                bodyElement.style.backgroundImage = "none";
+        bodyElement.style.backgroundImage = "none";
 
+        showMenu();
+        // setTimeout(showMenu, 2000);
     }
     function showSettings(){
         let navbar = document.getElementById("id_header");
@@ -79,9 +107,7 @@
         settings.style.display = 'none'
 
         let game = document.getElementById("id_game");
-        game.style.display = 'none'
-
-        
+        game.style.display = 'none' 
     }
 
     function showGame(){
@@ -95,7 +121,7 @@
         settings.style.display = 'none'
 
         let game = document.getElementById("id_game");
-        game.style.display = 'block'
+        game.style.display = 'flex'
 
         let screen = document.getElementById("id_screen");
         screen.style.height = '97vh';

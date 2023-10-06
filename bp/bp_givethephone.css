@@ -57,3 +57,18 @@ body {
 
 }
 
+#id_promptScreen{
+	font-size: 28px;
+    font-weight: bold;
+}
+
+#id_nextPrompt{
+	position: absolute;
+	width: 100%;
+    display: block;
+    height: 100%;
+}
+
+#id_endAnim{
+	position: absolute;
+}
