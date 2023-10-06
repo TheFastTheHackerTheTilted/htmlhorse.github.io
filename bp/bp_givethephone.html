@@ -140,7 +140,7 @@
 
     function endAnim(){
         let gameScreen = document.getElementById("id_game");
-        gameScreen.innerHTML =    '<video id="id_endAnim" width="640" height="360" autoplay loop muted><source src="bp_arcade/explosion_360p.mp4" type="video/mp4">Your browser does not support the video tag.</video>' + gameScreen.innerHTML
+        gameScreen.innerHTML =    '<img id="id_endAnim" width="640" height="360" src="bp_arcade/explosion.jpg">Your browser does not support the img tag.</img>' + gameScreen.innerHTML
 
         setTimeout(endGame,3000);
     }
@@ -206,5 +206,6 @@
         var bodyElement = document.body;
         bodyElement.style.backgroundImage = "linear-gradient(225deg, orange, yellow)";
     }
+
 </script>
  </html>
