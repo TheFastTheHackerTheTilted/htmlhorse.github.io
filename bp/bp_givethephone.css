@@ -12,6 +12,7 @@ video::-webkit-media-controls-start-playback-button {
 
 body {
 /*	background-image: linear-gradient(225deg, red, yellow);*/
+	color: white;
 }
 
 .cl_screen{
