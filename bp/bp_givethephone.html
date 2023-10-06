@@ -32,8 +32,17 @@
         </div>     
         <div id="id_settings">
             <a id="id_settings_return" onclick="showMenu()"></a>
-            <button onclick="startGame()">Pack1</button>
-            <button>Pack2</button>
+            <div id="id_settings_packs">
+                <button onclick="selectPack(1)" id="id_pack_1">Core</button>
+                <button onclick="selectPack(2)" id="id_pack_2">Relations</button>
+                <button onclick="selectPack(0)" id="id_pack_0">Custom</button>
+            </div>
+            <div id="id_settings_bottom">
+                <button id="id_duration" onclick="changeDuration()">Duration(45)</button>
+                <button id="id_duration" onclick="changeCustom()">Customize</button>
+            </div>  
+            
+            
         </div>
         <div id="id_game">
             <a id="id_nextPrompt" onclick="nextPrompt()"></a>
@@ -43,12 +52,73 @@
 
  </body>
 <script>
-    var pack1 = ["prompt1","prompt2","prompt11","prompt14"];
+    var gameDuration = 35000;
+
+    var selectedPacks = [0, 1, 2]
+
+    var pack_custom = []
+    var pack_core = ["prompt1","prompt2","prompt11","prompt14"];
+    var pack_rs = ["rs1","rs2","rs3","rs4"]
+    
+    function selectPack(packNo){
+        let packButton = document.getElementById("id_pack_"+packNo);
+
+        if (selectedPacks.includes(packNo)) {
+            selectedPacks.splice(selectedPacks.indexOf(packNo), 1);
+            packButton.style.backgroundColor = "rgba(240, 128, 128, 0.5)"
+        }
+        else{
+            selectedPacks.push(packNo);
+            packButton.style.backgroundColor = "rgba(240, 128, 128, 1)"
+        }
+        console.log(selectedPacks)
+    }
+
+    function changeCustom(){}
+
+    function changeDuration(){
+        let dText = document.getElementById("id_duration");
+
+        if (gameDuration === 35000) {
+            gameDuration = 50000;
+            dText.innerText = "Duration(60)"
+        }
+        else if (gameDuration === 50000) {
+            gameDuration = 65000;
+            dText.innerText = "Duration(75)"
+        }
+        else if (gameDuration === 65000) {
+            gameDuration = 80000;
+            dText.innerText = "Duration(90)"
+        }
+        else if (gameDuration ===80000) {
+            gameDuration = 110000;
+            dText.innerText = "Duration(120)"
+        }
+        else if (gameDuration === 110000) {
+            gameDuration = 20000;
+            dText.innerText = "Duration(30)"
+        }
+        else if (gameDuration === 20000) {
+            gameDuration = 35000;
+            dText.innerText = "Duration(45)"
+        }
+    }
+
     var finalPack = [];
     function startGame(){
+        finalPack = [];
         showGame();
 
-        finalPack = finalPack.concat(pack1)
+        if (selectedPacks.includes(0)) {
+            finalPack = finalPack.concat(pack_custom);
+        }
+        if (selectedPacks.includes(1)) {
+            finalPack = finalPack.concat(pack_core);
+        }
+        if (selectedPacks.includes(2)) {
+            finalPack = finalPack.concat(pack_rs);
+        }
 
         setTimeout(last10,5000);
         
