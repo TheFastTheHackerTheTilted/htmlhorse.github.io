@@ -13,7 +13,7 @@
  </head>
  <body>
     <div class="cl_header" id="id_header">
-        <p class="cl_page_text">Give The Phone</p>
+        <p class="cl_page_text">Pass The Phone</p>
         <p class="cl_page_text" id="id_version">v0.1</p>
         <div class="cl_header_all_buttons" id="id_header_all_buttons">
             <a class="cl_header_button active" id="id_button_home" href="https://www.htmlhorse.com">Home</a>
@@ -57,7 +57,14 @@
     var selectedPacks = [0, 1, 2]
 
     var pack_custom = []
-    var pack_core = ["prompt1","prompt2","prompt11","prompt14"];
+    var pack_core = ["Someone who cooks great meal",
+        "Someone who would sugar overdose.",
+        "Someone who gets drunk first in a party.",
+        "Someone who gets in car accidents the most.",
+        "Someone who sleeps the most.",
+        "Someone who doesnt drink enough water",
+        "Someone who ",
+        "Someone who ",];
     var pack_rs = ["rs1","rs2","rs3","rs4"]
     
     function selectPack(packNo){
@@ -120,7 +127,7 @@
             finalPack = finalPack.concat(pack_rs);
         }
 
-        setTimeout(last10,5000);
+        setTimeout(last10,gameDuration);
         
         nextPrompt();
     }
@@ -140,14 +147,13 @@
 
     function endAnim(){
         let gameScreen = document.getElementById("id_game");
-        gameScreen.innerHTML =    '<img id="id_endAnim" width="640" height="360" src="bp_arcade/explosion.jpg">Your browser does not support the img tag.</img>' + gameScreen.innerHTML
+        gameScreen.innerHTML =    '<img id="id_endAnim" width="640" height="360" src="bp_arcade/explosion.jpg"></img>' + gameScreen.innerHTML
 
         setTimeout(endGame,3000);
     }
     function endGame(){
         let endAnim = document.getElementById("id_endAnim");
         endAnim.remove();
-
 
 
         let screen = document.getElementById("id_screen");
