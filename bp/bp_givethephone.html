@@ -6,6 +6,7 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <title>HTMLHorse</title>
     <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="bp_givethephone.css">
     <script type="text/javascript" src="main.js"></script>
     <link rel="manifest" href="manifest.json" />
 
@@ -24,24 +25,83 @@
             </div>
         </div>
     </div>
-    <div class="cl_screen">
-        <div id="id_game_buttons">
+    <div class="cl_screen" id="id_screen">
+        <div id="id_menu">
             <button onclick="startGame()">Start</button>
-            <button>Settings</button>
-        </div>        
+            <button onclick="showSettings()">Settings</button>
+        </div>     
+        <div id="id_settings">
+            <a id="id_settings_return" onclick="showMenu()"></a>
+            <button onclick="startGame()">Pack1</button>
+            <button>Pack2</button>
+        </div>
+        <div id="id_game">
+            <p>Prompt?</p>
+        </div>
     </div>
 
  </body>
 <script>
     function startGame(){
+        showGame()
+
+    }
+    function endGame(){
+        let screen = document.getElementById("id_screen");
+        screen.style.height = '95vh';
+
+        var bodyElement = document.body;
+                bodyElement.style.backgroundImage = "none";
+
+    }
+    function showSettings(){
+        let navbar = document.getElementById("id_header");
+        navbar.style.display = 'block'
+
+        let menu = document.getElementById("id_menu");
+        menu.style.display = 'none'
+
+        let settings = document.getElementById("id_settings");
+        settings.style.display = 'flex'
+
+        let game = document.getElementById("id_game");
+        game.style.display = 'none'
+    }
+
+    function showMenu(){
+        let navbar = document.getElementById("id_header");
+        navbar.style.display = 'block'
+
+        let menu = document.getElementById("id_menu");
+        menu.style.display = 'flex'
+
+        let settings = document.getElementById("id_settings");
+        settings.style.display = 'none'
+
+        let game = document.getElementById("id_game");
+        game.style.display = 'none'
+
+        
+    }
+
+    function showGame(){
         let navbar = document.getElementById("id_header");
         navbar.style.display = 'none'
 
-        let gamemenu = document.getElementById("id_game_buttons");
-        gamemenu.style.display = 'none'
+        let menu = document.getElementById("id_menu");
+        menu.style.display = 'none'
 
-        body.style.background = "white"
+        let settings = document.getElementById("id_settings");
+        settings.style.display = 'none'
 
+        let game = document.getElementById("id_game");
+        game.style.display = 'block'
+
+        let screen = document.getElementById("id_screen");
+        screen.style.height = '97vh';
+
+        var bodyElement = document.body;
+        bodyElement.style.backgroundImage = "linear-gradient(225deg, red, yellow)";
     }
 </script>
  </html>

@@ -1,0 +1,59 @@
+body {
+/*	background-image: linear-gradient(225deg, red, yellow);*/
+}
+
+.cl_screen{
+/*	background-color: red;*/
+	overflow: hidden;
+  	background-size: cover;
+  	background-repeat: no-repeat;
+  	background-attachment: fixed; /* Optional - makes the background fixed */
+  	height: 80vh;
+}
+
+.cl_screen > div{
+	display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+#id_menu > button {
+	margin: 10px 0 10px 0;
+	border-style: none;
+	background-color: lightcoral;
+	width: 100px;
+	height: 40px;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+#id_settings{
+	display: none;
+}
+
+#id_settings > button {
+	margin: 10px 0 10px 0;
+	border-style: none;
+	background-color: lightcoral;
+	width: 100px;
+	height: 40px;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+#id_game{
+	display: none;
+}
+
+#id_settings_return{
+	position: absolute;
+	width: 100%;
+    display: block;
+    height: 100%;
+
+}
+
