@@ -30,11 +30,21 @@ function addAllBps(){
 	addBp("./bp/bp_shipwrecked.html","bp_shipwrecked","For example game shipwrecked where you think carefully and survive");
 	addBp("./bp/bp_space.html","bp_space","For simulation of space traveling");
 	addBp("./bp/bp_givethephone.html","bp_givethephone","For the ' giving the phone to x' game");
-
+	addBp("./bp/bp_jackpot.html","bp_jackpot","For the jackpot simulation game");
+	addBp("./bp/bp_potionmake.html","bp_potionmake","For the potion crafting game");
+	addBp("./bp/bp_popupnotif.html","bp_popupnotif","For the example popup notification");
 
 }
+
+var lastBpHref = "";
 function addBp(href,title,desc){
     let list = document.getElementById("id_middle");
     theText = '<a class="cl_bp_block" href="'+href+'"><i>'+title+'</i><br>'+desc+'</br></a>';
     list.innerHTML = theText +list.innerHTML;
+
+    lastBpHref = href;
+}
+
+function gotoLastBp(){
+	window.location.href = lastBpHref;
 }
