@@ -40,12 +40,14 @@ function addAllBps(){
 var lastBpHref = "";
 function addBp(href,title,desc){
     let list = document.getElementById("id_middle");
-    theText = '<a class="cl_bp_block" href="'+href+'"><i>'+title+'</i><br>'+desc+'</br></a>';
-    list.innerHTML = theText +list.innerHTML;
-
+    if(list){
+    	theText = '<a class="cl_bp_block" href="'+href+'"><i>'+title+'</i><br>'+desc+'</br></a>';
+    	list.innerHTML = theText +list.innerHTML;
+	}
     lastBpHref = href;
 }
 
 function gotoLastBp(){
+	addAllBps();
 	window.location.href = lastBpHref;
 }
