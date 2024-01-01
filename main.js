@@ -31,9 +31,9 @@ function addAllBps(){
 	addBp("./bp/bp_shipwrecked","bp_shipwrecked","For example game shipwrecked where you think carefully and survive");
 	addBp("./bp/bp_space","bp_space","For simulation of space traveling");
 	addBp("./bp/bp_givethephone","bp_givethephone","For the ' giving the phone to x' game");
-	addBp("./bp/bp_jackpot","bp_jackpot","For the jackpot simulation game");
-	addBp("./bp/bp_potionmake","bp_potionmake","For the potion crafting game");
-	addBp("./bp/bp_popupnotif","bp_popupnotif","For the example popup notification");
+	addBp("./bp/bp_jackpot","bp_jackpot","(WIP) For the jackpot simulation game");
+	addBp("./bp/bp_potionmake","bp_potionmake","(WIP) For the potion crafting game");
+	addBp("./bp/bp_popupnotif","bp_popupnotif","(WIP) For the example popup notification");
 	addBp("./bp/bp_vegetablereminder/vegetable_reminder","bp_vegetablereminder","For the project of vegetable reminder app");
 
 }
