@@ -1,0 +1,159 @@
+body{
+	margin: 0;
+}
+
+
+#pages {
+	display: flex;
+	flex-direction: column;
+	min-height: calc(100vh - 50px);
+	overflow-y: auto;
+	position: relative;
+}
+
+.page {
+	display: none;
+	box-sizing: border-box;
+}
+
+
+#navigation {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background-color: #333;
+	display: flex;
+	justify-content: space-evenly;
+	padding: 10px;
+	box-sizing: border-box;
+}
+
+#navigation a {
+	color: white;
+	text-decoration: none;
+	padding: 10px;
+	border-radius: 5px;
+	/* background-color: #555; */
+}
+.cl_nav_icon{
+	width: 24px;
+	height: 24px;
+}
+
+.nav-link.active {
+   background-color: #555; /* Change this to your desired background color */
+}
+
+/* 
+======================
+STYLE FOR HOME PAGE
+vvvvvvvvvvvvvvvvvvvvv
+*/
+
+#id_progressBars {
+   display: flex;
+   justify-content: space-between;
+   /* margin-bottom: 20px; /* Adjust the margin as needed */
+   padding: 10px;
+   background-color: #A1662F;
+}
+
+.progress-bar-home {
+   width: 45%; /* Adjust the width as needed */
+   height: 20px;
+   background-color: #4caf50; /* Green color, you can change it */
+   margin: 0;
+}
+
+#id_home_button_feed {
+   position: absolute;
+   bottom: 30px;
+   right: 10px;
+   border-radius: 50%;
+   background-color: lime;
+   height: 64px;
+   border-style: double;
+}
+
+#id_home_main{
+	padding: 10px;
+}
+
+/* 
+======================
+STYLE FOR HEALTH PAGE
+vvvvvvvvvvvvvvvvvvvvv
+*/
+#id_vits_table{
+
+}
+#id_page_health ul {
+	padding: 0 20px 0 20px;
+}
+#id_page_health li {
+   list-style-type: none;
+   margin-bottom: 10px; /* Adjust margin as needed */
+}
+
+.progress-bar-container {
+   position: relative;
+   height: 20px;
+   margin-left: 5px; /* Adjust margin as needed */
+}
+
+/* Style for the progress bar background */
+.progress-bar-background {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-color: #ddd; /* Background color for the progress bar background */
+}
+
+/* Style for the progress bar */
+.progress-bar {
+   height: 100%;
+   background-color: #4caf50; /* Green color, you can change it */
+}
+
+/* 
+======================
+STYLE FOR COOKBOOK PAGE
+vvvvvvvvvvvvvvvvvvvvv
+*/
+
+/* 
+======================
+STYLE FOR SETTINGS PAGE
+vvvvvvvvvvvvvvvvvvvvv
+*/
+#id_setting_credits a{
+	display: block;
+}
+
+
+@media only screen and (min-width: 601px) {
+			/* Desktop view: Show desktop message, hide pages and navigation */
+			#id_div_dekstop {
+				display: block;
+			}
+
+			#id_div_mobile {
+				display: none;
+			}
+		}
+
+@media only screen and (max-width: 600px) {
+			#id_div_dekstop{
+				display: none;
+			}
+			#id_div_mobile {
+				display: block;
+				background-color: rgb(24, 26, 27);
+				margin: 0;
+				font-family: Arial, sans-serif;
+				color: white;
+			}
+}

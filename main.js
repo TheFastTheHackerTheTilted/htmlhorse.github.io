@@ -34,6 +34,7 @@ function addAllBps(){
 	addBp("./bp/bp_jackpot.html","bp_jackpot","For the jackpot simulation game");
 	addBp("./bp/bp_potionmake.html","bp_potionmake","For the potion crafting game");
 	addBp("./bp/bp_popupnotif.html","bp_popupnotif","For the example popup notification");
+	addBp("./bp/bp_vegetablereminder/vegetable_reminder.html","bp_vegetablereminder","For the project of vegetable reminder app");
 
 }
 

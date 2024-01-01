@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="style.css">
+	<script src="scr_health.js"></script>
+    <script src="scr_home.js"></script>
+	<title>Hi-Fi prototype</title>
+</head>
+<body>
+	<div id="id_div_dekstop">
+		<h1 id="id_boiler_text">You shouldnt see this, this page is for mobile devices. If you are on mobile device and see this, let developers know about this</h1>
+	</div>
+
+	<div id="id_div_mobile">
+		<div id="pages">
+
+			<div id="id_page_home" class="page">
+				<div id="id_progressBars">
+					<div class="progress-bar-home" id="id_pbar_health"></div>
+					<div class="progress-bar-home" id="id_pbar_streak"></div>
+				</div>
+				<div id="id_home_main">
+					<h1>Home</h1>
+				</div>
+				<button id="id_home_button_feed">Feed me</button>
+			</div>
+
+			<div id="id_page_health" class="page">
+				<h1>Health</h1>
+				<!-- Content for Page 2 -->
+			</div>
+
+			<div id="id_page_cookbook" class="page">
+				<h1>Cookbook</h1>
+				<!-- Content for Page 3 -->
+			</div>
+
+			<div id="id_page_settings" class="page">
+				<h1>Settings</h1>
+				
+				<div id="id_setting_credits">
+					<p>Credits:</p>
+					<a href="https://www.flaticon.com/free-icons/home" title="home icons">Home icons created by Freepik - Flaticon</a>
+					<a href="https://www.flaticon.com/free-icons/heart" title="heart icons">Heart icons created by Freepik - Flaticon</a>
+					<a href="https://www.flaticon.com/free-icons/cookbook" title="cookbook icons">Cookbook icons created by Those Icons - Flaticon</a>
+					<a href="https://www.flaticon.com/free-icons/settings" title="settings icons">Settings icons created by Pixel perfect - Flaticon</a>
+				</div>
+				<div id="id_test_panel">
+					<button onclick="updateVitamin('Vitamin A', 5);">+ Vitamin A</button>
+					<button onclick="pastTime(1);">Past 1 hour</button>
+					<button onclick="pastTime(6);">Past 6 hours</button>
+					
+				</div>
+			</div>
+		</div>
+
+		<div id="navigation">
+			<a href="#id_page_home" class="nav-link active"><img class="cl_nav_icon" src="./assets/ico_home_filled.png" alt="Home"></a>
+			<a href="#id_page_health" class="nav-link"><img class="cl_nav_icon" src="./assets/ico_health_filled.png" alt="Health"></a>
+			<a href="#id_page_cookbook" class="nav-link"><img class="cl_nav_icon" src="./assets/ico_cookbook_filled.png" alt="Cookbook"></a>
+			<a href="#id_page_settings" class="nav-link"><img class="cl_nav_icon" src="./assets/ico_settings_filled.png" alt="Settings"></a>
+		</div>
+	</div>
+
+	<script>
+	</script>
+</body>
+</html>
