@@ -4,6 +4,8 @@ If you are interested in using some of my code, feel free to use but its ethical
 
 
 Note to myself:
-git add -A
-git commit -m ""
-git push -u origin main
+- git add -A
+- git commit -m ""
+- git push -u origin main
+
+_yes I push to origin main, its my own git ok!_ 
