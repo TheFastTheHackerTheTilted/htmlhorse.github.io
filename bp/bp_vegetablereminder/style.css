@@ -85,21 +85,24 @@ vvvvvvvvvvvvvvvvvvvvv
 STYLE FOR HEALTH PAGE
 vvvvvvvvvvvvvvvvvvvvv
 */
-#id_vits_table{
-
+#id_vits_table > li > span{
+	width: 50px;
 }
 #id_page_health ul {
 	padding: 0 20px 0 20px;
 }
 #id_page_health li {
    list-style-type: none;
-   margin-bottom: 10px; /* Adjust margin as needed */
+   margin-bottom: 20px;
+   display: flex;
+   /* padding: 5px 1px 5px 1px; */
 }
 
 .progress-bar-container {
    position: relative;
    height: 20px;
-   margin-left: 5px; /* Adjust margin as needed */
+   /* margin-left: 40px; */
+   width: 100%;
 }
 
 /* Style for the progress bar background */
@@ -116,6 +119,11 @@ vvvvvvvvvvvvvvvvvvvvv
 .progress-bar {
    height: 100%;
    background-color: #4caf50; /* Green color, you can change it */
+}
+.active-vit {
+	border-style: inset;
+	border-radius: 5px;
+	border-color: #32d939;
 }
 
 /* 
