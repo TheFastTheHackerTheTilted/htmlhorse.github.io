@@ -123,9 +123,30 @@ vvvvvvvvvvvvvvvvvvvvv
 .active-vit {
 	border-style: inset;
 	border-radius: 5px;
-	border-color: #32d939;
+	border-color: #8e9cbf;
+}
+#id_vit_desc_border {
+	display: block;
+	position: absolute;
+	bottom: 20px;
+	width: 98%;
+	box-sizing: border-box; /* Include padding in the total width */
 }
 
+#id_vit_desc {
+	border-style: inset;
+	border-radius: 5px;
+	border-color: #8e9cbf;
+	background-color: black;
+	height: 100px;
+	width: 100%;
+}
+#id_vit_close_desc{
+	position: absolute;
+	right: 0;
+	background: indianred;
+	font-weight: 900;
+}
 /* 
 ======================
 STYLE FOR COOKBOOK PAGE

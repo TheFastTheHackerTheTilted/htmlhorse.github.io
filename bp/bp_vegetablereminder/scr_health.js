@@ -49,7 +49,7 @@ function createVitaminListItem(vitamin) {
 
 // Function to initialize the vitamin list
 function initializeVitaminList() {
-	const vitaminListContainer = document.getElementById('id_page_health');
+	const vitaminListContainer = document.getElementById('id_vits');
 	vitaminListContainer.innerHTML = "";
 
 	// Create a list element
@@ -69,11 +69,11 @@ function initializeVitaminList() {
 
 function updateVitamin(name,change){
 	const vitamin = vitaminsData.find(vitamin => vitamin.name === name);
-		if (vitamin) {
-			vitamin.progress = Math.max(0, Math.min(100, vitamin.progress+change));
-		} else {
-			console.error(`Vitamin ${vitaminName} not found.`);
-		}
+	if (vitamin) {
+		vitamin.progress = Math.max(0, Math.min(100, vitamin.progress+change));
+	} else {
+		console.error(`Vitamin ${vitaminName} not found.`);
+	}
 	initializeVitaminList();
 }
 
@@ -102,7 +102,23 @@ function clickable_vits(){
 			link.classList.add('active-vit');
 
 			var targetVit = link.querySelector('span').textContent;
-			console.log(targetVit);
+			console.log("description about: "+targetVit);
+			show_vit_desc(targetVit);
+
 		});
 	});
+}
+
+
+function close_vit_desc() {
+	document.querySelector('#id_vit_desc_border').style.display = 'none';
+}
+
+function show_vit_desc() {
+	document.querySelector('#id_vit_desc_border').style.display = 'block';
+}
+
+function show_vit_desc(vit) {
+	document.querySelector('#id_vit_desc_border').style.display = 'block';
+	document.querySelector('#id_vit_desc').innerText = "Description of vitamin "+vit
 }
