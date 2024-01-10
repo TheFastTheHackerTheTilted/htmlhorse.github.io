@@ -112,6 +112,9 @@ function clickable_vits(){
 
 function close_vit_desc() {
 	document.querySelector('#id_vit_desc_border').style.display = 'none';
+	document.querySelectorAll('.cl_vitamin_bar').forEach(function (navLink) {
+				navLink.classList.remove('active-vit');
+			});
 }
 
 function show_vit_desc() {

@@ -126,7 +126,7 @@ vvvvvvvvvvvvvvvvvvvvv
 	border-color: #8e9cbf;
 }
 #id_vit_desc_border {
-	display: block;
+	display: none;
 	position: absolute;
 	bottom: 20px;
 	width: 98%;
