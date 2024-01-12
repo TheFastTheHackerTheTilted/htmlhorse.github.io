@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="style.css">
+	<script src="scr_cookbook.js"></script>
 	<script src="scr_health.js"></script>
     <script src="scr_home.js"></script>
 	<title>Hi-Fi prototype</title>
@@ -33,11 +34,18 @@
 				<div id="id_vit_desc_border">
 					<button id="id_vit_close_desc" onclick="close_vit_desc()">X</button>
 					<div id="id_vit_desc">text</div>
+					<button id="id_vit_read_more" >Read More</button>
 				</div>
 			</div>
 
 			<div id="id_page_cookbook" class="page">
 				<h1>Cookbook</h1>
+				<div class="cl_cb_recipe" id="r_id_00">
+					<span class="cl_cb_recipe_title">Test Recipe</span>
+					<span class="cl_cb_vit_desc">Vitamins:A,B1,E</span>
+					<span class="cl_cb_meal_desc">This test meal is nice!</span>
+					<button class="cl_cb_button_view_recipe" onclick="showRecipe('00')">View Recipe</button>
+				</div>
 				<!-- Content for Page 3 -->
 			</div>
 

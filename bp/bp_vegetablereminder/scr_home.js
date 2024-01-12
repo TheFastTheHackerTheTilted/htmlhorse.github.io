@@ -7,6 +7,9 @@ document.addEventListener("DOMContentLoaded", function() {
 		if (pageId === "id_page_health"){
 			initializeVitaminList();
 		}
+		if (pageId === "id_page_cookbook"){
+			showAllRecipes();
+		}
 	}
 
 
