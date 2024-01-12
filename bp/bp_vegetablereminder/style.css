@@ -97,6 +97,7 @@ vvvvvvvvvvvvvvvvvvvvv
 	margin-bottom: 20px;
 	display: flex;
 	/* padding: 5px 1px 5px 1px; */
+	height: 4vh;
 }
 
 .progress-bar-container {
