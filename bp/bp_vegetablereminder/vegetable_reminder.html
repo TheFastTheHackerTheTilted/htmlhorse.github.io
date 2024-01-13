@@ -6,6 +6,7 @@
 	<link rel="stylesheet" href="style.css">
 	<script src="scr_cookbook.js"></script>
 	<script src="scr_health.js"></script>
+	<script src="scr_settings.js"></script>
     <script src="scr_home.js"></script>
 	<title>Hi-Fi prototype</title>
 </head>
@@ -25,7 +26,12 @@
 				<div id="id_home_main">
 					<h1>Home</h1>
 				</div>
-				<button id="id_home_button_feed">Feed me</button>
+				<div id="id_feed_selector">
+					<button class="cl_feed_selector_button">List</button>
+					<button class="cl_feed_selector_button">Camera</button>
+					<button id="id_feed_selector_close" onclick="closeFeedSelector()">X</button>
+				</div>
+				<button id="id_home_button_feed"><img class="cl_nav_icon" src="./assets/ico_feed.png" alt="Home"></button>
 			</div>
 
 			<div id="id_page_health" class="page">
@@ -53,12 +59,14 @@
 				<h1>Settings</h1>
 				<p>Credits goes to: HTMLHorse, A. Toma, I. Mitev</p>
 				
+				<button class="cl_feed_selector_button" id="id_button_ico_creds">Icon Credits</button>
 				<div id="id_setting_credits">
-					<p>Credits:</p>
+					<p>Icon Credits:</p>
 					<a href="https://www.flaticon.com/free-icons/home" title="home icons">Home icons created by Freepik - Flaticon</a>
 					<a href="https://www.flaticon.com/free-icons/heart" title="heart icons">Heart icons created by Freepik - Flaticon</a>
 					<a href="https://www.flaticon.com/free-icons/cookbook" title="cookbook icons">Cookbook icons created by Those Icons - Flaticon</a>
 					<a href="https://www.flaticon.com/free-icons/settings" title="settings icons">Settings icons created by Pixel perfect - Flaticon</a>
+					<a href="https://www.flaticon.com/free-icons/food" title="food icons">Food icons created by Freepik - Flaticon</a>
 				</div>
 				<div id="id_test_panel">
 					<button onclick="updateVitamin('A', 5);">+ Vitamin A</button>

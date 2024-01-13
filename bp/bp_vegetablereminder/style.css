@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "Horse-Font";
+    src: url(http://www.htmlhorse.org/mc-font.otf) format("truetype");
+}
+
 body{
 	margin: 0;
 }
@@ -72,13 +77,47 @@ vvvvvvvvvvvvvvvvvvvvv
 	bottom: 30px;
 	right: 10px;
 	border-radius: 50%;
-	background-color: lime;
+	background-color: chartreuse;
 	height: 64px;
+	width: 64px;
 	border-style: double;
 }
 
 #id_home_main{
 	padding: 10px;
+}
+
+#id_feed_selector{
+    position: absolute;
+    top: 40%;
+    left: 20%;
+    background: black;
+    height: 15%;
+    width: 60%;
+    display: none;
+    color: black;
+    flex-direction: row;
+    align-content: center;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    align-items: center;
+    border-style: inset;
+    border-color: saddlebrown;
+    border-radius: 10px;
+}
+.cl_feed_selector_button{
+    background-color: greenyellow;
+    border-style: none;
+    border-radius: 0;
+    font-size: 18px;
+    width: 40%;
+}
+#id_feed_selector_close{
+	position: absolute;
+	right: 5px;
+	top: 5px;
+	background-color: indianred;
+	color: black;
 }
 
 /* 
@@ -197,6 +236,10 @@ vvvvvvvvvvvvvvvvvvvvv
 STYLE FOR SETTINGS PAGE
 vvvvvvvvvvvvvvvvvvvvv
 */
+#id_setting_credits{
+	display: none;
+	margin-bottom: 20px;
+}
 #id_setting_credits a{
 	display: block;
 }
