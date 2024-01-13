@@ -49,7 +49,7 @@ function showAllRecipes() {
   });
 }
 
-function createFilterBox(vitamin) {
+function createFilterBox(vitamin,activeVit) {
   const filterBox = document.createElement('label');
   filterBox.innerText = vitamin;
   filterBox.className = 'cl_label_filter';
@@ -58,16 +58,26 @@ function createFilterBox(vitamin) {
   filterInput.setAttribute('type','checkbox');
   filterInput.setAttribute('value',vitamin);
   filterInput.setAttribute('id',`id_cbox_${vitamin}`);
+  if (activeVit) {
+    filterInput.setAttribute('checked', 'checked');
+  }
 
   filterBox.appendChild(filterInput);
   return filterBox;
 }
 
-function loadFilter() {
+function loadFilter(activeVit) {
   const filterbar = document.getElementById('id_recipe_filterbar');
   filterbar.innerHTML ="";
 
   vitaminsData.forEach(vitamin => {
-    filterbar.appendChild(createFilterBox(vitamin.name));
+    if (vitamin.name === activeVit) {
+      filterbar.appendChild(createFilterBox(vitamin.name,true));
+    }
+    else{
+      filterbar.appendChild(createFilterBox(vitamin.name));
+    }
   });
 }
+
+

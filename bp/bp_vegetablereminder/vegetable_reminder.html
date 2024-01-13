@@ -14,6 +14,7 @@
 <body>
 	<div id="id_div_dekstop">
 		<h1 id="id_boiler_text">You shouldn't see this, this page is for mobile devices. If you are on mobile device and see this, let developers know about this</h1>
+		<h4>or tighten the width of window, make the window look like mobile screen</h4>
 	</div>
 
 	<div id="id_div_mobile">
@@ -30,16 +31,30 @@
 				<div id="id_feed_selector">
 					<button class="cl_default_button">List</button>
 					<button class="cl_default_button">Camera</button>
-					<button id="id_feed_selector_close" onclick="closeFeedSelector()">X</button>
+					<button class="cl_default_close" id="id_feed_selector_close" onclick="closeFeedSelector()">X</button>
 				</div>
 				<button id="id_home_button_feed"><img class="cl_nav_icon" src="./assets/ico_feed.png" alt="Home"></button>
 			</div>
 
 			<div id="id_page_health" class="page">
+				<div id="id_detail_vit">
+					<span class="cl_vit_title" id="id_vit_title">Vitamin X</span>
+					<span class="cl_vit_title" id="id_vit_benefits_title">Benefits:</span>
+					<span id="id_vit_benefits">x,y,z</span>
+
+					<span class="cl_vit_title" id="id_vit_def_title">On Deficiency:</span>
+					<span id="id_vit_def"> death, hair loss</span>
+
+					<span class="cl_vit_title"id="id_vit_src_title">Sources:</span>
+					<span id="id_vit_src">sources</span>
+
+					<button class="cl_default_close" id="id_detail_vit_close" onclick="readMoreVitClose()">X</button>
+					<button  id="id_vit_show_recipes" onclick="goToCookbook()">Show Recipes</button>
+				</div>
 				<div id="id_vits"></div>
 
 				<div id="id_vit_desc_border">
-					<button id="id_vit_close_desc" onclick="close_vit_desc()">X</button>
+					<button class="cl_default_close" id="id_vit_close_desc" onclick="close_vit_desc()">X</button>
 					<div id="id_vit_desc">text</div>
 					<button id="id_vit_read_more" >Read More</button>
 				</div>

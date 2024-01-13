@@ -33,6 +33,7 @@ body{
 	justify-content: space-evenly;
 	padding: 10px;
 	box-sizing: border-box;
+	z-index: 10;
 }
 
 #navigation a {
@@ -117,10 +118,16 @@ vvvvvvvvvvvvvvvvvvvvv
 }
 
 #id_feed_selector_close{
+	right: 0;
+	top: 0;
+}
+
+.cl_default_close{
 	position: absolute;
-	right: 5px;
-	top: 5px;
-	background-color: indianred;
+	right: 0;
+	top: 0;
+	background: indianred;
+	font-weight: 900;
 	color: black;
 }
 
@@ -187,11 +194,8 @@ vvvvvvvvvvvvvvvvvvvvv
 	width: 100%;
 }
 #id_vit_close_desc{
-	position: absolute;
-	right: 0;
-	background: indianred;
-	font-weight: 900;
-	color: black;
+	top: 5px;
+	right: 3px;
 }
 #id_vit_read_more{
 	position: absolute;
@@ -199,6 +203,48 @@ vvvvvvvvvvvvvvvvvvvvv
 	bottom: 10px;
 	background: #e9c18e;
 	color: black;
+}
+
+#id_detail_vit{
+	display: none;
+	position: fixed;
+    height: 90vh;
+    background: black;
+    z-index: 3;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 100%;
+}
+#id_detail_vit > span{
+	display: block;
+	font-size: 24px;
+}
+
+#id_detail_vit_close{
+	right: 10px;
+	top: 10px;
+	font-size: 24px;
+}
+#id_vit_show_recipes{
+	position: absolute;
+	bottom: 25px;
+	right: 5px;
+	font-size: 20px;
+	background-color: sandybrown;
+}
+
+.cl_vit_title{
+	margin-top: 30px;
+	font-weight: bold;
+}
+#id_vit_benefits_title{
+	color: green;
+}
+#id_vit_def_title{
+	color: red;
+}
+#id_vit_src_title{
+	color: yellow;
 }
 /* 
 ======================
@@ -212,13 +258,14 @@ vvvvvvvvvvvvvvvvvvvvv
 	align-content: center;
 	justify-content: space-between;
 	align-items: center;
-	background-color: #181A1B;
+	background-color: #A1662F;
 	position: sticky;
 	top: 0;
 	z-index: 3;
 }
 .cl_label_filter{
 	margin: 5px;
+	margin-right: 3%;
 }
 
 .cl_cb_recipe {

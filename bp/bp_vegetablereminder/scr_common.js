@@ -1,17 +1,27 @@
+	
+function showPage(pageId) {
+	document.querySelectorAll('.page').forEach(function (page) {
+		page.style.display = 'none';
+	});
+	document.getElementById(pageId).style.display = 'block';
+
+	document.querySelectorAll('.nav-link').forEach(function (navLink) {
+				navLink.classList.remove('active');
+			});
+
+	const linkToActivate = document.querySelector(`a[href="#${pageId}"]`);
+    if (linkToActivate) {
+        linkToActivate.classList.add('active');
+    } else {
+        console.error(`Link with href="#${pageId}" not found.`);
+    }
+}
+
 document.addEventListener("DOMContentLoaded", function() {
-	function showPage(pageId) {
-		document.querySelectorAll('.page').forEach(function (page) {
-			page.style.display = 'none';
-		});
-		document.getElementById(pageId).style.display = 'block';
-		if (pageId === "id_page_health"){
-			initializeVitaminList();
-		}
-		if (pageId === "id_page_cookbook"){
-			loadFilter();
-			showAllRecipes();
-		}
-	}
+	initializeVitaminList();
+	loadFilter();
+	showAllRecipes();
+
 
 
 	document.querySelectorAll('#navigation a').forEach(function (link) {

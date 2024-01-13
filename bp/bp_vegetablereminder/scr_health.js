@@ -1,21 +1,22 @@
 // Sample data for vitamins and their progress values (0 to 100)
 
 const vitaminsData = [
-	{ name: 'A', progress: 75 },
-	{ name: 'B1', progress: 50 },
-	{ name: 'B2', progress: 55 },
-	{ name: 'B3', progress: 45 },
-	{ name: 'B5', progress: 60 },
-	{ name: 'B6', progress: 35 },
-	{ name: 'B7', progress: 55 },
-	{ name: 'B9', progress: 45 },
-	{ name: 'B12', progress: 70 },
-	{ name: 'C', progress: 60 },
-	{ name: 'D', progress: 30 },
-	{ name: 'E', progress: 20 },
-	{ name: 'K', progress: 55 },
-	// Add more vitamins as needed
-	];
+    { name: 'A', progress: 75, benefit: 'Improves vision', defEff: 'Night blindness', sources: 'Carrots, Sweet potatoes' },
+    { name: 'B1', progress: 50, benefit: 'Aids in energy metabolism', defEff: 'Beriberi', sources: 'Whole grains, Legumes' },
+    { name: 'B2', progress: 55, benefit: 'Supports growth and red blood cell production', defEff: 'Ariboflavinosis', sources: 'Dairy products, Leafy greens' },
+    { name: 'B3', progress: 45, benefit: 'Lowers cholesterol levels', defEff: 'Pellagra', sources: 'Meat, Nuts' },
+    { name: 'B5', progress: 60, benefit: 'Helps convert food into energy', defEff: 'Hypoglycemia', sources: 'Avocado, Chicken' },
+    { name: 'B6', progress: 35, benefit: 'Supports brain development and function', defEff: 'Anemia, neurological symptoms', sources: 'Bananas, Potatoes' },
+    { name: 'B7', progress: 55, benefit: 'Promotes healthy skin, hair, and nails', defEff: 'Dermatitis, hair loss', sources: 'Eggs, Nuts' },
+    { name: 'B9', progress: 45, benefit: 'Important for cell division and DNA synthesis', defEff: 'Neural tube defects in unborn babies', sources: 'Leafy greens, Citrus fruits' },
+    { name: 'B12', progress: 70, benefit: 'Supports nerve function and the production of DNA and red blood cells', defEff: 'Pernicious anemia', sources: 'Meat, Dairy products' },
+    { name: 'C', progress: 60, benefit: 'Boosts the immune system and aids in collagen production', defEff: 'Scurvy', sources: 'Citrus fruits, Strawberries' },
+    { name: 'D', progress: 30, benefit: 'Helps the body absorb calcium', defEff: 'Rickets, osteomalacia', sources: 'Sunlight, Fatty fish' },
+    { name: 'E', progress: 20, benefit: 'Acts as an antioxidant', defEff: 'Rare, may lead to nerve and muscle damage', sources: 'Nuts, Seeds' },
+    { name: 'K', progress: 55, benefit: 'Aids in blood clotting and bone health', defEff: 'Hemorrhage, osteoporosis', sources: 'Leafy greens, Fish' },
+];
+
+
 
 // Function to create a progress bar element
 function createProgressBar(progress, limit) {
@@ -121,7 +122,35 @@ function show_vit_desc() {
 	document.querySelector('#id_vit_desc_border').style.display = 'block';
 }
 
-function show_vit_desc(vit) {
+function show_vit_desc(target) {
+	const vit = vitaminsData.find(vitamin => vitamin.name === target);
 	document.querySelector('#id_vit_desc_border').style.display = 'block';
-	document.querySelector('#id_vit_desc').innerText = "Description of vitamin "+vit
+	document.querySelector('#id_vit_desc').innerText = "Sources: "+vit.sources;
+	document.querySelector('#id_vit_read_more').setAttribute('onclick',`readMoreVit('${target}')`)
+}
+
+function readMoreVit(target){
+	console.log("Read more about: "+target);
+	close_vit_desc();
+	document.querySelector('#id_detail_vit').style.display = 'block';
+
+	const vit = vitaminsData.find(vitamin => vitamin.name === target);
+	document.querySelector('#id_vit_title').innerText = vit.name;
+
+	document.querySelector('#id_vit_benefits').innerText = vit.benefit;
+
+	document.querySelector('#id_vit_def').innerText = vit.defEff;
+	document.querySelector('#id_vit_src').innerText =  vit.sources;
+
+	document.querySelector('#id_vit_show_recipes').setAttribute('onclick',`goToCookbook('${vit.name}')`);
+}
+
+function readMoreVitClose(){
+	document.querySelector('#id_detail_vit').style.display = 'none';
+}
+
+function goToCookbook(vit){
+	readMoreVitClose();
+	showPage('id_page_cookbook');
+	loadFilter(vit);
 }
