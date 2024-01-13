@@ -1,6 +1,6 @@
 @font-face {
-    font-family: "Horse-Font";
-    src: url(http://www.htmlhorse.org/mc-font.otf) format("truetype");
+	font-family: "Horse-Font";
+	src: url(http://www.htmlhorse.org/mc-font.otf) format("truetype");
 }
 
 body{
@@ -51,6 +51,15 @@ body{
 	background-color: #555; /* Change this to your desired background color */
 }
 
+.cl_default_button{
+	background-color: greenyellow;
+	border-style: none;
+	border-radius: 0;
+	font-size: 18px;
+	width: 40%;
+	display: block;
+}
+
 /* 
 ======================
 STYLE FOR HOME PAGE
@@ -88,30 +97,25 @@ vvvvvvvvvvvvvvvvvvvvv
 }
 
 #id_feed_selector{
-    position: absolute;
-    top: 40%;
-    left: 20%;
-    background: black;
-    height: 15%;
-    width: 60%;
-    display: none;
-    color: black;
-    flex-direction: row;
-    align-content: center;
-    flex-wrap: nowrap;
-    justify-content: space-evenly;
-    align-items: center;
-    border-style: inset;
-    border-color: saddlebrown;
-    border-radius: 10px;
+	position: absolute;
+	top: 40%;
+	left: 20%;
+	background: black;
+	height: 15%;
+	width: 60%;
+	display: none;
+	color: black;
+	flex-direction: row;
+	align-content: center;
+	flex-wrap: nowrap;
+	justify-content: space-evenly;
+	align-items: center;
+	border-style: inset;
+	border-color: saddlebrown;
+	border-radius: 10px;
+	box-sizing: border-box
 }
-.cl_feed_selector_button{
-    background-color: greenyellow;
-    border-style: none;
-    border-radius: 0;
-    font-size: 18px;
-    width: 40%;
-}
+
 #id_feed_selector_close{
 	position: absolute;
 	right: 5px;
@@ -201,6 +205,21 @@ vvvvvvvvvvvvvvvvvvvvv
 STYLE FOR COOKBOOK PAGE
 vvvvvvvvvvvvvvvvvvvvv
 */
+#id_recipe_filterbar{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-content: center;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #181A1B;
+	position: sticky;
+	top: 0;
+	z-index: 3;
+}
+.cl_label_filter{
+	margin: 5px;
+}
 
 .cl_cb_recipe {
 	background-color: black;
@@ -244,6 +263,9 @@ vvvvvvvvvvvvvvvvvvvvv
 	display: block;
 }
 
+.dev_button{
+	margin-bottom: 10px;
+}
 
 @media only screen and (min-width: 601px) {
 	/* Desktop view: Show desktop message, hide pages and navigation */

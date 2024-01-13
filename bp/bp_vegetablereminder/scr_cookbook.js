@@ -15,7 +15,7 @@ function showRecipe(recipeId) {
 }
 
 function showAllRecipes() {
-  const cookbookContainer = document.getElementById('id_page_cookbook');
+  const cookbookContainer = document.getElementById('id_recipe_list');
   cookbookContainer.innerHTML ="";
 
   allRecipes.forEach(recipe => {
@@ -49,3 +49,25 @@ function showAllRecipes() {
   });
 }
 
+function createFilterBox(vitamin) {
+  const filterBox = document.createElement('label');
+  filterBox.innerText = vitamin;
+  filterBox.className = 'cl_label_filter';
+
+  const filterInput = document.createElement('input');
+  filterInput.setAttribute('type','checkbox');
+  filterInput.setAttribute('value',vitamin);
+  filterInput.setAttribute('id',`id_cbox_${vitamin}`);
+
+  filterBox.appendChild(filterInput);
+  return filterBox;
+}
+
+function loadFilter() {
+  const filterbar = document.getElementById('id_recipe_filterbar');
+  filterbar.innerHTML ="";
+
+  vitaminsData.forEach(vitamin => {
+    filterbar.appendChild(createFilterBox(vitamin.name));
+  });
+}

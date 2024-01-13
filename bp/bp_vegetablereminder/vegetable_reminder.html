@@ -4,10 +4,11 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="style.css">
-	<script src="scr_cookbook.js"></script>
 	<script src="scr_health.js"></script>
+	<script src="scr_cookbook.js"></script>
 	<script src="scr_settings.js"></script>
-    <script src="scr_home.js"></script>
+	<script src="scr_home.js"></script>
+	<script src="scr_common.js"></script>
 	<title>Hi-Fi prototype</title>
 </head>
 <body>
@@ -27,8 +28,8 @@
 					<h1>Home</h1>
 				</div>
 				<div id="id_feed_selector">
-					<button class="cl_feed_selector_button">List</button>
-					<button class="cl_feed_selector_button">Camera</button>
+					<button class="cl_default_button">List</button>
+					<button class="cl_default_button">Camera</button>
 					<button id="id_feed_selector_close" onclick="closeFeedSelector()">X</button>
 				</div>
 				<button id="id_home_button_feed"><img class="cl_nav_icon" src="./assets/ico_feed.png" alt="Home"></button>
@@ -45,21 +46,19 @@
 			</div>
 
 			<div id="id_page_cookbook" class="page">
-				<h1>Cookbook</h1>
-				<div class="cl_cb_recipe" id="r_id_00">
-					<span class="cl_cb_recipe_title">Test Recipe</span>
-					<span class="cl_cb_vit_desc">Vitamins:A, B1, E</span>
-					<span class="cl_cb_meal_desc">This test meal is nice!</span>
-					<button class="cl_cb_button_view_recipe" onclick="showRecipe('00')">View Recipe</button>
+				<div id="id_recipe_filterbar">
+					<label><input type="checkbox" value="A"> A</label>
+					<label><input type="checkbox" value="B"> B</label>
 				</div>
-				<!-- Content for Page 3 -->
+				<div id="id_recipe_list">	
+				</div>
 			</div>
 
 			<div id="id_page_settings" class="page">
 				<h1>Settings</h1>
 				<p>Credits goes to: HTMLHorse, A. Toma, I. Mitev</p>
 				
-				<button class="cl_feed_selector_button" id="id_button_ico_creds">Icon Credits</button>
+				<button class="cl_default_button dev_button" id="id_button_ico_creds">Icon Credits</button>
 				<div id="id_setting_credits">
 					<p>Icon Credits:</p>
 					<a href="https://www.flaticon.com/free-icons/home" title="home icons">Home icons created by Freepik - Flaticon</a>
@@ -69,10 +68,10 @@
 					<a href="https://www.flaticon.com/free-icons/food" title="food icons">Food icons created by Freepik - Flaticon</a>
 				</div>
 				<div id="id_test_panel">
-					<button onclick="updateVitamin('A', 5);">+ Vitamin A</button>
-					<button onclick="pastTime(1);">Past 1 hour</button>
-					<button onclick="pastTime(6);">Past 6 hours</button>
-					<button onclick="startQuiz();">Initialize questionnaire</button>
+					<button class="cl_default_button dev_button" onclick="updateVitamin('A', 5);">+ Vitamin A</button>
+					<button class="cl_default_button dev_button" onclick="pastTime(1);">Past 1 hour</button>
+					<button class="cl_default_button dev_button" onclick="pastTime(6);">Past 6 hours</button>
+					<button class="cl_default_button dev_button" onclick="startQuiz();">Initialize questionnaire</button>
 				</div>
 			</div>
 		</div>
