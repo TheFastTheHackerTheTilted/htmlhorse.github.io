@@ -125,7 +125,7 @@ function show_vit_desc() {
 function show_vit_desc(target) {
 	const vit = vitaminsData.find(vitamin => vitamin.name === target);
 	document.querySelector('#id_vit_desc_border').style.display = 'block';
-	document.querySelector('#id_vit_desc').innerText = "Sources: "+vit.sources;
+	document.querySelector('#id_vit_desc').innerText = `Common Vitamin ${target} Sources:\n`+vit.sources;
 	document.querySelector('#id_vit_read_more').setAttribute('onclick',`readMoreVit('${target}')`)
 }
 

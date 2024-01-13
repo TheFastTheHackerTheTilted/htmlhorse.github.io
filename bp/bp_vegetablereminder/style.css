@@ -87,7 +87,7 @@ vvvvvvvvvvvvvvvvvvvvv
 	bottom: 30px;
 	right: 10px;
 	border-radius: 50%;
-	background-color: chartreuse;
+	background-color: #e9c18e;
 	height: 64px;
 	width: 64px;
 	border-style: double;
@@ -192,14 +192,16 @@ vvvvvvvvvvvvvvvvvvvvv
 	background-color: black;
 	height: 100px;
 	width: 100%;
+	padding: 10px;
+    box-sizing: border-box;
 }
 #id_vit_close_desc{
 	top: 5px;
-	right: 3px;
+	right: 5px;
 }
 #id_vit_read_more{
 	position: absolute;
-	right: 0;
+	right: 5px;
 	bottom: 10px;
 	background: #e9c18e;
 	color: black;
@@ -230,7 +232,7 @@ vvvvvvvvvvvvvvvvvvvvv
 	bottom: 25px;
 	right: 5px;
 	font-size: 20px;
-	background-color: sandybrown;
+	background-color: #e9c18e;
 }
 
 .cl_vit_title{
