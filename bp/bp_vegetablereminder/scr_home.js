@@ -33,10 +33,12 @@ function gotoList(){
 	showPage('id_page_cookbook');
 }
 
+let cameraActive = false;
 let cameraStream;
 function openCamera(){
 	closeFeedSelector();
 	const video = document.getElementById('id_cameraPreview');
+	cameraActive = true;
 
 	navigator.mediaDevices.getUserMedia({ video: true })
         .then(stream => {
@@ -54,9 +56,13 @@ function openCamera(){
 	document.getElementById('id_stop_camera').style.display = "block";
 	document.getElementById('id_cameraPreview').style.display = 'block';
 	document.getElementById('id_take_image').style.display = "block";
+
+	takeFrames();
+	console.log("camera active: ",cameraActive);
 }
 
 function stopCamera() {
+	cameraActive = false;
     if (cameraStream) {
         const tracks = cameraStream.getTracks();
         tracks.forEach(track => track.stop());
@@ -80,7 +86,7 @@ function takeImage() {
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
     stopCamera();
-    document.getElementById('id_camera_panel').style.display = "flex";
+    // document.getElementById('id_camera_panel').style.display = "flex";
     // You can save the captured image or perform further processing here
     // For example: const imageData = canvas.toDataURL('image/png');
     const imageData = canvas.toDataURL('image/png');
@@ -89,40 +95,95 @@ function takeImage() {
     processImage(imageData);
 }
 
-function processImage(imageData) {
-    // Implement your logic for processing the image data here
-    console.log('Processing image:', imageData);
-    // You can send the imageData to another function, API, etc.
-}
-
-async function loadModel() {
-    const model = await tf.loadLayersModel('./assets/model/model.json');
-    return model;
-}
-
-const model = await loadModel();
-
-async function classifyImage() {
-    const imageInput = document.getElementById('imageInput');
-    const imagePreview = document.getElementById('imagePreview');
-
-    const file = imageInput.files[0];
-    const reader = new FileReader();
-
-    reader.onloadend = async () => {
-        const imageTensor = tf.browser.fromPixels(imagePreview);
-        const expandedDims = imageTensor.expandDims();
-
-        const predictions = model.predict(expandedDims);
-        const topPrediction = predictions.argMax(1).dataSync()[0];
-
-        console.log('Top Prediction:', topPrediction);
-
-        // Perform further actions based on the prediction
-    };
-
-    if (file) {
-        reader.readAsDataURL(file);
-        imagePreview.src = URL.createObjectURL(file);
+function takeFrames() {
+    if (cameraActive) {
+        getFrame().then((imageData) => {
+            // Perform further processing with the image data
+            processImage(imageData);
+            
+            // Schedule the next frame after 3 seconds
+            setTimeout(takeFrames, 3000);
+        });
     }
 }
+function getFrame(){
+	const video = document.getElementById('id_cameraPreview');
+    const canvas = document.createElement('canvas'); // Create a temporary canvas
+    const context = canvas.getContext('2d');
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    // You can save the captured image or perform further processing here
+    // For example: const imageData = canvas.toDataURL('image/png');
+    const imageData = canvas.toDataURL('image/png');
+
+    // Return the image data as a promise
+    return Promise.resolve(imageData);
+}
+
+function processImage(imageData) {
+    // Create an Image object to load the captured image
+    const img = new Image();
+
+    // Set the source of the Image object to the captured image data
+    img.src = imageData;
+
+    // Once the image is loaded, perform processing
+    img.onload = function() {
+        // Create a canvas for cropping
+        const cropCanvas = document.createElement('canvas');
+        const cropContext = cropCanvas.getContext('2d');
+
+        // Set the dimensions of the crop canvas
+        cropCanvas.width = 100; // Adjust the desired width
+        cropCanvas.height = 100; // Adjust the desired height
+
+        // Calculate the coordinates for center cropping
+        const centerX = (img.width - cropCanvas.width) / 2;
+        const centerY = (img.height - cropCanvas.height) / 2;
+
+        // Draw the cropped image onto the crop canvas
+        cropContext.drawImage(img, centerX, centerY, cropCanvas.width, cropCanvas.height, 0, 0, cropCanvas.width, cropCanvas.height);
+
+        // Get the image data of the cropped canvas
+        const croppedImageData = cropCanvas.toDataURL('image/png');
+
+        // Analyze the main color of the cropped image
+        const analyzedColor = analyzeColor(cropCanvas);
+
+        // Log the analyzed color
+        console.log('Main Color:', analyzedColor);
+        document.getElementById('id_detected_label').innerText = `r: ${analyzedColor.red} b: ${analyzedColor.blue} g: ${analyzedColor.green}`
+    	document.getElementById('id_detected_label').style.color = `rgb(${analyzedColor.red},${analyzedColor.green},${analyzedColor.blue})`
+    };
+}
+
+// Function to analyze the main color of an image
+function analyzeColor(canvas) {
+    const context = canvas.getContext('2d');
+    const imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
+
+    // Initialize counters for each RGB channel
+    let redSum = 0;
+    let greenSum = 0;
+    let blueSum = 0;
+
+    // Iterate through the image data to calculate channel sums
+    for (let i = 0; i < imageData.length; i += 4) {
+        redSum += imageData[i];
+        greenSum += imageData[i + 1];
+        blueSum += imageData[i + 2];
+    }
+
+    // Calculate average RGB values
+    const redAvg = redSum / (canvas.width * canvas.height);
+    const greenAvg = greenSum / (canvas.width * canvas.height);
+    const blueAvg = blueSum / (canvas.width * canvas.height);
+
+    // Return the analyzed color as an object
+    return { red: redAvg, green: greenAvg, blue: blueAvg };
+}
+

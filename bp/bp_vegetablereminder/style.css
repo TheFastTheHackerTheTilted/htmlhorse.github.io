@@ -107,6 +107,13 @@ vvvvvvvvvvvvvvvvvvvvv
 	z-index: 5;
 	width: 100%;
 }
+#id_detected_label{
+	z-index: 8;
+	background-color: rgba(0, 0, 0, 1);
+	padding: 0 10px;
+	position: absolute;
+    bottom: 30vh;
+}
 #id_avatar{
 	position: absolute;
     top: 30vh;
