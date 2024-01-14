@@ -1,17 +1,94 @@
 const allRecipes = [
-	{id:"00", recipeTitle: "Test Recipe", vitaminList: ["A","B1","E"],shortDesc:"This test meal is nice!", recipe:["Step 1:...","Step 2:...", "Step 3:...", "DONE"]},
-	{id:"01", recipeTitle: "Test Recipe 2", vitaminList: ["A","K","E"],shortDesc:"This other meal is easier!", recipe:["Step 1:...","Step 2:...", "DONE"]},
-	{id:"02", recipeTitle: "Beef Recipe", vitaminList: ["B7","B12","K"],shortDesc:"This test meal has meat!", recipe:["Step 1:...","Step 2:...", "Step 3:...", "DONE"]},
-	{id:"03", recipeTitle: "Shroom Recipe", vitaminList: ["C","D","E"],shortDesc:"This test meal feels nice!", recipe:["Step 1:...","Step 2:...", "Step 3:...", "DONE"]},
-	{id:"04", recipeTitle: "Special Recipe", vitaminList: ["A","B6","D"],shortDesc:"This test meal is chef's special!", recipe:["Step 1:...","Step 2:...", "Step 3:...", "DONE"]},
-	{id:"05", recipeTitle: "Another Recipe", vitaminList: ["A","B7","B12"],shortDesc:"This test meal is an extra!", recipe:["Step 1:...","Step 2:...", "Step 3:...", "DONE"]},
-	{id:"06", recipeTitle: "Super Recipe", vitaminList: ["A","B7","B12","E","K"],shortDesc:"This test meal is ultra good!", recipe:["Step 1:...","Step 2:...", "Step 3:...", "DONE"]},
+    {
+        id: "00",
+        recipeTitle: "Grilled Chicken Salad",
+        vitaminList: ["A", "B1", "E"],
+        shortDesc: "A refreshing salad with grilled chicken.",
+        steps: ["Step 1: Grill chicken", "Step 2: Chop vegetables", "Step 3: Toss everything", "DONE"]
+    },
+    {
+        id: "01",
+        recipeTitle: "Vegetarian Stir Fry",
+        vitaminList: ["A", "K", "E"],
+        shortDesc: "A quick and easy stir fry with a variety of vegetables.",
+        steps: ["Step 1: Sauté vegetables", "Step 2: Add sauce", "DONE"]
+    },
+    {
+        id: "02",
+        recipeTitle: "Beef and Broccoli Stir Fry",
+        vitaminList: ["B7", "B12", "K"],
+        shortDesc: "A flavorful stir fry with tender beef and broccoli.",
+        steps: ["Step 1: Marinate beef", "Step 2: Sauté beef and broccoli", "Step 3: Add sauce", "DONE"]
+    },
+    {
+        id: "03",
+        recipeTitle: "Mushroom Risotto",
+        vitaminList: ["C", "D", "E"],
+        shortDesc: "Creamy risotto with mushrooms and a touch of Parmesan.",
+        steps: ["Step 1: Sauté mushrooms", "Step 2: Cook risotto rice", "Step 3: Add broth gradually", "DONE"]
+    },
+    {
+        id: "04",
+        recipeTitle: "Chef's Special Seafood Pasta",
+        vitaminList: ["A", "B6", "D"],
+        shortDesc: "A delectable seafood pasta prepared with the chef's special sauce.",
+        steps: ["Step 1: Cook pasta", "Step 2: Sauté seafood", "Step 3: Combine with sauce", "DONE"]
+    },
+    {
+        id: "05",
+        recipeTitle: "Mediterranean Quinoa Bowl",
+        vitaminList: ["A", "B7", "B12"],
+        shortDesc: "A nutritious quinoa bowl with Mediterranean flavors.",
+        steps: ["Step 1: Cook quinoa", "Step 2: Assemble bowl with veggies", "Step 3: Add dressing", "DONE"]
+    },
+    {
+        id: "06",
+        recipeTitle: "Superfood Smoothie Bowl",
+        vitaminList: ["A", "B7", "B12", "E", "K"],
+        shortDesc: "A nutrient-packed smoothie bowl with superfood toppings.",
+        steps: ["Step 1: Blend smoothie ingredients", "Step 2: Pour into a bowl", "Step 3: Add toppings", "DONE"]
+    }
+];
 
-	]
 
 function showRecipe(recipeId) {
-  // Your showRecipe function implementation here
+  const recipe = allRecipes.find(recipe => recipe.id === recipeId);
   console.log('Showing recipe with ID:', recipeId);
+  document.getElementById('id_recipe_details').style.display="block";
+  document.getElementById('id_recipe_title').innerText = recipe.recipeTitle;
+
+  const stepDiv = document.getElementById('id_recipe_steps_div');
+  stepDiv.innerHTML = "";
+
+  const recipeSteps= recipe.steps;
+
+  let i = 1;
+  recipeSteps.forEach(step => {
+    const spanElement = document.createElement('span');
+    spanElement.textContent = i +". "+step;
+    spanElement.className = "cl_recipe_step";
+    i+=1;
+
+    stepDiv.appendChild(spanElement);
+  });
+
+  
+  document.getElementById('id_recipe_eat_button').setAttribute('onclick',`eat_food('${recipe.id}')`)
+}
+
+function closeRecipe(){
+  document.getElementById('id_recipe_details').style.display="none";
+}
+
+function eat_food(id){
+  const food = allRecipes.find(recipe => recipe.id === id);
+  const recipeVits= food.vitaminList;
+
+
+  recipeVits.forEach(vit => {
+    updateVitamin(vit,+20);
+  });
+  closeRecipe();
 }
 
 function showAllRecipes() {

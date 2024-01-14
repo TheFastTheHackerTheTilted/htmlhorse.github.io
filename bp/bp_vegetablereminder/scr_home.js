@@ -15,3 +15,15 @@ function toggleFeedSelector() {
 		creditsElement.style.display = 'none';
 	}
 }
+
+function avatar_interact(){
+	const soundMeow = new Audio("./assets/snd_meow.mp3");
+    soundMeow.play();
+}
+
+function updateMainProgressbar(){
+
+	let prg = getAvgVit();
+	console.log("pbar updated %"+prg)
+	document.getElementById('id_pbar_health').style.width = `${prg}%`;
+}

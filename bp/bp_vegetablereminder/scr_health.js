@@ -17,6 +17,15 @@ const vitaminsData = [
 ];
 
 
+function getAvgVit(){
+	let allPrg = 0;
+	const vitCount = 13;
+	vitaminsData.forEach((vitamin) => {
+		allPrg += vitamin.progress;
+	});
+	let res = Math.round(allPrg/vitCount)
+	return res;
+}
 
 // Function to create a progress bar element
 function createProgressBar(progress, limit) {
@@ -66,6 +75,7 @@ function initializeVitaminList() {
 	// Append the list to the container
 	vitaminListContainer.appendChild(vitaminList);
 	clickable_vits();
+	updateMainProgressbar();
 }
 
 function updateVitamin(name,change){
@@ -136,7 +146,7 @@ function readMoreVit(target){
 	document.querySelector('#id_detail_vit').style.display = 'block';
 
 	const vit = vitaminsData.find(vitamin => vitamin.name === target);
-	document.querySelector('#id_vit_title').innerText = vit.name;
+	document.querySelector('#id_vit_title').innerText = "Vitamin "+vit.name;
 
 	document.querySelector('#id_vit_benefits').innerText = vit.benefit;
 
