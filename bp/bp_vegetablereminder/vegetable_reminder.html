@@ -29,15 +29,21 @@
 						<div id="id_pbar_streak"></div>
 					</div>
 				</div>
-				<div id="id_home_main">
-					<h1>Home</h1>
-					<img id="id_avatar" onclick="avatar_interact()" src="./assets/av_main.png">
+				<div id="id_camera_panel">
+					<canvas id="id_imageCanvas"></canvas>
+					<video id="id_cameraPreview"></video>
+					<button class="cl_default_close cl_cam_button" id="id_stop_camera" onclick="stopCamera()">X</button>
+					<button class="cl_cam_button" id="id_take_image" onclick="takeImage()">
+						<img onclick="takeImage()" id="id_take_image_button" src="./assets/ico_camera.png">
+					</button>
+					
 				</div>
+				<img id="id_avatar" onclick="avatar_interact()" src="./assets/av_main.png">
 				<div id="id_feed_selector">
 					<label>Method to use?</label>
 					<div id="id_feed_selector_buttons">
-						<button class="cl_default_button" onclick="showPage('id_page_cookbook')">From List</button>
-						<button class="cl_default_button">Take Image</button>
+						<button class="cl_default_button" onclick="gotoList()">From List</button>
+						<button class="cl_default_button" onclick="openCamera()">Take Image</button>
 					</div>
 					<button class="cl_default_close" id="id_feed_selector_close" onclick="closeFeedSelector()">X</button>
 				</div>
@@ -96,6 +102,7 @@
 					<a href="https://www.flaticon.com/free-icons/cookbook" title="cookbook icons">Cookbook icons created by Those Icons - Flaticon</a>
 					<a href="https://www.flaticon.com/free-icons/settings" title="settings icons">Settings icons created by Pixel perfect - Flaticon</a>
 					<a href="https://www.flaticon.com/free-icons/food" title="food icons">Food icons created by Freepik - Flaticon</a>
+					<a href="https://www.flaticon.com/free-icons/camera" title="camera icons">Camera icons created by Freepik - Flaticon</a>
 				</div>
 				<div id="id_test_panel">
 					<button class="cl_default_button dev_button" onclick="updateVitamin('A', 5);">+ Vitamin A</button>
