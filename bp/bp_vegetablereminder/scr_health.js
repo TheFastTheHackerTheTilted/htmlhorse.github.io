@@ -80,11 +80,12 @@ function updateVitamin(name,change){
 
 function reduceAllVitamins(value) {
 	vitaminsData.forEach(vitamin => {
-		vitamin.progress = Math.max(0, vitamin.progress - value);
+		updateVitamin(vitamin.name,-value)
 	});
 }
 
 function pastTime(hours){
+	console.log("Time passed: "+hours)
 	reduceAllVitamins(hours);
 }
 

@@ -304,6 +304,10 @@ vvvvvvvvvvvvvvvvvvvvv
 STYLE FOR SETTINGS PAGE
 vvvvvvvvvvvvvvvvvvvvv
 */
+#id_page_settings{
+	padding: 10px;
+}
+
 #id_setting_credits{
 	display: none;
 	margin-bottom: 20px;
