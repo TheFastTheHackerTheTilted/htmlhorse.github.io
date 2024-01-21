@@ -4,7 +4,7 @@ const allRecipes = [
         recipeTitle: "Grilled Chicken Salad",
         vitaminList: ["A", "B1", "E"],
         shortDesc: "A refreshing salad with grilled chicken.",
-        tags: "🟩 | 🥩 🌿",
+        tags: "⌛ | 🥩 🌿",
         steps: ["Step 1: Grill chicken", "Step 2: Chop vegetables", "Step 3: Toss everything", "DONE"]
     },
     {
@@ -12,7 +12,7 @@ const allRecipes = [
         recipeTitle: "Vegetarian Stir Fry",
         vitaminList: ["A", "K", "E"],
         shortDesc: "A quick and easy stir fry with a variety of vegetables.",
-        tags: "🟩 |🌿",
+        tags: "⌛ |🌿",
         steps: ["Step 1: Sauté vegetables", "Step 2: Add sauce", "DONE"]
     },
     {
@@ -20,7 +20,7 @@ const allRecipes = [
         recipeTitle: "Beef and Broccoli Stir Fry",
         vitaminList: ["B7", "B12", "K"],
         shortDesc: "A flavorful stir fry with tender beef and broccoli.",
-        tags: "🟨 🟨 | 🥩 🌿",
+        tags: "⌛ ⌛ | 🥩 🌿",
         steps: ["Step 1: Marinate beef", "Step 2: Sauté beef and broccoli", "Step 3: Add sauce", "DONE"]
     },
     {
@@ -28,7 +28,7 @@ const allRecipes = [
         recipeTitle: "Mushroom Risotto",
         vitaminList: ["C", "D", "E"],
         shortDesc: "Creamy risotto with mushrooms and a touch of Parmesan.",
-        tags: "🟩 | 🌿",
+        tags: "⌛ | 🌿",
         steps: ["Step 1: Sauté mushrooms", "Step 2: Cook risotto rice", "Step 3: Add broth gradually", "DONE"]
     },
     {
@@ -36,7 +36,7 @@ const allRecipes = [
         recipeTitle: "Chef's Special Seafood Pasta",
         vitaminList: ["A", "B6", "D"],
         shortDesc: "A delectable seafood pasta prepared with the chef's special sauce.",
-        tags: "🟥 🟥 🟥 | 🌿",
+        tags: "⌛ ⌛ ⌛ | 🌿",
         steps: ["Step 1: Cook pasta", "Step 2: Sauté seafood", "Step 3: Combine with sauce", "DONE"]
     },
     {
@@ -44,7 +44,7 @@ const allRecipes = [
         recipeTitle: "Mediterranean Quinoa Bowl",
         vitaminList: ["A", "B7", "B12"],
         shortDesc: "A nutritious quinoa bowl with Mediterranean flavors.",
-        tags: "🟨 🟨 | 🌿",
+        tags: "⌛ ⌛ | 🌿",
         steps: ["Step 1: Cook quinoa", "Step 2: Assemble bowl with veggies", "Step 3: Add dressing", "DONE"]
     },
     {
@@ -52,7 +52,7 @@ const allRecipes = [
         recipeTitle: "Superfood Smoothie Bowl",
         vitaminList: ["A", "B7", "B12", "E", "K"],
         shortDesc: "A nutrient-packed smoothie bowl with superfood toppings.",
-        tags: "🟩 | 🌿",
+        tags: "⌛ | 🌿",
         steps: ["Step 1: Blend smoothie ingredients", "Step 2: Pour into a bowl", "Step 3: Add toppings", "DONE"]
     }
 ];

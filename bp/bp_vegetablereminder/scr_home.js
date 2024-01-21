@@ -74,25 +74,23 @@ function stopCamera() {
 }
 
 function takeImage() {
-    const video = document.getElementById('id_cameraPreview');
-    const canvas = document.getElementById('id_imageCanvas');
-    canvas.style.display = "block";
-    const context = canvas.getContext('2d');
+    if (cameraActive) {
+        getFrame().then((imageData) => {
+            processImage(imageData)
+            
+            let veggie = globalveggie;
+            if (veggie === "Tomato") {
+                console.log("Fed Tomato");
+                updateVitamin("A",50)
+            }
+            else if (veggie === "Cucumber") {
+                console.log("Fed Tomato");
+                updateVitamin("C",50)
+            }
+            stopCamera();
 
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-
-
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-    stopCamera();
-    // document.getElementById('id_camera_panel').style.display = "flex";
-    // You can save the captured image or perform further processing here
-    // For example: const imageData = canvas.toDataURL('image/png');
-    const imageData = canvas.toDataURL('image/png');
-
-    // Pass the image data to another function or perform further processing
-    processImage(imageData);
+            });
+    }
 }
 
 function takeFrames() {
@@ -124,6 +122,7 @@ function getFrame(){
     return Promise.resolve(imageData);
 }
 
+let globalveggie = "Unknown";
 function processImage(imageData) {
     // Create an Image object to load the captured image
     const img = new Image();
@@ -155,9 +154,19 @@ function processImage(imageData) {
         const analyzedColor = analyzeColor(cropCanvas);
 
         // Log the analyzed color
+
+        const detectedVegetable = detectVegetable(analyzedColor);
+        globalveggie = detectedVegetable;
+
         console.log('Main Color:', analyzedColor);
-        document.getElementById('id_detected_label').innerText = `r: ${analyzedColor.red} b: ${analyzedColor.blue} g: ${analyzedColor.green}`
+        document.getElementById('id_detected_label').innerText = `r: ${analyzedColor.red} b: ${analyzedColor.blue} g: ${analyzedColor.green}\n${detectedVegetable}`
     	document.getElementById('id_detected_label').style.color = `rgb(${analyzedColor.red},${analyzedColor.green},${analyzedColor.blue})`
+        let rv = analyzedColor.red;
+        let gv = analyzedColor.green;
+        let bv = analyzedColor.blue;
+        let res = [rv,gv,bv]
+        console.log(res);
+        return res;
     };
 }
 
@@ -187,3 +196,28 @@ function analyzeColor(canvas) {
     return { red: redAvg, green: greenAvg, blue: blueAvg };
 }
 
+function detectVegetable(colors){
+    red = colors.red;
+    green = colors.green;
+    blue = colors.blue;
+    if (red >= 170 && green <=170) {
+        return "Tomato";
+    }
+    else if ( green >=170) {
+        return "Cucumber";
+    }
+    return "Unknown";
+}
+
+function detectVegetableList(colorList){
+    red = colorList[0];
+    green = colorList[1];
+    blue = colorList[2];
+    if (red >= 170 && green <=150 && blue <=150) {
+        return "Tomato";
+    }
+    else if (red <= 150 && green >=170 && blue <=150) {
+        return "Cucumber";
+    }
+    return "Unknown";
+}
