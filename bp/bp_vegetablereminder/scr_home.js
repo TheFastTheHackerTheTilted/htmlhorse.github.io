@@ -165,7 +165,8 @@ function processImage(imageData) {
         let gv = analyzedColor.green;
         let bv = analyzedColor.blue;
         let res = [rv,gv,bv]
-        console.log(res);
+        // console.log(res);
+        updateObjectBorder();
         return res;
     };
 }
@@ -200,24 +201,29 @@ function detectVegetable(colors){
     red = colors.red;
     green = colors.green;
     blue = colors.blue;
-    if (red >= 170 && green <=170) {
+    if (red >= 150 && green <=150) {
         return "Tomato";
     }
-    else if ( green >=170) {
+    else if ( green >=150) {
         return "Cucumber";
     }
     return "Unknown";
 }
 
-function detectVegetableList(colorList){
-    red = colorList[0];
-    green = colorList[1];
-    blue = colorList[2];
-    if (red >= 170 && green <=150 && blue <=150) {
-        return "Tomato";
+
+function updateObjectBorder(){
+    const borderobj = document.getElementById('id_object_border');
+    if (globalveggie != 'Unknown') {
+        borderobj.style.display = 'block';
+        const randomTop = Math.floor(Math.random() * (37 - 33 + 1)) + 33 + 'vh';
+        const randomLeft = Math.floor(Math.random() * (37 - 33 + 1)) + 33 + 'vw';
+
+        // Apply the random positions to the element
+        borderobj.style.bottom = randomTop;
+        borderobj.style.left = randomLeft;
     }
-    else if (red <= 150 && green >=170 && blue <=150) {
-        return "Cucumber";
+    else{
+        borderobj.style.display = 'none';
     }
-    return "Unknown";
+
 }
