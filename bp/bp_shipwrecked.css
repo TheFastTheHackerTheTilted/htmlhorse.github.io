@@ -27,6 +27,7 @@
 
 .cl_prompt{
 	font-size: 20px;
+	text-align: center;
 }
 .cl_div_buttons{
 	flex: 60%;

@@ -106,6 +106,8 @@ function showAllRecipes() {
     const recipeElement = document.createElement('div');
     recipeElement.className = 'cl_cb_recipe';
     recipeElement.id = `r_id_${recipe.id}`;
+    //recipeElement.onclick = `showRecipe(${recipe.id})`;
+    recipeElement.addEventListener('click', () => showRecipe(recipe.id));
 
     const titleElement = document.createElement('span');
     titleElement.className = 'cl_cb_recipe_title';
@@ -119,15 +121,17 @@ function showAllRecipes() {
     mealDescElement.className = 'cl_cb_meal_desc';
     mealDescElement.textContent = recipe.shortDesc;
 
+    /*
     const viewRecipeButton = document.createElement('button');
     viewRecipeButton.className = 'cl_cb_button_view_recipe';
     viewRecipeButton.textContent = 'View Recipe';
     viewRecipeButton.addEventListener('click', () => showRecipe(recipe.id));
+    */
 
     recipeElement.appendChild(titleElement);
     recipeElement.appendChild(vitDescElement);
     recipeElement.appendChild(mealDescElement);
-    recipeElement.appendChild(viewRecipeButton);
+    // recipeElement.appendChild(viewRecipeButton);
 
     cookbookContainer.appendChild(recipeElement);
   });
