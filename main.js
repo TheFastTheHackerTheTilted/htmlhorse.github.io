@@ -29,12 +29,15 @@ function addAllBps(){
     addBp("./bp/bp_designshop","bp_designshop","For the design of a shopping page.")
 	addBp("./bp/bp_game","bp_game","For the interactive game.")
 	addBp("./bp/bp_shipwrecked","bp_shipwrecked","For example game shipwrecked where you think carefully and survive");
-	addBp("./bp/bp_space","bp_space","For simulation of space traveling");
+	addBp("./bp/bp_space","(WIP) bp_space","For simulation of space traveling");
 	addBp("./bp/bp_givethephone","bp_givethephone","For the ' giving the phone to x' game");
 	addBp("./bp/bp_jackpot","bp_jackpot","(WIP) For the jackpot simulation game");
 	addBp("./bp/bp_potionmake","bp_potionmake","(WIP) For the potion crafting game");
 	addBp("./bp/bp_popupnotif","bp_popupnotif","(WIP) For the example popup notification");
 	addBp("./bp/bp_vegetablereminder/vegetable_reminder","bp_vegetablereminder","For the project of vegetable reminder app");
+	addBp("./bp/bp_euclidean","bp_euclidean ","(WIP) For the Euclidean  algorithm calculation visualization");
+	addBp("./bp/bp_wordguesser","bp_wordguesser ","(WIP) For the word guesser game");
+
 
 }
 

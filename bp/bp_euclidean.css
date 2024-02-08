@@ -1,0 +1,48 @@
+body{
+	font-size: 24px;
+}
+
+.cl_middle{
+	min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#id_euc_table {
+    border-collapse: collapse;
+    width: 40%;
+}
+
+#id_euc_control{
+	margin-bottom: 10px;
+}
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+    background-color: white;
+    color: goldenrod;
+    width: 60px;
+ }
+
+
+.cl_inputnumber{
+  	border-width: 0;
+  	width: 50px;
+}
+
+#id_calculatebutton{
+  	border-width: 0;
+}
+
+#id_how{
+    font-size: 16px;
+}
+#id_neso{
+    text-decoration: underline;
+    font-style: italic;
+}
