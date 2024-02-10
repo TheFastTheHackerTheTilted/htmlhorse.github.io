@@ -18,9 +18,10 @@
     background-color: transparent;
     border-width: 5px;
     border-style: double;
-    margin: 0 10px;
+    margin: 10px 10px;
     color: white;
     font-size: 28px;
+    text-align: center;
 }
 
 .cl_b_wordcount{
