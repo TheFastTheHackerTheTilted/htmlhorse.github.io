@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" href="favicon.ico" type="image/x-icon">
+	<title>bp_wordguesser</title>
+	<link rel="manifest" href="manifest.json" />
+	<link rel="stylesheet" href="main.css">
+	<link rel="stylesheet" href="bp_wordguesser.css">
+	<script type="text/javascript" src="main.js"></script>
+	<script type="text/javascript" src="bp_wordguesser.js"></script>
+
+</head>
+<body>
+	<div class="cl_header">
+		<p class="cl_page_text">bp_wordguesser</p>
+		<p class="cl_page_text" id="id_version"> v0.1</p>
+		<div class="cl_header_all_buttons" id="id_header_all_buttons">
+			<a class="cl_header_button" id="id_button_home" href="https://www.htmlhorse.com">Home</a>
+			<a class="cl_header_button active" href="https://www.htmlhorse.com/blueprints.html">Blueprints</a>
+			<a class="cl_header_button" id="id_button_log" href="https://www.htmlhorse.com/logs.html">Changelogs</a>
+			<div class="cl_header_box">
+				<div class="cl_header_box_icon" id="id_header_box" onclick="header_expand()">≡</div>
+			</div>
+		</div>
+	</div>
+	<div class="cl_middle" id="id_middle">
+		<div id="id_div_inputsize">
+			<span>Words Length</span>
+			<select id="id_wordsize">
+				<option value="3">3</option>
+			</select>
+		</div>
+		<div id="id_div_wordcount">
+			<span>Word Count</span>
+			<button class="cl_b_wordcount" onclick="setWordCount(1)">1</button>
+			<button class="cl_b_wordcount" onclick="setWordCount(2)">2</button>
+			<button class="cl_b_wordcount" onclick="setWordCount(3)">3</button>
+		</div>
+		<div id="id_div_wordlengths">
+			<div class="cl_div_length" id="id_length_1">
+			<label>First Word length</label>
+			<input type="number" class="cl_length" id="id_length_1">
+			</div>
+			<div class="cl_div_length" id="id_length_2">
+			<label>Second Word length</label>
+			<input type="number" class="cl_length" id="id_length_2">
+			</div>
+			<div class="cl_div_length" id="id_length_3">
+			<label>Third Word length</label>
+			<input type="number" class="cl_length" id="id_length_3">
+			</div>
+		</div>
+		<div id="id_digits">
+			<input type="number" class="cl_digit" id="id_digit_1">
+			<input type="number" class="cl_digit" id="id_digit_2">
+			<input type="number" class="cl_digit" id="id_digit_3">
+		</div>
+	</div>
+	<div id="id_footer" class="cl_footer"><hr>HTMLHorse is a webpage filled with weird subpages. If you are interested in using similar functionalites from my pages, if anything inspired you, feel free to use. It would be nice to mention me tho!</div>
+</body>
+
+
+</html>

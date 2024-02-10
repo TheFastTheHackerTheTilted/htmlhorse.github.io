@@ -1,0 +1,54 @@
+.cl_middle{
+	min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.cl_middle >div{
+    margin: 10px 0;
+}
+
+.cl_digit{
+    width: 50px;
+    height: 80px;
+    background-color: transparent;
+    border-width: 5px;
+    border-style: double;
+    margin: 0 10px;
+    color: white;
+    font-size: 28px;
+}
+
+.cl_b_wordcount{
+    width: 50px;
+    height: 50px;
+    border-style: solid;
+    border-radius: 12px;
+    background-color: white;
+    font-size: 24px;
+    cursor: pointer;
+
+}
+#id_div_wordcount{
+    font-size: 18px;
+}
+
+.cl_length{
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    border-width: 5px;
+    border-radius: 20px;
+    border-style: double;
+    margin: 0 10px;
+    color: white;
+    font-size: 28px;
+}
+
+.cl_div_length{
+    display: inline-block;
+}
