@@ -40,6 +40,7 @@ th, td {
   	border-width: 0;
     font-size: 24px;
     background-color: greenyellow;
+    cursor: pointer;
 }
 
 #id_how{
