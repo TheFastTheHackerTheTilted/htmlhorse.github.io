@@ -33,10 +33,13 @@ th, td {
 .cl_inputnumber{
   	border-width: 0;
   	width: 50px;
+    font-size: 24px;
 }
 
 #id_calculatebutton{
   	border-width: 0;
+    font-size: 24px;
+    background-color: greenyellow;
 }
 
 #id_how{
