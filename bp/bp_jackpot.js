@@ -1,8 +1,18 @@
+var balance = 100;
+var totalspent = 0;
+var rollprice = 5;
+
 function startRoll(){
-  unlockRows();
-  getNewValue("1",0);
-  getNewValue("2",0);
-  getNewValue("3",0);
+  if (balance>=rollprice) {
+    balance = balance-rollprice
+    document.getElementById("id_bal").innerText = balance;
+
+    unlockRows();
+
+    getNewValue("1",0);
+    getNewValue("2",0);
+    getNewValue("3",0);
+  }
 }
 
 function insertToRow(rowId, value){
@@ -38,6 +48,34 @@ function getNewValue(rowId,rollNumber){
 function lockRow(rowId){
   var row = document.getElementById("id_rowmid_" + rowId);
   row.classList.add("cl_lockedrow")
+  checkAllLocked();
+}
+
+function checkAllLocked(){
+  var e1 = document.getElementById("id_rowmid_1");
+  var e2 = document.getElementById("id_rowmid_2");
+  var e3 = document.getElementById("id_rowmid_3");
+
+  if (e1.classList.contains("cl_lockedrow") & e2.classList.contains("cl_lockedrow")& e3.classList.contains("cl_lockedrow")) {
+      getCombo();
+  }
+}
+
+function getCombo(){
+  var e1 = document.getElementById("id_rowmid_1").innerText;
+  var e2 = document.getElementById("id_rowmid_2").innerText;
+  var e3 = document.getElementById("id_rowmid_3").innerText;
+  let vallist = []
+  vallist.push(e1)
+  vallist.push(e2)
+  vallist.push(e3)
+
+  console.log("get all values and reward player: "+e1+e2+e3)
+  console.error("reward calculations needs to be done here")
+}
+
+function addBal(value){
+  valance = balance+value;
 }
 
 function unlockRows(){
