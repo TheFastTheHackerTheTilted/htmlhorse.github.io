@@ -17,17 +17,21 @@ function insertToRow(rowId, value){
     blocks[1].textContent = blocks[0].textContent;
     blocks[0].textContent = value;
 }
+const soundClick = new Audio("./bp_jackpot/click.wav");
+const soundLocking = new Audio("./bp_jackpot/locking.wav");
 
 function getNewValue(rowId,rollNumber){
   let rerollchance = Math.random();
   if (rerollchance <= 1-(rollNumber*0.001)){
+    soundClick.play();
     insertToRow(rowId,getRandomValue());
     setTimeout(function() {
       getNewValue(rowId,rollNumber+1)
-    }, 100)
+    }, 100+(rollNumber*5))
   }
   else{
     lockRow(rowId);
+    soundLocking.play();
   }
 }
 
