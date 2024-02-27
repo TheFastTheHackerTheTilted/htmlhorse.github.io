@@ -1,0 +1,66 @@
+body{
+	font-size: 24px;
+}
+
+.cl_middle{
+	min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+#id_roll{
+    border-width: 0;
+    font-size: 24px;
+    background-color: gold;
+    cursor: pointer;
+    margin-bottom: 50px;
+    margin: 20px 0 50px 0;
+}
+
+.cl_screen{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    background-color: dimgray;
+    padding: 4px 0;
+}
+
+.cl_resrow{
+    padding: 0 10px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 0;
+    border-color: white;
+    margin: 0 5px;
+    background-color: darkgray;
+    text-align: center;
+    width: 100px;
+}
+
+.cl_stats >p{
+    font-size: 18px;
+    margin: 2px 0;
+}
+
+.cl_midrow{
+    border-color: lightgoldenrodyellow;
+    border-width: 1px 0;
+    border-style: solid;
+}
+
+.cl_resblock{
+    height: 40px;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+}
+.cl_lockedrow{
+    background-color: #2b1717;
+}
