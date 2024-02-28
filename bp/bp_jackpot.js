@@ -1,11 +1,14 @@
 var balance = 100;
 var totalspent = 0;
 var rollprice = 5;
+var rollDuration = 100;
 
 function startRoll(){
   if (balance>=rollprice) {
     balance = balance-rollprice
     document.getElementById("id_bal").innerText = balance;
+    totalspent = totalspent+rollprice
+    document.getElementById("id_spent").innerText = totalspent;
 
     unlockRows();
 
@@ -37,7 +40,7 @@ function getNewValue(rowId,rollNumber){
     insertToRow(rowId,getRandomValue());
     setTimeout(function() {
       getNewValue(rowId,rollNumber+1)
-    }, 100+(rollNumber*5))
+    }, rollDuration+(rollNumber*5))
   }
   else{
     lockRow(rowId);
@@ -70,12 +73,46 @@ function getCombo(){
   vallist.push(e2)
   vallist.push(e3)
 
-  console.log("get all values and reward player: "+e1+e2+e3)
-  console.error("reward calculations needs to be done here")
+  console.log("get all values and reward player: ")
+  console.log(vallist)
+  if(checkifhas3(vallist,"💰")){addBal(rollprice*100000);}
+  else if(checkifhas2(vallist,"💰")){addBal(rollprice*10000);}
+  else if(checkifhas3(vallist,"💲💲💲")){addBal(rollprice*1000);}
+  else if(checkifhas2(vallist,"💲💲💲")){addBal(rollprice*250);}
+  else if(checkifhas3(vallist,"💲")){addBal(rollprice*200);}
+  else if(checkifhas2(vallist,"💲")){addBal(rollprice*50);}
+  else if(checkifhas3(vallist,"100X")){addBal(rollprice*100);}
+  else if(checkifhas2(vallist,"100X")){addBal(rollprice*20);}
+  else if(checkifhas3(vallist,"10X")){addBal(rollprice*10);}
+  else if(checkifhas2(vallist,"10X")){addBal(rollprice*2);}
+  else if(checkifhas3(vallist,"5X")){addBal(rollprice*5);}
+  else if(checkifhas3(vallist,"3X")){addBal(rollprice*3);}
+  else if(checkifhas3(vallist,"2X")){addBal(rollprice*2);}
+  else if(checkifhas3(vallist,"1.5X")){addBal(rollprice*1.5);}
+  else{console.log("No winners")}
+}
+
+function checkifhas3(thelist,value){
+  let counter = 0;
+  for (var i = thelist; i <= 2 ; i++) {
+    if(thelist[i] == value){ counter+=1;}
+  }
+  if (counter >=3) {return true;}
+  else {return false;}
+}
+
+function checkifhas2(thelist,value){
+  let counter = 0;
+  for (var i = thelist; i <= 2 ; i++) {
+    if(thelist[i] == value){ counter+=1;}
+  }
+  if (counter ==2) {return true;}
+  else {return false;}
 }
 
 function addBal(value){
-  valance = balance+value;
+  balance = balance+value;
+  document.getElementById("id_bal").innerText = balance;
 }
 
 function unlockRows(){
@@ -110,5 +147,5 @@ function getRandomValue(){
   else if(value >45000){
     return "2X"
   }
-  else {return "1X"}
+  else {return "1.5X"}
 }
