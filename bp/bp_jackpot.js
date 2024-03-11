@@ -32,6 +32,7 @@ function insertToRow(rowId, value){
 }
 const soundClick = new Audio("./bp_jackpot/click.wav");
 const soundLocking = new Audio("./bp_jackpot/locking.wav");
+const soundPayout = new Audio("./bp_jackpot/coin.wav");
 
 function getNewValue(rowId,rollNumber){
   let rerollchance = Math.random();
@@ -61,6 +62,7 @@ function checkAllLocked(){
 
   if (e1.classList.contains("cl_lockedrow") & e2.classList.contains("cl_lockedrow")& e3.classList.contains("cl_lockedrow")) {
       getCombo();
+      console.log("all locked")
   }
 }
 
@@ -73,29 +75,21 @@ function getCombo(){
   vallist.push(e2)
   vallist.push(e3)
 
-  console.log("get all values and reward player: ")
-  console.log(vallist)
-  if(checkifhas3(vallist,"💰")){addBal(rollprice*100000);}
-  else if(checkifhas2(vallist,"💰")){addBal(rollprice*10000);}
-  else if(checkifhas3(vallist,"💲💲💲")){addBal(rollprice*1000);}
-  else if(checkifhas2(vallist,"💲💲💲")){addBal(rollprice*250);}
-  else if(checkifhas3(vallist,"💲")){addBal(rollprice*200);}
-  else if(checkifhas2(vallist,"💲")){addBal(rollprice*50);}
-  else if(checkifhas3(vallist,"100X")){addBal(rollprice*100);}
-  else if(checkifhas2(vallist,"100X")){addBal(rollprice*20);}
-  else if(checkifhas3(vallist,"10X")){addBal(rollprice*10);}
-  else if(checkifhas2(vallist,"10X")){addBal(rollprice*2);}
-  else if(checkifhas3(vallist,"5X")){addBal(rollprice*5);}
-  else if(checkifhas3(vallist,"3X")){addBal(rollprice*3);}
-  else if(checkifhas3(vallist,"2X")){addBal(rollprice*2);}
-  else if(checkifhas3(vallist,"1.5X")){addBal(rollprice*1.5);}
+  // console.log("get all values and reward player: ")
+  // console.log(vallist)
+  if(checkifhas3(vallist,'100X')){addBal(rollprice*100);}
+  else if(checkifhas2(vallist,'100X')){addBal(rollprice*20);}
+  else if(checkifhas3(vallist,'10X')){addBal(rollprice*10);}
+  else if(checkifhas2(vallist,'10X')){addBal(rollprice*2);}
+  else if(checkifhas3(vallist,'5X')){addBal(rollprice*5);}
+  else if(checkifhas3(vallist,'2X')){addBal(rollprice*2);}
   else{console.log("No winners")}
 }
 
-function checkifhas3(thelist,value){
+function checkifhas3(thelist,dvalue){
   let counter = 0;
-  for (var i = thelist; i <= 2 ; i++) {
-    if(thelist[i] == value){ counter+=1;}
+  for (let i = 0; i <= 2 ; i++) {
+    if(thelist[i] == dvalue){ counter+=1;}
   }
   if (counter >=3) {return true;}
   else {return false;}
@@ -103,7 +97,7 @@ function checkifhas3(thelist,value){
 
 function checkifhas2(thelist,value){
   let counter = 0;
-  for (var i = thelist; i <= 2 ; i++) {
+  for (let i = 0; i <= 2 ; i++) {
     if(thelist[i] == value){ counter+=1;}
   }
   if (counter ==2) {return true;}
@@ -113,6 +107,7 @@ function checkifhas2(thelist,value){
 function addBal(value){
   balance = balance+value;
   document.getElementById("id_bal").innerText = balance;
+  soundPayout.play();
 }
 
 function unlockRows(){
@@ -122,30 +117,18 @@ function unlockRows(){
 }
 
 function getRandomValue(){
-  let value = Math.floor(Math.random() * 99999 +1);
-  if (value === 100000) {
-    return "💰";
-  }
-  else if(value >99500){
-    return "💲💲💲"
-  }
-  else if(value >99000){
-    return "💲"
-  }
-  else if(value >95000){
+  let value = Math.floor(Math.random() * 81 +1);
+  if(value >80){
     return "100X"
   }
-  else if(value >90000){
+  else if(value >70){
     return "10X"
   }
-  else if(value >80000){
+  else if(value >50){
     return "5X"
   }
-  else if(value >65000){
-    return "3X"
-  }
-  else if(value >45000){
+  else if(value >1){
     return "2X"
   }
-  else {return "1.5X"}
+  else {return "100X"}
 }
