@@ -84,17 +84,17 @@ body{
 }
 
 .cl_bp_block, .cl_hm_v{
-	background-color: #000020;
-/*	height: 45px;*/
+	background-color: #0000003b;
 	margin: 20px 10px;
 	padding: 5px 5px;
 	display: block;
-	border-style: none;
-	border-color: lightblue;
+	border-style: groove;
+	border-color: #ffbf00;
 	border-width: 1px;
+	color: white;
 }
 .cl_bp_block:hover, .cl_hm_v:hover{
-	background-color: #4b4b80;
+	background-color: #00000073;
 }
 .cl_middle a{
 	text-decoration: none;
