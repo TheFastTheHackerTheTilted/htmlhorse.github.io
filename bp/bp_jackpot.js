@@ -3,18 +3,23 @@ var totalspent = 0;
 var rollprice = 5;
 var rollDuration = 100;
 
+var running = false;
+
 function startRoll(){
-  if (balance>=rollprice) {
-    balance = balance-rollprice
-    document.getElementById("id_bal").innerText = balance;
-    totalspent = totalspent+rollprice
-    document.getElementById("id_spent").innerText = totalspent;
+  if (running === false){
+    running = true;
+    if (balance>=rollprice) {
+      balance = balance-rollprice
+      document.getElementById("id_bal").innerText = balance;
+      totalspent = totalspent+rollprice
+      document.getElementById("id_spent").innerText = totalspent;
 
-    unlockRows();
+      unlockRows();
 
-    getNewValue("1",0);
-    getNewValue("2",0);
-    getNewValue("3",0);
+      getNewValue("1",0);
+      getNewValue("2",0);
+      getNewValue("3",0);
+    }
   }
 }
 
@@ -84,6 +89,7 @@ function getCombo(){
   else if(checkifhas3(vallist,'5X')){addBal(rollprice*5);}
   else if(checkifhas3(vallist,'2X')){addBal(rollprice*2);}
   else{console.log("No winners")}
+  running = false;
 }
 
 function checkifhas3(thelist,dvalue){

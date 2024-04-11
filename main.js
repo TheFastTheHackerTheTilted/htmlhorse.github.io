@@ -37,6 +37,7 @@ function addAllBps(){
 	addBp("./bp/bp_vegetablereminder/vegetable_reminder","bp_vegetablereminder","For the project of vegetable reminder app");
 	addBp("./bp/bp_euclidean","bp_euclidean ","For the Euclidean  algorithm calculation visualization");
 	addBp("./bp/bp_wordguesser","bp_wordguesser ","For the word guesser game");
+	addBp("./bp/bp_chat","bp_chat ","(WIP) For the chatting game");
 
 
 }

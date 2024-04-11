@@ -1,0 +1,13 @@
+body{
+	font-size: 24px;
+}
+
+.cl_middle{
+	min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
