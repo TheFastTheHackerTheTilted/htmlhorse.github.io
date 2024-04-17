@@ -36,10 +36,10 @@ body{
 	color: white;
 	font-family: Verdana, sans-serif;
 	cursor: pointer;
-	padding-top: 30px;
+	padding-top: 30px 10px 0 10px;
 	display: inline-block;
 	text-decoration: none;
-	width: 100px;
+	/* width: 100px; */
 	height: 45px;
 	text-align: center;
 	margin-right: 10px;
