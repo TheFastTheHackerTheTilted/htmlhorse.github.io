@@ -39,6 +39,7 @@ function addAllBps(){
 	addBp("./bp/bp_wordguesser","bp_wordguesser ","For the word guesser game");
 	addBp("./bp/bp_chat","bp_chat ","(WIP) For the chatting game");
 	addBp("./bp/bp_citygame","bp_citygame ","(WIP) For the city sim game");
+	addBp("./bp/bp_scripts","bp_scripts ","For small scripts/apps");
 
 
 }
