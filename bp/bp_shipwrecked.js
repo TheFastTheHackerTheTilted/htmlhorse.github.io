@@ -45,14 +45,17 @@ function nextDiag(){
 function emptyFullPanel(){
 	let fp = document.getElementById("id_fullpanel");
 	fp.innerHTML = ""
+	document.getElementById("id_startsimulation").style.display = "none"
 }
 
 function switchPanel(){
 	let fullPanel = document.getElementById("id_fullpanel");
 	let game = document.getElementById("id_game");
+	let startButton = document.getElementById("id_startsimulation")
 
 	if (fullPanel.style.display == 'none') {
 	    fullPanel.style.display = 'flex';
+	    startButton.style.display = 'block'
 	    game.style.display = 'none';
 	} else {
 	    fullPanel.style.display = 'none'
@@ -63,32 +66,32 @@ function itemSelectionScreen(){
 	emptyFullPanel()
 	switchPanel()
 	insertAllItems()
-	loadListeners()
+
 }
 function insertItem(item){
 	let panel = document.getElementById("id_fullpanel");
-	let newdivElement = document.createElement('div');
-	newdivElement.classList.add('cl_item')
+	let newButton = document.createElement('button');
+	newButton.classList.add('cl_item')
 	let label = document.createElement('label');
 	label.textContent = item;
-	newdivElement.appendChild(label);
-	panel.appendChild(newdivElement);
+	newButton.appendChild(label);
+	panel.appendChild(newButton);
 }
 
-function loadListeners(){
-	document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
     const fullPanelElement = document.getElementById('id_fullpanel');
-    const itemElements = fullPanelElement.querySelectorAll('.cl_item');
 
-    itemElements.forEach(itemElement => {
-        itemElement.addEventListener('click', () => {
-            const labelElement = itemElement.querySelector('label');
+    fullPanelElement.addEventListener('click', event => {
+        const buttonElement = event.target.closest('button.cl_item');
+
+        if (buttonElement) {
+            const labelElement = buttonElement.querySelector('label');
             const labelText = labelElement.textContent.trim();
             addToInv(labelText);
-        });
+        }
     });
 });
-}
+
 function insertAllItems(){
 	insertItem("First aid kit")
 	insertItem("Frying Pan")
@@ -118,16 +121,41 @@ function insertAllItems(){
 
 }
 
-function addToInv(item) {
-    if (inventory.length < 3) {
-        inventory.push(item);
-    } else {
-        inventory.shift(); // Remove the first element
-        inventory.push(item);
-    }
-    console.log(inventory)
+function updateButtonClasses() {
+    const fullPanelElement = document.getElementById('id_fullpanel');
+    const buttonElements = fullPanelElement.querySelectorAll('button.cl_item');
+
+    buttonElements.forEach(button => {
+        const labelElement = button.querySelector('label');
+        const labelText = labelElement.textContent.trim();
+
+        if (inventory.includes(labelText)) {
+            button.classList.add('cl_active');
+        } else {
+            button.classList.remove('cl_active');
+        }
+    });
 }
 
+function addToInv(item) {
+    if (!inventory.includes(item)) {
+        if (inventory.length < 3) {
+            inventory.push(item);
+        } else {
+            inventory.shift(); // Remove the first element
+            inventory.push(item);
+        }
+    }
+    console.log(inventory);
+    updateButtonClasses()
+}
+
+function startSim(){
+	if (inventory.length == 3) {
+		console.log("started")
+		emptyFullPanel()
+	}
+}
 
 var dPointer = 0;
 var promptList = [];
