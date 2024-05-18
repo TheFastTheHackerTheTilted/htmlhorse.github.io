@@ -1,3 +1,6 @@
+const inventory = [] 
+
+
 function initalize(){
 	changePrompt("Start Game?");
 	removeChoices();
@@ -29,7 +32,7 @@ function diagStart(){
 }
 
 function nextDiag(){
-	if (dPointer == promptList.length-1) {
+	if (dPointer === 16) {
 		removeChoices();
 		for (l in choiceList){
 			addChoice(choiceList[l][0],choiceList[l][1])
@@ -39,10 +42,91 @@ function nextDiag(){
 	dPointer +=1;
 }
 
+function emptyFullPanel(){
+	let fp = document.getElementById("id_fullpanel");
+	fp.innerHTML = ""
+}
 
+function switchPanel(){
+	let fullPanel = document.getElementById("id_fullpanel");
+	let game = document.getElementById("id_game");
 
+	if (fullPanel.style.display == 'none') {
+	    fullPanel.style.display = 'flex';
+	    game.style.display = 'none';
+	} else {
+	    fullPanel.style.display = 'none'
+	    game.style.display = 'flex';
+	}
+}
+function itemSelectionScreen(){
+	emptyFullPanel()
+	switchPanel()
+	insertAllItems()
+	loadListeners()
+}
+function insertItem(item){
+	let panel = document.getElementById("id_fullpanel");
+	let newdivElement = document.createElement('div');
+	newdivElement.classList.add('cl_item')
+	let label = document.createElement('label');
+	label.textContent = item;
+	newdivElement.appendChild(label);
+	panel.appendChild(newdivElement);
+}
 
+function loadListeners(){
+	document.addEventListener('DOMContentLoaded', () => {
+    const fullPanelElement = document.getElementById('id_fullpanel');
+    const itemElements = fullPanelElement.querySelectorAll('.cl_item');
 
+    itemElements.forEach(itemElement => {
+        itemElement.addEventListener('click', () => {
+            const labelElement = itemElement.querySelector('label');
+            const labelText = labelElement.textContent.trim();
+            addToInv(labelText);
+        });
+    });
+});
+}
+function insertAllItems(){
+	insertItem("First aid kit")
+	insertItem("Frying Pan")
+	insertItem("Dog")
+	insertItem("Lighter")
+	insertItem("Pack of Matchsticks")
+	insertItem("2 bottle of alcohol")
+	insertItem("Pocket knife")
+	insertItem("Machete")
+	insertItem("Compass")
+	insertItem("Flare Gun")
+	insertItem("5 Gallons of water")
+	insertItem("5 kgs of canned food")
+	insertItem("Thermal clothing (Cold&Hot)")
+	insertItem("Waterproof Notebook & Pens")
+	insertItem("Flashlight")
+	insertItem("Tent kit")
+	insertItem("Music player")
+	insertItem("Antidote kit")
+	insertItem("Life jacket")
+	insertItem("Survival journal")
+	insertItem("Radiation Detector")
+	insertItem("Harpoon gun")
+	insertItem("Fire Extinguisher")
+	insertItem("Magnifying Glass")
+	insertItem("Axe")
+
+}
+
+function addToInv(item) {
+    if (inventory.length < 3) {
+        inventory.push(item);
+    } else {
+        inventory.shift(); // Remove the first element
+        inventory.push(item);
+    }
+    console.log(inventory)
+}
 
 
 var dPointer = 0;
