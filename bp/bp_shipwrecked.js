@@ -165,23 +165,63 @@ var round = 0
 function createEvent(){
 	let randomNumber = Math.floor(Math.random() * 101);
 
-	if (randomNumber > (0+(round*15)) && eventList.length > 0) {
+	if (round < 3 && eventList.length > 0) {
 		round +=1;
 
 		let randomIndex = Math.floor(Math.random() * eventList.length);
 		let eventName = eventList[randomIndex];
 		eventList.splice(randomIndex, 1);
-		textScreen(eventName)
+		
+		runEvent(eventName)
 
 
-
-		setTimeout(function() {
-			createEvent()
-			}, 3000)
+		
 
 	}
 	else{
 		textScreen("Help came in time, You Survived..")
+	}
+}
+
+const eventDescMap = {
+	"hunger":"The island does not have healthy looking plants or animals to eat. With time you start to feel the starvation. ",
+	"thirst":"Because you cannot drink sea water, you start to feel thirsty. ",
+	"snake":"An aggresive snake appeared, if you cant find a way to get rid of it, it might kill you. ",
+	"infection":"From small bruises and wounds on your hand, you got an infection. It started to look worse by day. "
+}
+
+const eventSolutionMap = {
+	"hunger":["Lighter","Pack of Matchsticks","5 kgs of canned food","Survival journal"],
+	"thirst":["5 Gallons of water","Survival journal"],
+	"snake":["Machete","Axe","Antidote kit","Harpoon gun"],
+	"infection":["First aid kit","2 bottle of alcohol","Survival journal"]
+}
+
+function runEvent(eventName){
+	let desc = eventDescMap[eventName]
+	let solution = ""
+
+	//find solution from inventory
+	for (i in inventory) {
+		let invItem = inventory[i]
+		console.log(invItem)
+		if (eventSolutionMap[eventName].includes(invItem)){
+			solution = invItem;
+			break;
+		}
+	}
+	let endText = "And you got no solution for this. This is how you die. The END."
+
+	textScreen(eventDescMap[eventName])
+
+	if (solution === "") {
+		textScreen(desc + endText)
+	}
+	else{
+		textScreen(desc + solution)
+		setTimeout(function() {
+				createEvent()
+				}, 5000)
 	}
 }
 
