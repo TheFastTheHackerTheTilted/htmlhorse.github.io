@@ -54,12 +54,12 @@ function switchPanel(){
 	let startButton = document.getElementById("id_startsimulation")
 
 	if (fullPanel.style.display == 'none') {
-	    fullPanel.style.display = 'flex';
-	    startButton.style.display = 'block'
-	    game.style.display = 'none';
+		fullPanel.style.display = 'flex';
+		startButton.style.display = 'block'
+		game.style.display = 'none';
 	} else {
-	    fullPanel.style.display = 'none'
-	    game.style.display = 'flex';
+		fullPanel.style.display = 'none'
+		game.style.display = 'flex';
 	}
 }
 function itemSelectionScreen(){
@@ -79,17 +79,17 @@ function insertItem(item){
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const fullPanelElement = document.getElementById('id_fullpanel');
+	const fullPanelElement = document.getElementById('id_fullpanel');
 
-    fullPanelElement.addEventListener('click', event => {
-        const buttonElement = event.target.closest('button.cl_item');
+	fullPanelElement.addEventListener('click', event => {
+		const buttonElement = event.target.closest('button.cl_item');
 
-        if (buttonElement) {
-            const labelElement = buttonElement.querySelector('label');
-            const labelText = labelElement.textContent.trim();
-            addToInv(labelText);
-        }
-    });
+		if (buttonElement) {
+			const labelElement = buttonElement.querySelector('label');
+			const labelText = labelElement.textContent.trim();
+			addToInv(labelText);
+		}
+	});
 });
 
 function insertAllItems(){
@@ -122,39 +122,78 @@ function insertAllItems(){
 }
 
 function updateButtonClasses() {
-    const fullPanelElement = document.getElementById('id_fullpanel');
-    const buttonElements = fullPanelElement.querySelectorAll('button.cl_item');
+	const fullPanelElement = document.getElementById('id_fullpanel');
+	const buttonElements = fullPanelElement.querySelectorAll('button.cl_item');
 
-    buttonElements.forEach(button => {
-        const labelElement = button.querySelector('label');
-        const labelText = labelElement.textContent.trim();
+	buttonElements.forEach(button => {
+		const labelElement = button.querySelector('label');
+		const labelText = labelElement.textContent.trim();
 
-        if (inventory.includes(labelText)) {
-            button.classList.add('cl_active');
-        } else {
-            button.classList.remove('cl_active');
-        }
-    });
+		if (inventory.includes(labelText)) {
+			button.classList.add('cl_active');
+		} else {
+			button.classList.remove('cl_active');
+		}
+	});
 }
 
 function addToInv(item) {
-    if (!inventory.includes(item)) {
-        if (inventory.length < 3) {
-            inventory.push(item);
-        } else {
-            inventory.shift(); // Remove the first element
-            inventory.push(item);
-        }
-    }
-    console.log(inventory);
-    updateButtonClasses()
+	if (!inventory.includes(item)) {
+		if (inventory.length < 3) {
+			inventory.push(item);
+		} else {
+			inventory.shift(); // Remove the first element
+			inventory.push(item);
+		}
+	}
+	console.log(inventory);
+	updateButtonClasses()
 }
 
 function startSim(){
 	if (inventory.length == 3) {
 		console.log("started")
 		emptyFullPanel()
+
+		createEvent()
+
 	}
+}
+
+var eventList = ["hunger","thirst","snake","infection"]
+var round = 0
+function createEvent(){
+	let randomNumber = Math.floor(Math.random() * 101);
+
+	if (randomNumber > (0+(round*15)) && eventList.length > 0) {
+		round +=1;
+
+		let randomIndex = Math.floor(Math.random() * eventList.length);
+		let eventName = eventList[randomIndex];
+		eventList.splice(randomIndex, 1);
+		textScreen(eventName)
+
+
+
+		setTimeout(function() {
+			createEvent()
+			}, 3000)
+
+	}
+	else{
+		textScreen("Help came in time, You Survived..")
+	}
+}
+
+
+function textScreen(context){
+	emptyFullPanel()
+	let panel = document.getElementById("id_fullpanel");
+	let label = document.createElement('label');
+	label.classList.add('cl_textscreen')
+	label.textContent = context;
+	panel.appendChild(label);
+
 }
 
 var dPointer = 0;

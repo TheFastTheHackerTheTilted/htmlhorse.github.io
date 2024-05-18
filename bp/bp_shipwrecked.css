@@ -52,6 +52,11 @@
 	background-color: sienna;
 }
 
+.cl_textscreen{
+	font-size: 24px;
+	color: white;
+}
+
 #id_startsimulation{
 	display: none;
 	background-color: peachpuff;
