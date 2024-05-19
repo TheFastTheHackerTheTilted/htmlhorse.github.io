@@ -104,7 +104,7 @@ function insertAllItems(){
 	insertItem("Compass")
 	insertItem("Flare Gun")
 	insertItem("5 Gallons of water")
-	insertItem("5 kgs of canned food")
+	insertItem("4 kgs of canned food")
 	insertItem("Thermal clothing (Cold&Hot)")
 	insertItem("Waterproof Notebook & Pens")
 	insertItem("Flashlight")
@@ -191,29 +191,44 @@ const eventDescMap = {
 }
 
 const eventSolutionMap = {
-	"hunger":["Lighter","Pack of Matchsticks","5 kgs of canned food","Survival journal"],
-	"thirst":["5 Gallons of water","Survival journal"],
+	"hunger":["Lighter","Pack of Matchsticks","4 kgs of canned food","Survival journal"],
+	"thirst":["5 Gallons of water","Frying Pan","Survival journal"],
 	"snake":["Machete","Axe","Antidote kit","Harpoon gun"],
-	"infection":["First aid kit","2 bottle of alcohol","Survival journal"]
+	"infection":["First aid kit","2 bottle of alcohol"]
+}
+
+const eventSolutionDescMap = {
+	"hungerLighter":"But with the lighter, you were able to cook some fishes. Now you won't starve to death.",
+	"hungerPack":"But with the Matchsticks, you prepared a fire and  were able to cook some fishes. Now you won't starve to death.",
+	"hunger4":"But these canned foods are enough for you to survive a bit longer. Now you won't starve to death.",
+	"hungerSurvival":"But from the journal, you recognized edible plants on the island. They don't look good but atleast safe. Now you won't starve to death.",
+	"thirst5":"But gallons of fresh water should be enough to survive a bit longer. You won't die because of thirst.",
+	"thirstSurvival":"But with survival journal, you managed to make a water collection system with leaves. And luckily there was rain. You won't die because of thirst.",
+	"thirstFrying":"Luckily there was rain and you managed to collect some wother. You won't die becuase of thirst.",
+	"snakeMachete":"But with a good swing of machete, you managed to bleed the snake. You managed to escape from the snake's attack.",
+	"snakeAxe":"But with a good swing of axe, you managed to cut the snake in half. You managed to escape from the snake's attack.",
+	"snakeAntidote":"Altough snake bit you, you were able to cure it with the Antidote kit. You survived the snake's poison.",
+	"snakeHarpoon":"But you aimed carefully and shot the snake. As the snake slowly died, you managed to survive the attack.",
+	"infectionFirst":"But using the first aid kit, you got a proper treatement. You no longer suffer from infection",
+	"infection2":"But using the alcohol, you managed to kill the infection. It was quite painful but you wont die."
 }
 
 function runEvent(eventName){
 	let desc = eventDescMap[eventName]
 	let solution = ""
-
+	let endText = "And you got no solution for this. This is how you die. The END."
+	
 	//find solution from inventory
 	for (i in inventory) {
 		let invItem = inventory[i]
-		console.log(invItem)
 		if (eventSolutionMap[eventName].includes(invItem)){
-			solution = invItem;
+			solution = eventSolutionDescMap[(eventName + getFirstWord(invItem))];
 			break;
 		}
 	}
-	let endText = "And you got no solution for this. This is how you die. The END."
 
-	textScreen(eventDescMap[eventName])
 
+	console.log(inventory)
 	if (solution === "") {
 		textScreen(desc + endText)
 	}
@@ -221,7 +236,7 @@ function runEvent(eventName){
 		textScreen(desc + solution)
 		setTimeout(function() {
 				createEvent()
-				}, 5000)
+				}, 7000)
 	}
 }
 
@@ -261,4 +276,10 @@ function startGame(){
 		"Are you going to accept the offer?"]
 	choiceList = [["Accept", "itemSelectionScreen()"]]
 	diagStart();
+}
+
+function getFirstWord(str) {
+    str = str.trim();
+    const words = str.split(' ');
+    return words[0] || '';
 }
