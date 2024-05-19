@@ -206,7 +206,7 @@ const eventSolutionMap = {
 	"cold":["Lighter","Pack of Matchsticks","Thermal clothing (Cold&Hot)","Tent kit","Alcohol"],
 	"lost":["Compass","Waterproof Notebook & Pens","Machete","Flashlight"],
 	"ship":["Flare Gun","Lighter"],
-	"wildfire":["Fire Extinguisher","5 Gallons of water"]
+	"wildfire":["Fire Extinguisher","5 Gallons of water", "Frying Pan"]
 }
 
 const eventSolutionDescMap = {
@@ -247,6 +247,7 @@ const eventSolutionDescMap = {
 	"shipLighter":"To get some attention, you made a small scaled wildfire and created a smoke.",
 	"wildfireFire":"Using the fire Extinguisher you managed to avoid burning the whole island.",
 	"wildfire5":"Using a lot of water, you avoided burning the whole island."
+	"wildfireFrying":"Using the frying pan as a bucket. you managed to extinguish the fire. You avoided burning the whole island."
 }
 
 const eventEndMap = {
