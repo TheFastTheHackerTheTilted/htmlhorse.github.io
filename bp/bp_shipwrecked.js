@@ -246,7 +246,7 @@ const eventSolutionDescMap = {
 	"shipFlare":"To get some attention, you used your flare gun.",
 	"shipLighter":"To get some attention, you made a small scaled wildfire and created a smoke.",
 	"wildfireFire":"Using the fire Extinguisher you managed to avoid burning the whole island.",
-	"wildfire5":"Using a lot of water, you avoided burning the whole island."
+	"wildfire5":"Using a lot of water, you avoided burning the whole island.",
 	"wildfireFrying":"Using the frying pan as a bucket. you managed to extinguish the fire. You avoided burning the whole island."
 }
 
