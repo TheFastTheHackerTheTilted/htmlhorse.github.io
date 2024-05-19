@@ -32,7 +32,7 @@ function diagStart(){
 }
 
 function nextDiag(){
-	if (dPointer === 16) {
+	if (dPointer === promptList.length-1) {
 		removeChoices();
 		for (l in choiceList){
 			addChoice(choiceList[l][0],choiceList[l][1])
@@ -160,7 +160,7 @@ function startSim(){
 	}
 }
 
-var eventList = ["hunger","thirst","snake","infection"]
+var eventList = ["hunger","thirst","snake","infection", "injury","sanity","cold","lost","ship","wildfire"]
 var round = 0
 function createEvent(){
 	let randomNumber = Math.floor(Math.random() * 101);
@@ -186,15 +186,27 @@ function createEvent(){
 const eventDescMap = {
 	"hunger":"The island does not have healthy looking plants or animals to eat. With time you start to feel the starvation. ",
 	"thirst":"Because you cannot drink sea water, you start to feel thirsty. ",
-	"snake":"An aggresive snake appeared, if you cant find a way to get rid of it, it might kill you. ",
-	"infection":"From small bruises and wounds on your hand, you got an infection. It started to look worse by day. "
+	"snake":"An aggresive snake appeared, it looks big and deadly. You have to face it somehow. ",
+	"infection":"From small bruises and wounds on your hand, you got an infection. It started to look worse by day. ",
+	"injury":"While wandering you started to feel pain in your limbs, looks like a bleeding from unknown cause. ",
+	"sanity":"Spending time alone pushes the limits of your sanity. ",
+	"cold":"Harsh weather conditions made you feel the cold. If this continues you are gonna have hypothermia. ",
+	"lost":"While looking for valuable resources, you wandered bit to far from your campsite. The time is getting late and you dont know where you are. ",
+	"ship":"You see a ship passing by, time is getting late and this might be your only chance",
+	"wildfire":"A wildfire has started due to the sun. Its spreading fast. "
 }
 
 const eventSolutionMap = {
-	"hunger":["Lighter","Pack of Matchsticks","4 kgs of canned food","Survival journal"],
+	"hunger":["Lighter","Pack of Matchsticks","4 kgs of canned food","Survival journal","Dog","Pocket knife"],
 	"thirst":["5 Gallons of water","Frying Pan","Survival journal"],
-	"snake":["Machete","Axe","Antidote kit","Harpoon gun"],
-	"infection":["First aid kit","2 bottle of alcohol"]
+	"snake":["Machete","Axe","Antidote kit","Harpoon gun","Tent kit"],
+	"infection":["First aid kit","2 bottle of alcohol"],
+	"injury":["First aid kit","Magnifying Glass"],
+	"sanity":["Dog","Alcohol","Magnifying Glass","Waterproof Notebook & Pens","Music player"],
+	"cold":["Lighter","Pack of Matchsticks","Thermal clothing (Cold&Hot)","Tent kit","Alcohol"],
+	"lost":["Compass","Waterproof Notebook & Pens","Machete","Flashlight"],
+	"ship":["Flare Gun","Lighter"],
+	"wildfire":["Fire Extinguisher","5 Gallons of water"]
 }
 
 const eventSolutionDescMap = {
@@ -202,6 +214,9 @@ const eventSolutionDescMap = {
 	"hungerPack":"But with the Matchsticks, you prepared a fire and  were able to cook some fishes. Now you won't starve to death.",
 	"hunger4":"But these canned foods are enough for you to survive a bit longer. Now you won't starve to death.",
 	"hungerSurvival":"But from the journal, you recognized edible plants on the island. They don't look good but atleast safe. Now you won't starve to death.",
+	"hungerFrying":"Using the reflective side of the frying pan, you managed to use the heat of sun and cook the plants and animals to be safe. Now you won't starve to death.",
+	"hungerDog":"And the dog looked like it was trying to show you something. Using his nose, he found a familiar plant to eat. Now you won't starve to death.",
+	"hungerPocket":"With the pocket knife you easily cleaned the fish and eat it. Now you won't starve to death.",
 	"thirst5":"But gallons of fresh water should be enough to survive a bit longer. You won't die because of thirst.",
 	"thirstSurvival":"But with survival journal, you managed to make a water collection system with leaves. And luckily there was rain. You won't die because of thirst.",
 	"thirstFrying":"Luckily there was rain and you managed to collect some wother. You won't die becuase of thirst.",
@@ -209,14 +224,49 @@ const eventSolutionDescMap = {
 	"snakeAxe":"But with a good swing of axe, you managed to cut the snake in half. You managed to escape from the snake's attack.",
 	"snakeAntidote":"Altough snake bit you, you were able to cure it with the Antidote kit. You survived the snake's poison.",
 	"snakeHarpoon":"But you aimed carefully and shot the snake. As the snake slowly died, you managed to survive the attack.",
-	"infectionFirst":"But using the first aid kit, you got a proper treatement. You no longer suffer from infection",
-	"infection2":"But using the alcohol, you managed to kill the infection. It was quite painful but you wont die."
+	"snakeTent":"You quickly ran to your tent, closed the entrance and just waited for some time to get rid of snake. You managed to avoid the attack.",
+	"infectionFirst":"But using the first aid kit, you got a proper treatement. You no longer suffer from infection.",
+	"infection2":"But using the alcohol, you managed to kill the infection. It was quite painful but you wont die.",
+	"injuryFirst":"But the first aid kit had proper materials for you to treat the wound. Now you won't die to to injury.",
+	"injuryMagnifying":"You managed to see what was the problem with your magnifying glass. You saw little pieces that pierced your skin and managed to clean it. It needs time to heal but now you won't die to to injury.",
+	"sanityDog":"But this little fella be your friend, eventhough it doesnt speak, atleast there is someone to play with. You are still sane.",
+	"sanityAlcohol":"It's not the optimmal solution but why not just get drunk and forgot that you are on a deserted island. You managed to avoid instanity attack, for now.",
+	"sanityMagnigying":"It was fun to analyze the surroundings, every plant, every insect. You managed to avoid instanity attack, for now.",
+	"sanityWaterproof":"You started to take notes of interesting things that you experience, or draw things you feel like. It makes you feel human for a little more. You managed to avoid instanity attack, for now.",
+	"sanityMusic":"You started to listen some music, it feels like you are the main charachter of this world and you try even harder to survive. You are still sane.",
+	"coldLighter":"You started a campfire with the lighter, you started feel warm. You avoided an hypothermia attack.",
+	"coldPack":"You started a campfire with the matchsticks, you started feel warm. You avoided an hypothermia attack.",
+	"coldThermal":"The thermal clothing made you little warmer. You avoided an hypothermia attack.",
+	"coldTent":"You stayed inside your tent for a while to get warm. Staying outside could have froze you. You avoided an hypothermia attack.",
+	"coldAlcohol":"Burning some alcohol for quick fire or drinking it made you feel warmer. Its not the best method but you are still not frozen.",
+	"lostCompass":"By checking your compass you knew where you needed to head. Eventually you found your campsite. You did not get lost and die somewhere unknown.",
+	"lostWaterproof":"You remembered that you made a map of visited places on your notebook. This was a lifesaver movement. You did not get lost and die somewhere unknown.",
+	"lostMachete":"You dont know where you are heading towards but you started to cut every plant in front of you until you reached to a shore. You know how to find your campsite from this location.",
+	"lostFlashlight":"With the reduced light, without a flashlight it would have been much more difficult to recognize placemarks you remembered to get back to your campsite. You did not die in the dark somewhere unknown.",
+	"shipFlare":"To get some attention, you used your flare gun.",
+	"shipLighter":"To get some attention, you made a small scaled wildfire and created a smoke.",
+	"wildfireFire":"Using the fire Extinguisher you managed to avoid burning the whole island.",
+	"wildfire5":"Using a lot of water, you avoided burning the whole island."
+}
+
+const eventEndMap = {
+	"hunger":"And you cannot figure out what is safe to consume. Slowly you lost all your energy and died. The END. ",
+	"thirst":"And you couldn't find a fresh water source. While thikning about what to do, you did not manage to wake up one day. The END. ",
+	"snake":" The snake swiftly attacked you, grasping your body. Strangled you to death without you being able to hurt it. The END. ",
+	"infection": "You couldn't manage to treat the infection for a long time and went into a septic shock. Your organs failed to keep you alive. The END. ",
+	"injury":"You couldn't manage to treat the wound, the bleeding got worse leading to a death due to losing too much blood. The END. ",
+	"sanity":"Eventually you lost your sanity, you dont know whats happening. You couldnt track your needs and died. The END. ",
+	"cold":"And in fact, you couldnt find a solution. You have hypothermia that you cannot treat in this condition. The END. ",
+	"lost":"Time has passed, its really dark right now and you dont know whats happening around you. Scary sounds are coming. A sneaky attack and you are dead. The END. ",
+	"ship":"You couldnt get the attention of the ship. You didn't know it was your last chance. You waited but the next ship never came. Was the previous one even real. The END. ",
+	"wildfire":"It was an uncontrollable wildifre, spreading to whole island. You couldn't stop it. Now all wildlife is perish and so do you. The END. "
+
 }
 
 function runEvent(eventName){
 	let desc = eventDescMap[eventName]
 	let solution = ""
-	let endText = "And you got no solution for this. This is how you die. The END."
+	let endText = eventEndMap[eventName]
 	
 	//find solution from inventory
 	for (i in inventory) {
@@ -231,6 +281,9 @@ function runEvent(eventName){
 	console.log(inventory)
 	if (solution === "") {
 		textScreen(desc + endText)
+	}
+	else if(solution != "" && eventName === "ship"){
+		textScreen(desc+solution+" Luckily the ship saw your sign and came to help you")
 	}
 	else{
 		textScreen(desc + solution)
@@ -262,16 +315,14 @@ function startGame(){
 		"There is a challenge he wants you to do",
 		"If you succeed, you will be rewarded with 100.000$", 
 		"He starts to explain the details of the challenge" ,
-		"The main focus is surviving in an unknown island with 9 more strangers", 
+		"The main focus is surviving in an unknown island with some items", 
 		"You don't know how long you need to survive", 
 		"The help will come when the timer ends",
-		"Each survivor when the timer ends will get the money",
-		"Additionally, for each survivor the money will be increased by 5%",
 		"If you die before the help comes, you die",
 		"Here are the ground rules:",
-		"-From a list of items, you are free to pick 5",
+		"-From a list of items, you are free to pick 3",
 		"-You can't give up",
-		"-You can't go away from the island",
+		"-You can't go away from the island without a modern vehicle",
 		"-No laws against crime",
 		"Are you going to accept the offer?"]
 	choiceList = [["Accept", "itemSelectionScreen()"]]
