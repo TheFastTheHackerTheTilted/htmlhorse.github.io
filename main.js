@@ -28,7 +28,7 @@ function addAllBps(){
     addBp("./bp/bp_wiki_mixedup","bp_wiki_mixedup","For the mod Mixed-up.")
     addBp("./bp/bp_designshop","bp_designshop","For the design of a shopping page.")
 	addBp("./bp/bp_game","bp_game","For the interactive game.")
-	addBp("./bp/bp_shipwrecked","(WIP) bp_shipwrecked","For example game shipwrecked where you think carefully and survive");
+	addBp("./bp/bp_shipwrecked","bp_shipwrecked","For example game shipwrecked where you think carefully and survive");
 	addBp("./bp/bp_space","(WIP) bp_space","For simulation of space traveling");
 	addBp("./bp/bp_givethephone","bp_givethephone","For the ' giving the phone to x' game");
 	addBp("./bp/bp_jackpot","bp_jackpot","For the jackpot simulation game");
